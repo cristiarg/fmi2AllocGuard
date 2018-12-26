@@ -1,6 +1,6 @@
 #include "fmi2AllocGuard.h"
 #include <stdlib.h>
-#include <cassert>
+//#include <cassert>
 
 size_t fmi2_guarded_acquire()
 {
@@ -19,7 +19,7 @@ fmi2_guarded_free_t fmi2_guarded_get_free( const size_t entry )
 
 void fmi2_guarded_release( const size_t entry )
 {
-  assert( 42 == entry );
+  //assert( 42 == entry );
 }
 
 //namespace fmi2_alloc_guard {

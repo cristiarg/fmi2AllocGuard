@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.0)
 
-project (fmi2AllocGuard LANGUAGES CXX)
+project (fmi2AllocGuard LANGUAGES C)
 
 # tune some cmake options
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -24,15 +24,25 @@ include_directories("${PROJECT_SOURCE_DIR}/src/inc")
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion)
+target_compile_options(fmi2AllocGuard PUBLIC -Wall -Wfloat-conversion)
+  # not needed for C-only compilation : -std=c++03 
 
 # needed because both .c and .cpp code files are present
-#set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
   # seems this causes linking of empty binary; smth's missing maybe
   # or maybe it works in conjunction with "LANGUAGES C" above
 
 # change the defined exports symbol - see inc/export.h
 set_target_properties( fmi2AllocGuard PROPERTIES DEFINE_SYMBOL "FMI2ALLOCGUARD_DLL_EXPORTS")
+
+#
+# try out
+#
+get_target_property( fmi2AllocGuard_target_type fmi2AllocGuard TYPE )
+if( fmi2AllocGuard_target_type STREQUAL "SHARED_LIBRARY" )
+  # needed to allow both shared and static lib build
+  add_definitions( -DFMI2ALLOCGUARD_DLL )
+endif()
 
 #
 # the unit test executable

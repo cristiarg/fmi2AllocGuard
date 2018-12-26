@@ -14,23 +14,19 @@ extern "C" {
   // obtain a new entry in the function table
   // the value is an opaque reference for further requests
   //
-  /*FMI2ALLOCGUARD_DLL_EXPORTS*/
-  size_t fmi2_guarded_acquire();
+  size_t FMI2ALLOCGUARD_API fmi2_guarded_acquire();
 
   // the getter functions
   // the entry is obtained from a previously called *_acquire
   //
-  /*FMI2ALLOCGUARD_DLL_EXPORTS*/
-  fmi2_guarded_alloc_t fmi2_guarded_get_alloc( const size_t entry );
-  /*FMI2ALLOCGUARD_DLL_EXPORTS*/
-  fmi2_guarded_free_t fmi2_guarded_get_free( const size_t entry );
+  fmi2_guarded_alloc_t FMI2ALLOCGUARD_API fmi2_guarded_get_alloc( const size_t entry );
+  fmi2_guarded_free_t FMI2ALLOCGUARD_API fmi2_guarded_get_free( const size_t entry );
 
   // release an entry in the function table
   // upon calling this, remaining unfreed memory pending to this entry is released
   // the entry is obtained from a previously called *_acquire
   //
-  /*FMI2ALLOCGUARD_DLL_EXPORTS*/
-  void fmi2_guarded_release( const size_t entry );
+  void FMI2ALLOCGUARD_API fmi2_guarded_release( const size_t entry );
 
 #ifdef __cplusplus
 } // extern "C"
