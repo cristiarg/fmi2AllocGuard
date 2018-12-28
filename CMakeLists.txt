@@ -1,16 +1,23 @@
 cmake_minimum_required (VERSION 3.0)
 
-project (fmi2AllocGuard LANGUAGES C)
+macro(print_all_variables)
+  message(STATUS "print_all_variables------------------------------------------{")
+  get_cmake_property(_variableNames VARIABLES)
+  foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+  endforeach()
+  message(STATUS "print_all_variables------------------------------------------}")
+endmacro()
+
+project (fmi2AllocGuard LANGUAGES CXX)
 
 # tune some cmake options
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES ON)
 
-
 #
 # the shared library
 #
-
 file(GLOB_RECURSE shared_lib_sources "${PROJECT_SOURCE_DIR}/src/*.c" "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 add_library(fmi2AllocGuard SHARED ${shared_lib_sources})
@@ -24,39 +31,75 @@ include_directories("${PROJECT_SOURCE_DIR}/src/inc")
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC -Wall -Wfloat-conversion)
-  # not needed for C-only compilation : -std=c++03 
+target_compile_options(fmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion)
 
 # needed because both .c and .cpp code files are present
-set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
-  # seems this causes linking of empty binary; smth's missing maybe
-  # or maybe it works in conjunction with "LANGUAGES C" above
+#set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
 
 # change the defined exports symbol - see inc/export.h
 set_target_properties( fmi2AllocGuard PROPERTIES DEFINE_SYMBOL "FMI2ALLOCGUARD_DLL_EXPORTS")
 
-#
-# try out
-#
 get_target_property( fmi2AllocGuard_target_type fmi2AllocGuard TYPE )
 if( fmi2AllocGuard_target_type STREQUAL "SHARED_LIBRARY" )
   # needed to allow both shared and static lib build
+  # for now, we're only using shared but this can be ammended above
   add_definitions( -DFMI2ALLOCGUARD_DLL )
 endif()
 
-#
-# the unit test executable
-#
+# by default, compilation is in Release mode
+add_definitions( -DCMAKE_BUILD_TYPE=Debug )
 
-## TODO: add a verification whether the lib/Catch2 actually exists
-#
-#file(GLOB_RECURSE unit_test_sources "${PROJECT_SOURCE_DIR}/tst/*.cpp")
-#
-#add_executable(testFmi2AllocGuard ${unit_test_sources})
-#
-#add_subdirectory(lib/Catch2)
-#
-#target_link_libraries(testFmi2AllocGuard Catch2::Catch2)
-#
-#target_compile_options(testFmi2AllocGuard PUBLIC -std=c++11 -Wall -Wfloat-conversion)
+# NOTE: to compile C-only:
+# - specify language "C" when declaring project
+# - remove compiler arguments that do not make sense for C (for GCC, you
+#     get a warning, other compilers might not be so tolerant)
+# - add property "LINKER_LANGUAGE" with "C"
 
+
+#
+# unit testing
+#
+option(FMI2AG_TESTS "Build tests for fmi2AllocGuard. Default: ON" ON)
+if ( FMI2AG_TESTS )
+  enable_testing()
+
+  set(FMI2AG_FETCH_CATCH
+      GIT_REPOSITORY https://github.com/catchorg/Catch2
+      GIT_TAG c32f275a008a50ae058fcd8a43f0c387d90c929b)
+    # fetching Catch1.x branch
+
+  include(ExternalProject)
+
+  ExternalProject_Add(
+      Catch-External
+      PREFIX ${CMAKE_BINARY_DIR}/external/Catch1.x
+      ${FMI2AG_FETCH_CATCH}
+      CONFIGURE_COMMAND ""
+      BUILD_COMMAND ""
+      INSTALL_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/external/Catch1.x/src/Catch-External/single_include/catch.hpp
+                                               ${CMAKE_BINARY_DIR}/external/Catch/include/catch.hpp
+    )
+  add_library(Catch INTERFACE)
+  add_dependencies(Catch Catch-External)
+  target_include_directories(Catch INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
+
+  set(FMI2AG_TST_DIR "${PROJECT_SOURCE_DIR}/tst")
+  file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
+
+  add_executable(testFmi2AllocGuard ${unit_test_sources})
+  target_link_libraries(testFmi2AllocGuard PUBLIC fmi2AllocGuard Catch)
+  target_include_directories(testFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
+
+  ##add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Catch2)
+  ##find_package(Catch2 REQUIRED)
+
+  ## needed because both .c and .cpp code files are present
+  ##set_target_properties( testFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+  ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
+
+  target_compile_options(testFmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion)
+
+  add_test(NAME Test1 COMMAND testFmi2AllocGuard)
+endif()
+
+#print_all_variables()

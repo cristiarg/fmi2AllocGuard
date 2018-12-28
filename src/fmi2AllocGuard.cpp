@@ -1,25 +1,35 @@
 #include "fmi2AllocGuard.h"
 #include <stdlib.h>
-//#include <cassert>
+#include <cassert>
+
+static const size_t id = 42;
 
 size_t fmi2_guarded_acquire()
 {
-  return 42;
+  return id;
 }
 
 fmi2_guarded_alloc_t fmi2_guarded_get_alloc( const size_t entry )
 {
-  return calloc;
+  if( entry == id ) {
+    return calloc;
+  } else {
+    return NULL;
+  }
 }
 
 fmi2_guarded_free_t fmi2_guarded_get_free( const size_t entry )
 {
-  return free;
+  if( entry == id ) {
+    return free;
+  } else {
+    return NULL;
+  }
 }
 
 void fmi2_guarded_release( const size_t entry )
 {
-  //assert( 42 == entry );
+  assert( id == entry );
 }
 
 //namespace fmi2_alloc_guard {
