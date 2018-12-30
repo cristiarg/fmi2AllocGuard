@@ -15,18 +15,17 @@ project (fmi2AllocGuard LANGUAGES CXX)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES ON)
 
-#
-# the shared library
-#
-file(GLOB_RECURSE shared_lib_sources "${PROJECT_SOURCE_DIR}/src/*.c" "${PROJECT_SOURCE_DIR}/src/*.cpp")
+#########################################
+# library
+#########################################
+
+set(FMI2AG_SRC_DIR "${PROJECT_SOURCE_DIR}/src")
+file(GLOB_RECURSE shared_lib_sources "${FMI2AG_SRC_DIR}/*.c" "${FMI2AG_SRC_DIR}/*.cpp")
 
 add_library(fmi2AllocGuard SHARED ${shared_lib_sources})
 
 # public includes
 include_directories("${PROJECT_SOURCE_DIR}/inc")
-
-# implementation detail includes
-include_directories("${PROJECT_SOURCE_DIR}/src/inc")
 
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
@@ -56,9 +55,10 @@ add_definitions( -DCMAKE_BUILD_TYPE=Debug )
 # - add property "LINKER_LANGUAGE" with "C"
 
 
-#
+#########################################
 # unit testing
-#
+#########################################
+
 option(FMI2AG_TESTS "Build tests for fmi2AllocGuard. Default: ON" ON)
 if ( FMI2AG_TESTS )
   enable_testing()
@@ -82,6 +82,10 @@ if ( FMI2AG_TESTS )
   add_library(Catch INTERFACE)
   add_dependencies(Catch Catch-External)
   target_include_directories(Catch INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
+
+  # implementation detail includes
+  include_directories("${PROJECT_SOURCE_DIR}/src")
+
 
   set(FMI2AG_TST_DIR "${PROJECT_SOURCE_DIR}/tst")
   file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")

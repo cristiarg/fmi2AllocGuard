@@ -37,6 +37,9 @@
 *.out
 *.app
 
+# Directories
+build/
+
 #
 # CMake
 #
