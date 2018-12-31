@@ -4,6 +4,7 @@
 
 static const int FMI2_FUNC_INDEX_MIN = 1;
 static const int FMI2_FUNC_INDEX_MAX = 5;
+static const int FMI2_FUNC_INDEX_INVALID = -1;
 
 
 struct fmi2_guarded_alloc_free_str {
@@ -26,4 +27,6 @@ void fmi2_free4 ( void* _ptr );
 void fmi2_free5 ( void* _ptr );
 
 struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ 6 ];
+
+void fmi2_guarded_bookkeeping_init();
 
