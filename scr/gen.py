@@ -4,7 +4,7 @@ import sys
 import os
 
 START_ID = 1
-END_ID = 5
+END_ID = 10
 INVALID_ID = -1
 
 FILE_NAME_BASE = "GuardedBookkeeping"
@@ -17,16 +17,22 @@ FILE_NAME_CODE    = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_CODE )
 #
 # header functions
 #
+def gen_header_include_guard_top( _hf ) :
+  _hf.write("#ifndef FMI2GUARDEDBOOKKEEPING_H\n")
+  _hf.write("#define FMI2GUARDEDBOOKKEEPING_H\n")
+  _hf.write("\n")
+
 def gen_header_includes( _hf ) :
   _hf.write("#include \"fmi2AllocGuard.h\"\n")
   _hf.write("#include \"PointerKeeper.hpp\"\n")
-  _hf.write("\n\n")
+  _hf.write("\n")
 
 def gen_header_consts( _hf , _start_id , _end_id , _invalid_id ) :
   _hf.write("static const int FMI2_FUNC_INDEX_MIN = %d;\n" % (_start_id) )
   _hf.write("static const int FMI2_FUNC_INDEX_MAX = %d;\n" % (_end_id) )
+  _hf.write("\n")
   _hf.write("static const int FMI2_FUNC_INDEX_INVALID = %d;\n" % (_invalid_id) )
-  _hf.write("\n\n")
+  _hf.write("\n")
 
 def gen_header_struct( _hf ) :
   _hf.write("struct fmi2_guarded_alloc_free_str {\n")
@@ -47,25 +53,29 @@ def gen_header_frees( _hf , _start_id , _end_id ) :
     _hf.write("void fmi2_free%d ( void* _ptr );\n" % (i) )
   _hf.write("\n")
 
-def gen_header_struct_array( _hf , _end_id ) :
-  _hf.write("struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ %d ];\n" % (_end_id + 1))
+def gen_header_struct_array_declaration( _hf ) :
+  _hf.write("extern struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];\n")
   _hf.write("\n")
 
 def gen_header_init( _hf ) :
   _hf.write("void fmi2_guarded_bookkeeping_init();\n")
   _hf.write("\n")
 
+def gen_header_include_guard_bottom( _hf ) :
+  _hf.write("#endif // FMI2GUARDEDBOOKKEEPING_H\n")
+  _hf.write("\n")
+
 def main_gen_header() :
-  header_file = open( FILE_NAME_HEADER , "w" )
-
-  gen_header_includes( header_file )
-  gen_header_consts( header_file , START_ID , END_ID , INVALID_ID )
-  gen_header_struct( header_file )
-  gen_header_callocs( header_file , START_ID , END_ID )
-  gen_header_frees( header_file , START_ID , END_ID )
-  gen_header_struct_array( header_file , END_ID )
-  gen_header_init( header_file )
-
+  with open( FILE_NAME_HEADER , "w" ) as header_file :
+    gen_header_include_guard_top( header_file )
+    gen_header_includes( header_file )
+    gen_header_consts( header_file , START_ID , END_ID , INVALID_ID )
+    gen_header_struct( header_file )
+    gen_header_callocs( header_file , START_ID , END_ID )
+    gen_header_frees( header_file , START_ID , END_ID )
+    gen_header_struct_array_declaration( header_file )
+    gen_header_init( header_file )
+    gen_header_include_guard_bottom( header_file )
   header_file.close()
 
 #
@@ -74,7 +84,7 @@ def main_gen_header() :
 def gen_body_includes( _bf ) :
   _bf.write("#include \"%s\"\n" % (FILE_NAME_HEADER))
   _bf.write("#include <stdlib.h>\n")
-  _bf.write("\n\n")
+  _bf.write("\n")
 
 def gen_body_callocs( _bf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
@@ -107,6 +117,9 @@ def gen_body_frees( _bf , _start_id , _end_id ) :
     _bf.write("  free( _ptr );\n")
     _bf.write("}\n")
     _bf.write("\n")
+
+def gen_body_struct_array_implementation( _bf ) :
+  _bf.write("struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];\n")
   _bf.write("\n")
 
 def gen_body_init( _bf , _start_id , _end_id ) :
@@ -135,6 +148,7 @@ def main_gen_body() :
   gen_body_includes( body_file )
   gen_body_callocs( body_file , START_ID , END_ID )
   gen_body_frees( body_file , START_ID , END_ID )
+  gen_body_struct_array_implementation( body_file )
   gen_body_init( body_file , START_ID , END_ID )
 
   body_file.close()

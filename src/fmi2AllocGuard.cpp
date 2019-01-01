@@ -2,33 +2,57 @@
 #include <stdlib.h>
 #include <cassert>
 
-static const size_t id = 42;
+#include "GuardedBookkeeping.h"
+#include "PointerKeeper.hpp"
 
-size_t fmi2_guarded_acquire()
+void fmi2_guarded_init()
 {
-  return id;
+  fmi2_guarded_bookkeeping_init();
 }
 
-fmi2_guarded_alloc_t fmi2_guarded_get_alloc( const size_t entry )
+int fmi2_guarded_acquire()
 {
-  if( entry == id ) {
-    return calloc;
-  } else {
-    return NULL;
+  for( int idx = FMI2_FUNC_INDEX_MIN ; idx <= FMI2_FUNC_INDEX_MAX ; ++idx ) {
+    if( fmi2_guarded_bookkeeping[ idx ].pointer_keeper == NULL ) {
+      fmi2_guarded_alloc_free_str& str = fmi2_guarded_bookkeeping[ idx ];
+      str.pointer_keeper = new PointerKeeper();
+      return str.id;
+    }
   }
+  return FMI2_FUNC_INDEX_INVALID;
 }
 
-fmi2_guarded_free_t fmi2_guarded_get_free( const size_t entry )
+fmi2_guarded_alloc_t fmi2_guarded_get_alloc( const int _id )
 {
-  if( entry == id ) {
-    return free;
-  } else {
-    return NULL;
+  if( FMI2_FUNC_INDEX_MIN <= _id && _id <= FMI2_FUNC_INDEX_MAX ) {
+    fmi2_guarded_alloc_free_str& str = fmi2_guarded_bookkeeping[ _id ];
+    if( str.pointer_keeper != NULL ) {
+      return str.calloc_p;
+    }
   }
+  return NULL;
 }
 
-void fmi2_guarded_release( const size_t entry )
+fmi2_guarded_free_t fmi2_guarded_get_free( const int _id )
 {
-  assert( id == entry );
+  if ( FMI2_FUNC_INDEX_MIN <= _id && _id <= FMI2_FUNC_INDEX_MAX ) {
+    fmi2_guarded_alloc_free_str& str = fmi2_guarded_bookkeeping[ _id ];
+    if( str.pointer_keeper != NULL ) {
+      return str.free_p;
+    }
+  }
+  return NULL;
+}
+
+void fmi2_guarded_release( const int _id )
+{
+  if ( FMI2_FUNC_INDEX_MIN <= _id && _id <= FMI2_FUNC_INDEX_MAX ) {
+    fmi2_guarded_alloc_free_str& str = fmi2_guarded_bookkeeping[ _id ];
+    if ( str.pointer_keeper != NULL ) {
+      str.pointer_keeper->flush();
+      delete str.pointer_keeper;
+      str.pointer_keeper = NULL;
+    }
+  }
 }
 

@@ -30,7 +30,7 @@ include_directories("${PROJECT_SOURCE_DIR}/inc")
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion)
+target_compile_options(fmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion -Wpedantic)
 
 # needed because both .c and .cpp code files are present
 #set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
@@ -101,7 +101,7 @@ if ( FMI2AG_TESTS )
   ##set_target_properties( testFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
   ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
 
-  target_compile_options(testFmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion)
+  target_compile_options(testFmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion -Wpedantic)
 
   add_test(NAME Test1 COMMAND testFmi2AllocGuard)
 endif()

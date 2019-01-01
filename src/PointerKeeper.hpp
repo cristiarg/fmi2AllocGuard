@@ -1,3 +1,6 @@
+#ifndef POINTERKEEPER_HPP
+#define POINTERKEEPER_HPP /*1*/
+
 #include <set>
 
 class PointerKeeper
@@ -24,3 +27,5 @@ public:
 private:
   PointerToVoidSet_t pointerToVoiSet;
 };
+
+#endif // POINTERKEEPER_HPP
