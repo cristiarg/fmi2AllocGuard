@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <cassert>
 
-#include "GuardedBookkeeping.h"
+#include "GuardedBookkeeping.hpp"
 #include "PointerKeeper.hpp"
 
 void fmi2_guarded_init()

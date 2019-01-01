@@ -16,21 +16,48 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES ON)
 
 #########################################
+# compiler options
+#########################################
+
+set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
+  #message( STATUS "compiler id = 'GNU'" )
+elseif( CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" )
+  #message( STATUS "compiler id = 'MSVC'" )
+endif()
+
+#########################################
 # library
 #########################################
 
-set(FMI2AG_SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-file(GLOB_RECURSE shared_lib_sources "${FMI2AG_SRC_DIR}/*.c" "${FMI2AG_SRC_DIR}/*.cpp")
+set(FMI2AG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
+set(FMI2AG_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
-add_library(fmi2AllocGuard SHARED ${shared_lib_sources})
+set(FMI2AG_FILES_HEADERS_PUBLIC
+  ${FMI2AG_INCLUDE_DIR}/export.h
+  ${FMI2AG_INCLUDE_DIR}/fmi2Defines.h
+  ${FMI2AG_INCLUDE_DIR}/fmi2AllocGuard.h )
+
+set(FMI2AG_FILES_HEADERS_PRIVATE
+  ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.hpp
+  ${FMI2AG_SOURCE_DIR}/PointerKeeper.hpp )
+
+set(FMI2AG_FILES_CODE
+  ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.cpp
+  ${FMI2AG_SOURCE_DIR}/PointerKeeper.cpp
+  ${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.cpp )
+
+add_library(fmi2AllocGuard SHARED ${FMI2AG_FILES_CODE} ${FMI2AG_FILES_HEADERS_PUBLIC} ${FMI2AG_FILES_HEADERS_PRIVATE} )
 
 # public includes
-include_directories("${PROJECT_SOURCE_DIR}/inc")
+include_directories( ${FMI2AG_INCLUDE_DIR} )
 
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion -Wpedantic)
+target_compile_options(fmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
 # needed because both .c and .cpp code files are present
 #set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
@@ -65,7 +92,7 @@ if ( FMI2AG_TESTS )
 
   set(FMI2AG_FETCH_CATCH
       GIT_REPOSITORY https://github.com/catchorg/Catch2
-      GIT_TAG c32f275a008a50ae058fcd8a43f0c387d90c929b)
+      GIT_TAG c32f275a008a50ae058fcd8a43f0c387d90c929b )
     # fetching Catch1.x branch
 
   include(ExternalProject)
@@ -86,7 +113,6 @@ if ( FMI2AG_TESTS )
   # implementation detail includes
   include_directories("${PROJECT_SOURCE_DIR}/src")
 
-
   set(FMI2AG_TST_DIR "${PROJECT_SOURCE_DIR}/tst")
   file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
 
@@ -101,7 +127,7 @@ if ( FMI2AG_TESTS )
   ##set_target_properties( testFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
   ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
 
-  target_compile_options(testFmi2AllocGuard PUBLIC -std=c++03 -Wall -Wfloat-conversion -Wpedantic)
+  target_compile_options(testFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
   add_test(NAME Test1 COMMAND testFmi2AllocGuard)
 endif()

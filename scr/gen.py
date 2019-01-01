@@ -4,15 +4,46 @@ import sys
 import os
 
 START_ID = 1
-END_ID = 10
+END_ID = 100
 INVALID_ID = -1
 
-FILE_NAME_BASE = "GuardedBookkeeping"
-FILE_EXT_HEADER = "h"
-FILE_EXT_CODE = "cpp"
+FILE_NAME_DEFINES_BASE = "fmi2Defines"
 
-FILE_NAME_HEADER  = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_HEADER )
-FILE_NAME_CODE    = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_CODE )
+FILE_NAME_BASE = "GuardedBookkeeping"
+FILE_EXT_H = "h"
+FILE_EXT_HPP = "hpp"
+FILE_EXT_CPP = "cpp"
+
+FILE_NAME_DEFINES_HEADER = "../inc/{0}.{1}".format( FILE_NAME_DEFINES_BASE , FILE_EXT_H )
+
+FILE_NAME_HEADER  = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_HPP )
+FILE_NAME_CODE    = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_CPP )
+
+#
+# header with constants
+#
+def gen_header_defines_include_guard_top( _hf ) :
+  _hf.write("#ifndef FMI2DEFINES_H\n")
+  _hf.write("#define FMI2DEFINES_H\n")
+  _hf.write("\n")
+
+def gen_header_defines_constants( _hf , _start_id , _end_id , _invalid_id ) :
+  _hf.write("static const int FMI2_FUNC_INDEX_MIN = %d;\n" % (_start_id) )
+  _hf.write("static const int FMI2_FUNC_INDEX_MAX = %d;\n" % (_end_id) )
+  _hf.write("\n")
+  _hf.write("static const int FMI2_FUNC_INDEX_INVALID = %d;\n" % (_invalid_id) )
+  _hf.write("\n")
+
+def gen_header_defines_include_guard_bottom( _hf ) :
+  _hf.write("#endif // FMI2DEFINES_H\n")
+  _hf.write("\n")
+
+def main_gen_defines_header() :
+  with open( FILE_NAME_DEFINES_HEADER , "w" ) as header_file :
+    gen_header_defines_include_guard_top( header_file )
+    gen_header_defines_constants( header_file , START_ID , END_ID , INVALID_ID )
+    gen_header_defines_include_guard_bottom( header_file )
+  header_file.close()
 
 #
 # header functions
@@ -25,13 +56,6 @@ def gen_header_include_guard_top( _hf ) :
 def gen_header_includes( _hf ) :
   _hf.write("#include \"fmi2AllocGuard.h\"\n")
   _hf.write("#include \"PointerKeeper.hpp\"\n")
-  _hf.write("\n")
-
-def gen_header_consts( _hf , _start_id , _end_id , _invalid_id ) :
-  _hf.write("static const int FMI2_FUNC_INDEX_MIN = %d;\n" % (_start_id) )
-  _hf.write("static const int FMI2_FUNC_INDEX_MAX = %d;\n" % (_end_id) )
-  _hf.write("\n")
-  _hf.write("static const int FMI2_FUNC_INDEX_INVALID = %d;\n" % (_invalid_id) )
   _hf.write("\n")
 
 def gen_header_struct( _hf ) :
@@ -69,7 +93,7 @@ def main_gen_header() :
   with open( FILE_NAME_HEADER , "w" ) as header_file :
     gen_header_include_guard_top( header_file )
     gen_header_includes( header_file )
-    gen_header_consts( header_file , START_ID , END_ID , INVALID_ID )
+    #gen_header_consts( header_file , START_ID , END_ID , INVALID_ID )
     gen_header_struct( header_file )
     gen_header_callocs( header_file , START_ID , END_ID )
     gen_header_frees( header_file , START_ID , END_ID )
@@ -157,5 +181,6 @@ def main_gen_body() :
 #
 # main
 #
+main_gen_defines_header()
 main_gen_header()
 main_gen_body()

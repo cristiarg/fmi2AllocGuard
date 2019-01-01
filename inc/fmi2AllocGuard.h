@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include "export.h"
+#include "fmi2Defines.h"
 
 #ifdef __cplusplus
 extern "C" {

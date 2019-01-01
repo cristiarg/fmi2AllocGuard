@@ -3,7 +3,7 @@
 #include <catch.hpp>
 
 #include "fmi2AllocGuard.h"
-#include "../src/GuardedBookkeeping.h"
+#include "../src/GuardedBookkeeping.hpp"
 
 struct TestEntry {
   TestEntry( const int _id )
@@ -32,6 +32,7 @@ struct TestEntry {
     ( *pFree )( p1 );
     ( *pFree )( p2 );
 
+    // make an allloc and leave it to be unallocated upon release
     void* p3 = ( *pAlloc )( 1 , sizeof( double ) );
   }
 
