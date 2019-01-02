@@ -2,7 +2,7 @@
 #define FMI2ALLOCGUARD_H
 
 #include <stddef.h>
-#include "export.h"
+#include "fmi2Export.h"
 #include "fmi2Defines.h"
 
 #ifdef __cplusplus

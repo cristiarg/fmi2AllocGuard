@@ -1,6 +1,5 @@
 #include "fmi2AllocGuard.h"
 #include <stdlib.h>
-#include <cassert>
 
 #include "GuardedBookkeeping.hpp"
 #include "PointerKeeper.hpp"
