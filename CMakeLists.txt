@@ -35,6 +35,8 @@ endif()
 set(FMI2AG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
 set(FMI2AG_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
+#set_source_files_properties(${FMI2AG_SOURCE_DIR}/avl.c PROPERTIES LANGUAGE CXX )
+
 set(FMI2AG_FILES_HEADERS_PUBLIC
   ${FMI2AG_INCLUDE_DIR}/fmi2Export.h
   ${FMI2AG_INCLUDE_DIR}/fmi2Defines.h
@@ -43,11 +45,13 @@ set(FMI2AG_FILES_HEADERS_PUBLIC
 set(FMI2AG_FILES_HEADERS_PRIVATE
   ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.hpp
   ${FMI2AG_SOURCE_DIR}/PointerKeeper.hpp )
+  #${FMI2AG_SOURCE_DIR}/avl.h)
 
 set(FMI2AG_FILES_CODE
   ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.cpp
   ${FMI2AG_SOURCE_DIR}/PointerKeeper.cpp
   ${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.cpp )
+  #${FMI2AG_SOURCE_DIR}/avl.c )
 
 add_library(fmi2AllocGuard SHARED ${FMI2AG_FILES_CODE} ${FMI2AG_FILES_HEADERS_PUBLIC} ${FMI2AG_FILES_HEADERS_PRIVATE} )
 
@@ -114,9 +118,17 @@ if ( FMI2AG_TESTS )
   include_directories("${PROJECT_SOURCE_DIR}/src")
 
   set(FMI2AG_TST_DIR "${PROJECT_SOURCE_DIR}/tst")
-  file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
 
-  add_executable(testFmi2AllocGuard ${unit_test_sources})
+  set ( FMI2AG_TEST_FILES_CODE
+    ${FMI2AG_TST_DIR}/testMain.cpp
+    ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
+    ${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
+    ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp
+    ${FMI2AG_TST_DIR}/test04_PointerKeeper.cpp )
+    #${FMI2AG_TST_DIR}/test11_AVL.cpp )
+  #file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
+
+  add_executable(testFmi2AllocGuard ${FMI2AG_TEST_FILES_CODE})
   target_link_libraries(testFmi2AllocGuard PUBLIC fmi2AllocGuard Catch)
   target_include_directories(testFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
 

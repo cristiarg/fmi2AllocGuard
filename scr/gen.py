@@ -54,9 +54,12 @@ def gen_header_include_guard_top( _hf ) :
   _hf.write("\n")
 
 def gen_header_includes( _hf ) :
-  _hf.write("#include \"fmi2AllocGuard.h\"\n")
-  _hf.write("#include \"PointerKeeper.hpp\"\n")
-  _hf.write("\n")
+  _hf.write(
+"""#include "fmi2Export.h"
+#include "fmi2AllocGuard.h"
+#include "PointerKeeper.hpp"
+
+""")
 
 def gen_header_struct( _hf ) :
   _hf.write("struct fmi2_guarded_alloc_free_str {\n")
@@ -69,12 +72,12 @@ def gen_header_struct( _hf ) :
 
 def gen_header_callocs( _hf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
-    _hf.write("void* fmi2_calloc%d ( size_t _num , size_t _size );\n" % (i) )
+    _hf.write("FMI2ALLOCGUARD_LOCAL void* fmi2_calloc%d ( size_t _num , size_t _size );\n" % (i) )
   _hf.write("\n")
 
 def gen_header_frees( _hf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
-    _hf.write("void fmi2_free%d ( void* _ptr );\n" % (i) )
+    _hf.write("FMI2ALLOCGUARD_LOCAL void fmi2_free%d ( void* _ptr );\n" % (i) )
   _hf.write("\n")
 
 def gen_header_struct_array_declaration( _hf ) :
