@@ -129,7 +129,10 @@ if ( FMI2AG_TESTS )
 
   target_compile_options(testFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
-  add_test(NAME Test1 COMMAND testFmi2AllocGuard)
+  add_test( NAME TestStaticInit         COMMAND testFmi2AllocGuard TestStaticInit )
+  add_test( NAME TestAllocGuard         COMMAND testFmi2AllocGuard TestAllocGuard )
+  add_test( NAME TestGuardedBookkeeping COMMAND testFmi2AllocGuard TestGuardedBookkeeping )
+  add_test( NAME TestPointerKeeper      COMMAND testFmi2AllocGuard TestPointerKeeper )
 endif()
 
 #print_all_variables()

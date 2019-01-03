@@ -2502,15 +2502,22 @@ void fmi2_free100 ( void* _ptr )
   free( _ptr );
 }
 
-struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];
+struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ]
+    = {   0
+        , NULL
+        , NULL
+        , NULL };
 
 void fmi2_guarded_bookkeeping_init()
 {
-  for( int i = 0; i < FMI2_FUNC_INDEX_MIN ; i++ ) {
-    fmi2_guarded_bookkeeping[ i ].id             = -1;
-    fmi2_guarded_bookkeeping[ i ].calloc_p       = NULL;
-    fmi2_guarded_bookkeeping[ i ].free_p         = NULL;
-    fmi2_guarded_bookkeeping[ i ].pointer_keeper = NULL;
+  for( int idx_clean = 0 ; idx_clean <= FMI2_FUNC_INDEX_MAX ; ++idx_clean ) {
+    fmi2_guarded_bookkeeping[ idx_clean ].id        = -1;
+    fmi2_guarded_bookkeeping[ idx_clean ].calloc_p  = NULL;
+    fmi2_guarded_bookkeeping[ idx_clean ].free_p    = NULL;
+    if( fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper != NULL ) {
+      delete fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper;
+      fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper = NULL;
+    }
   }
 
   fmi2_guarded_bookkeeping[ 1 ].id              = 1;

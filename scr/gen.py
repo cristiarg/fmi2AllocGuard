@@ -143,27 +143,44 @@ def gen_body_frees( _bf , _start_id , _end_id ) :
     _bf.write("\n")
 
 def gen_body_struct_array_implementation( _bf ) :
-  _bf.write("struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];\n")
-  _bf.write("\n")
+  _bf.write(
+"""struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ]
+    = {   0
+        , NULL
+        , NULL
+        , NULL };
+
+""")
 
 def gen_body_init( _bf , _start_id , _end_id ) :
-  _bf.write("void fmi2_guarded_bookkeeping_init()\n")
-  _bf.write("{\n")
-  # first, init the idle part
-  _bf.write("  for( int i = 0; i < FMI2_FUNC_INDEX_MIN ; i++ ) {\n")
-  _bf.write("    fmi2_guarded_bookkeeping[ i ].id             = -1;\n")
-  _bf.write("    fmi2_guarded_bookkeeping[ i ].calloc_p       = NULL;\n")
-  _bf.write("    fmi2_guarded_bookkeeping[ i ].free_p         = NULL;\n")
-  _bf.write("    fmi2_guarded_bookkeeping[ i ].pointer_keeper = NULL;\n")
-  _bf.write("  }\n")
+  # first, clean up, possible, double init
+  _bf.write(
+"""void fmi2_guarded_bookkeeping_init()
+{
+  for( int idx_clean = 0 ; idx_clean <= FMI2_FUNC_INDEX_MAX ; ++idx_clean ) {
+    fmi2_guarded_bookkeeping[ idx_clean ].id        = -1;
+    fmi2_guarded_bookkeeping[ idx_clean ].calloc_p  = NULL;
+    fmi2_guarded_bookkeeping[ idx_clean ].free_p    = NULL;
+    if( fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper != NULL ) {
+      delete fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper;
+      fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper = NULL;
+    }
+  }""")
   # secondly, iterate and generate for each indirection
   for i in range( _start_id , _end_id + 1 ) :
-    _bf.write("\n")
-    _bf.write("  fmi2_guarded_bookkeeping[ %d ].id              = %d;\n" % (i, i))
-    _bf.write("  fmi2_guarded_bookkeeping[ %d ].calloc_p        = &fmi2_calloc%d;\n" % (i, i))
-    _bf.write("  fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;\n" % (i, i))
-    _bf.write("  fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;\n" % (i))
-  _bf.write("}\n")
+    _bf.write("""
+
+  fmi2_guarded_bookkeeping[ %d ].id              = %d;
+  fmi2_guarded_bookkeeping[ %d ].calloc_p        = &fmi2_calloc%d;
+  fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;
+  fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;""" % (i , i , i , i , i , i , i) )
+
+    #_bf.write("\n")
+    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].id              = %d;\n" % (i, i))
+    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].calloc_p        = &fmi2_calloc%d;\n" % (i, i))
+    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;\n" % (i, i))
+    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;\n" % (i))
+  _bf.write("\n}\n")
   _bf.write("\n")
 
 def main_gen_body() :

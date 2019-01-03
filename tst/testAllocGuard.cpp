@@ -40,7 +40,7 @@ private:
   const int id;
 };
 
-void testRecursive( int& _count )
+bool testRecursive( int& _count )
 {
   const int id = fmi2_guarded_acquire();
   if ( id != FMI2_FUNC_INDEX_INVALID ) {
@@ -48,17 +48,20 @@ void testRecursive( int& _count )
     TestEntry te( id );
     te.test();
 
-    testRecursive( _count );
+    return testRecursive( _count );
 
   } else {
-    return;
+    return true; // reached invalid
   }
 }
 
-TEST_CASE("Test1")
+TEST_CASE("TestAllocGuard")
 {
+  fmi2_guarded_init();
   fmi2_guarded_init();
 
   int count = 0;
-  testRecursive( count );
+  const bool reachedInvalid = testRecursive( count );
+  REQUIRE( count == ( FMI2_FUNC_INDEX_MAX - FMI2_FUNC_INDEX_MIN + 1 ) );
+  REQUIRE( reachedInvalid );
 }

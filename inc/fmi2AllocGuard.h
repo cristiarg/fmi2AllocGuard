@@ -15,6 +15,7 @@ extern "C" {
   typedef void  ( *fmi2_guarded_free_t  )( void* obj );
 
   // one time call
+  // calling this more than once, will lead to free-ing allocated memory
   //
   void FMI2ALLOCGUARD_API fmi2_guarded_init();
 
