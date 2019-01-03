@@ -1,3 +1,5 @@
+#ifndef FMI2EXPORT_H
+#define FMI2EXPORT_H
 
 // as seen on:
 //    https://gcc.gnu.org/wiki/Visibility
@@ -35,3 +37,6 @@
 #   define FMI2ALLOCGUARD_API
 #   define FMI2ALLOCGUARD_LOCAL
 # endif // FMI2ALLOCGUARD_DLL
+
+#endif
+
