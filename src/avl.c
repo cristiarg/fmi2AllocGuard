@@ -57,7 +57,7 @@ struct avl_node* avl_internal_detach_leftmost(struct avl_node* const _root, stru
     struct avl_node* const saved_rite_child = _root->rite;
     _root->rite = NULL;
     *_detached = _root;
-    return saved_rite_child;
+return saved_rite_child;
   }
 }
 
@@ -134,6 +134,24 @@ bool avl_rem(struct avl_node** const _root, const int _data)
   bool found = false;
   *_root = avl_internal_rem(*_root, _data, &found);
   return found;
+}
+
+bool avl_find(const struct avl_node* const _root, const int _data)
+{
+  // non-recursive
+  const struct avl_node* l_root = _root;
+  while (l_root != NULL) {
+    if (_data < l_root->data) {
+      l_root = l_root->left;
+    }
+    else if (l_root->data < _data) {
+      l_root = l_root->rite;
+    }
+    else if (l_root->data == _data) {
+      return true;
+    }
+  }
+  return false;
 }
 
 bool avl_check(const struct avl_node* const _root)

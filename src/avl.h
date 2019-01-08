@@ -12,8 +12,10 @@ struct avl_node {
   struct avl_node* rite;
 };
 
-bool avl_add(struct avl_node** const _root, const int _data );
-bool avl_rem(struct avl_node** const _root, const int _data );
+bool avl_add(struct avl_node** const _root, const int _data);
+bool avl_rem(struct avl_node** const _root, const int _data);
+
+bool avl_find(const struct avl_node* const _root, const int _data);
 
 bool avl_check(const struct avl_node* const _root);
 
