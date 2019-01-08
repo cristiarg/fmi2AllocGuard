@@ -1402,10 +1402,12 @@ void* fmi2_calloc100 ( size_t _num , size_t _size )
 }
 
 
+
+
 void fmi2_free1 ( void* _ptr )
 {
   static const int func_id = 1;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1416,7 +1418,7 @@ void fmi2_free1 ( void* _ptr )
 void fmi2_free2 ( void* _ptr )
 {
   static const int func_id = 2;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1427,7 +1429,7 @@ void fmi2_free2 ( void* _ptr )
 void fmi2_free3 ( void* _ptr )
 {
   static const int func_id = 3;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1438,7 +1440,7 @@ void fmi2_free3 ( void* _ptr )
 void fmi2_free4 ( void* _ptr )
 {
   static const int func_id = 4;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1449,7 +1451,7 @@ void fmi2_free4 ( void* _ptr )
 void fmi2_free5 ( void* _ptr )
 {
   static const int func_id = 5;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1460,7 +1462,7 @@ void fmi2_free5 ( void* _ptr )
 void fmi2_free6 ( void* _ptr )
 {
   static const int func_id = 6;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1471,7 +1473,7 @@ void fmi2_free6 ( void* _ptr )
 void fmi2_free7 ( void* _ptr )
 {
   static const int func_id = 7;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1482,7 +1484,7 @@ void fmi2_free7 ( void* _ptr )
 void fmi2_free8 ( void* _ptr )
 {
   static const int func_id = 8;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1493,7 +1495,7 @@ void fmi2_free8 ( void* _ptr )
 void fmi2_free9 ( void* _ptr )
 {
   static const int func_id = 9;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1504,7 +1506,7 @@ void fmi2_free9 ( void* _ptr )
 void fmi2_free10 ( void* _ptr )
 {
   static const int func_id = 10;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1515,7 +1517,7 @@ void fmi2_free10 ( void* _ptr )
 void fmi2_free11 ( void* _ptr )
 {
   static const int func_id = 11;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1526,7 +1528,7 @@ void fmi2_free11 ( void* _ptr )
 void fmi2_free12 ( void* _ptr )
 {
   static const int func_id = 12;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1537,7 +1539,7 @@ void fmi2_free12 ( void* _ptr )
 void fmi2_free13 ( void* _ptr )
 {
   static const int func_id = 13;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1548,7 +1550,7 @@ void fmi2_free13 ( void* _ptr )
 void fmi2_free14 ( void* _ptr )
 {
   static const int func_id = 14;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1559,7 +1561,7 @@ void fmi2_free14 ( void* _ptr )
 void fmi2_free15 ( void* _ptr )
 {
   static const int func_id = 15;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1570,7 +1572,7 @@ void fmi2_free15 ( void* _ptr )
 void fmi2_free16 ( void* _ptr )
 {
   static const int func_id = 16;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1581,7 +1583,7 @@ void fmi2_free16 ( void* _ptr )
 void fmi2_free17 ( void* _ptr )
 {
   static const int func_id = 17;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1592,7 +1594,7 @@ void fmi2_free17 ( void* _ptr )
 void fmi2_free18 ( void* _ptr )
 {
   static const int func_id = 18;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1603,7 +1605,7 @@ void fmi2_free18 ( void* _ptr )
 void fmi2_free19 ( void* _ptr )
 {
   static const int func_id = 19;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1614,7 +1616,7 @@ void fmi2_free19 ( void* _ptr )
 void fmi2_free20 ( void* _ptr )
 {
   static const int func_id = 20;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1625,7 +1627,7 @@ void fmi2_free20 ( void* _ptr )
 void fmi2_free21 ( void* _ptr )
 {
   static const int func_id = 21;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1636,7 +1638,7 @@ void fmi2_free21 ( void* _ptr )
 void fmi2_free22 ( void* _ptr )
 {
   static const int func_id = 22;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1647,7 +1649,7 @@ void fmi2_free22 ( void* _ptr )
 void fmi2_free23 ( void* _ptr )
 {
   static const int func_id = 23;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1658,7 +1660,7 @@ void fmi2_free23 ( void* _ptr )
 void fmi2_free24 ( void* _ptr )
 {
   static const int func_id = 24;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1669,7 +1671,7 @@ void fmi2_free24 ( void* _ptr )
 void fmi2_free25 ( void* _ptr )
 {
   static const int func_id = 25;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1680,7 +1682,7 @@ void fmi2_free25 ( void* _ptr )
 void fmi2_free26 ( void* _ptr )
 {
   static const int func_id = 26;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1691,7 +1693,7 @@ void fmi2_free26 ( void* _ptr )
 void fmi2_free27 ( void* _ptr )
 {
   static const int func_id = 27;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1702,7 +1704,7 @@ void fmi2_free27 ( void* _ptr )
 void fmi2_free28 ( void* _ptr )
 {
   static const int func_id = 28;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1713,7 +1715,7 @@ void fmi2_free28 ( void* _ptr )
 void fmi2_free29 ( void* _ptr )
 {
   static const int func_id = 29;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1724,7 +1726,7 @@ void fmi2_free29 ( void* _ptr )
 void fmi2_free30 ( void* _ptr )
 {
   static const int func_id = 30;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1735,7 +1737,7 @@ void fmi2_free30 ( void* _ptr )
 void fmi2_free31 ( void* _ptr )
 {
   static const int func_id = 31;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1746,7 +1748,7 @@ void fmi2_free31 ( void* _ptr )
 void fmi2_free32 ( void* _ptr )
 {
   static const int func_id = 32;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1757,7 +1759,7 @@ void fmi2_free32 ( void* _ptr )
 void fmi2_free33 ( void* _ptr )
 {
   static const int func_id = 33;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1768,7 +1770,7 @@ void fmi2_free33 ( void* _ptr )
 void fmi2_free34 ( void* _ptr )
 {
   static const int func_id = 34;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1779,7 +1781,7 @@ void fmi2_free34 ( void* _ptr )
 void fmi2_free35 ( void* _ptr )
 {
   static const int func_id = 35;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1790,7 +1792,7 @@ void fmi2_free35 ( void* _ptr )
 void fmi2_free36 ( void* _ptr )
 {
   static const int func_id = 36;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1801,7 +1803,7 @@ void fmi2_free36 ( void* _ptr )
 void fmi2_free37 ( void* _ptr )
 {
   static const int func_id = 37;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1812,7 +1814,7 @@ void fmi2_free37 ( void* _ptr )
 void fmi2_free38 ( void* _ptr )
 {
   static const int func_id = 38;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1823,7 +1825,7 @@ void fmi2_free38 ( void* _ptr )
 void fmi2_free39 ( void* _ptr )
 {
   static const int func_id = 39;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1834,7 +1836,7 @@ void fmi2_free39 ( void* _ptr )
 void fmi2_free40 ( void* _ptr )
 {
   static const int func_id = 40;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1845,7 +1847,7 @@ void fmi2_free40 ( void* _ptr )
 void fmi2_free41 ( void* _ptr )
 {
   static const int func_id = 41;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1856,7 +1858,7 @@ void fmi2_free41 ( void* _ptr )
 void fmi2_free42 ( void* _ptr )
 {
   static const int func_id = 42;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1867,7 +1869,7 @@ void fmi2_free42 ( void* _ptr )
 void fmi2_free43 ( void* _ptr )
 {
   static const int func_id = 43;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1878,7 +1880,7 @@ void fmi2_free43 ( void* _ptr )
 void fmi2_free44 ( void* _ptr )
 {
   static const int func_id = 44;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1889,7 +1891,7 @@ void fmi2_free44 ( void* _ptr )
 void fmi2_free45 ( void* _ptr )
 {
   static const int func_id = 45;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1900,7 +1902,7 @@ void fmi2_free45 ( void* _ptr )
 void fmi2_free46 ( void* _ptr )
 {
   static const int func_id = 46;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1911,7 +1913,7 @@ void fmi2_free46 ( void* _ptr )
 void fmi2_free47 ( void* _ptr )
 {
   static const int func_id = 47;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1922,7 +1924,7 @@ void fmi2_free47 ( void* _ptr )
 void fmi2_free48 ( void* _ptr )
 {
   static const int func_id = 48;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1933,7 +1935,7 @@ void fmi2_free48 ( void* _ptr )
 void fmi2_free49 ( void* _ptr )
 {
   static const int func_id = 49;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1944,7 +1946,7 @@ void fmi2_free49 ( void* _ptr )
 void fmi2_free50 ( void* _ptr )
 {
   static const int func_id = 50;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1955,7 +1957,7 @@ void fmi2_free50 ( void* _ptr )
 void fmi2_free51 ( void* _ptr )
 {
   static const int func_id = 51;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1966,7 +1968,7 @@ void fmi2_free51 ( void* _ptr )
 void fmi2_free52 ( void* _ptr )
 {
   static const int func_id = 52;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1977,7 +1979,7 @@ void fmi2_free52 ( void* _ptr )
 void fmi2_free53 ( void* _ptr )
 {
   static const int func_id = 53;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1988,7 +1990,7 @@ void fmi2_free53 ( void* _ptr )
 void fmi2_free54 ( void* _ptr )
 {
   static const int func_id = 54;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -1999,7 +2001,7 @@ void fmi2_free54 ( void* _ptr )
 void fmi2_free55 ( void* _ptr )
 {
   static const int func_id = 55;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2010,7 +2012,7 @@ void fmi2_free55 ( void* _ptr )
 void fmi2_free56 ( void* _ptr )
 {
   static const int func_id = 56;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2021,7 +2023,7 @@ void fmi2_free56 ( void* _ptr )
 void fmi2_free57 ( void* _ptr )
 {
   static const int func_id = 57;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2032,7 +2034,7 @@ void fmi2_free57 ( void* _ptr )
 void fmi2_free58 ( void* _ptr )
 {
   static const int func_id = 58;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2043,7 +2045,7 @@ void fmi2_free58 ( void* _ptr )
 void fmi2_free59 ( void* _ptr )
 {
   static const int func_id = 59;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2054,7 +2056,7 @@ void fmi2_free59 ( void* _ptr )
 void fmi2_free60 ( void* _ptr )
 {
   static const int func_id = 60;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2065,7 +2067,7 @@ void fmi2_free60 ( void* _ptr )
 void fmi2_free61 ( void* _ptr )
 {
   static const int func_id = 61;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2076,7 +2078,7 @@ void fmi2_free61 ( void* _ptr )
 void fmi2_free62 ( void* _ptr )
 {
   static const int func_id = 62;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2087,7 +2089,7 @@ void fmi2_free62 ( void* _ptr )
 void fmi2_free63 ( void* _ptr )
 {
   static const int func_id = 63;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2098,7 +2100,7 @@ void fmi2_free63 ( void* _ptr )
 void fmi2_free64 ( void* _ptr )
 {
   static const int func_id = 64;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2109,7 +2111,7 @@ void fmi2_free64 ( void* _ptr )
 void fmi2_free65 ( void* _ptr )
 {
   static const int func_id = 65;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2120,7 +2122,7 @@ void fmi2_free65 ( void* _ptr )
 void fmi2_free66 ( void* _ptr )
 {
   static const int func_id = 66;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2131,7 +2133,7 @@ void fmi2_free66 ( void* _ptr )
 void fmi2_free67 ( void* _ptr )
 {
   static const int func_id = 67;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2142,7 +2144,7 @@ void fmi2_free67 ( void* _ptr )
 void fmi2_free68 ( void* _ptr )
 {
   static const int func_id = 68;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2153,7 +2155,7 @@ void fmi2_free68 ( void* _ptr )
 void fmi2_free69 ( void* _ptr )
 {
   static const int func_id = 69;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2164,7 +2166,7 @@ void fmi2_free69 ( void* _ptr )
 void fmi2_free70 ( void* _ptr )
 {
   static const int func_id = 70;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2175,7 +2177,7 @@ void fmi2_free70 ( void* _ptr )
 void fmi2_free71 ( void* _ptr )
 {
   static const int func_id = 71;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2186,7 +2188,7 @@ void fmi2_free71 ( void* _ptr )
 void fmi2_free72 ( void* _ptr )
 {
   static const int func_id = 72;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2197,7 +2199,7 @@ void fmi2_free72 ( void* _ptr )
 void fmi2_free73 ( void* _ptr )
 {
   static const int func_id = 73;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2208,7 +2210,7 @@ void fmi2_free73 ( void* _ptr )
 void fmi2_free74 ( void* _ptr )
 {
   static const int func_id = 74;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2219,7 +2221,7 @@ void fmi2_free74 ( void* _ptr )
 void fmi2_free75 ( void* _ptr )
 {
   static const int func_id = 75;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2230,7 +2232,7 @@ void fmi2_free75 ( void* _ptr )
 void fmi2_free76 ( void* _ptr )
 {
   static const int func_id = 76;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2241,7 +2243,7 @@ void fmi2_free76 ( void* _ptr )
 void fmi2_free77 ( void* _ptr )
 {
   static const int func_id = 77;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2252,7 +2254,7 @@ void fmi2_free77 ( void* _ptr )
 void fmi2_free78 ( void* _ptr )
 {
   static const int func_id = 78;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2263,7 +2265,7 @@ void fmi2_free78 ( void* _ptr )
 void fmi2_free79 ( void* _ptr )
 {
   static const int func_id = 79;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2274,7 +2276,7 @@ void fmi2_free79 ( void* _ptr )
 void fmi2_free80 ( void* _ptr )
 {
   static const int func_id = 80;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2285,7 +2287,7 @@ void fmi2_free80 ( void* _ptr )
 void fmi2_free81 ( void* _ptr )
 {
   static const int func_id = 81;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2296,7 +2298,7 @@ void fmi2_free81 ( void* _ptr )
 void fmi2_free82 ( void* _ptr )
 {
   static const int func_id = 82;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2307,7 +2309,7 @@ void fmi2_free82 ( void* _ptr )
 void fmi2_free83 ( void* _ptr )
 {
   static const int func_id = 83;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2318,7 +2320,7 @@ void fmi2_free83 ( void* _ptr )
 void fmi2_free84 ( void* _ptr )
 {
   static const int func_id = 84;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2329,7 +2331,7 @@ void fmi2_free84 ( void* _ptr )
 void fmi2_free85 ( void* _ptr )
 {
   static const int func_id = 85;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2340,7 +2342,7 @@ void fmi2_free85 ( void* _ptr )
 void fmi2_free86 ( void* _ptr )
 {
   static const int func_id = 86;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2351,7 +2353,7 @@ void fmi2_free86 ( void* _ptr )
 void fmi2_free87 ( void* _ptr )
 {
   static const int func_id = 87;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2362,7 +2364,7 @@ void fmi2_free87 ( void* _ptr )
 void fmi2_free88 ( void* _ptr )
 {
   static const int func_id = 88;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2373,7 +2375,7 @@ void fmi2_free88 ( void* _ptr )
 void fmi2_free89 ( void* _ptr )
 {
   static const int func_id = 89;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2384,7 +2386,7 @@ void fmi2_free89 ( void* _ptr )
 void fmi2_free90 ( void* _ptr )
 {
   static const int func_id = 90;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2395,7 +2397,7 @@ void fmi2_free90 ( void* _ptr )
 void fmi2_free91 ( void* _ptr )
 {
   static const int func_id = 91;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2406,7 +2408,7 @@ void fmi2_free91 ( void* _ptr )
 void fmi2_free92 ( void* _ptr )
 {
   static const int func_id = 92;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2417,7 +2419,7 @@ void fmi2_free92 ( void* _ptr )
 void fmi2_free93 ( void* _ptr )
 {
   static const int func_id = 93;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2428,7 +2430,7 @@ void fmi2_free93 ( void* _ptr )
 void fmi2_free94 ( void* _ptr )
 {
   static const int func_id = 94;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2439,7 +2441,7 @@ void fmi2_free94 ( void* _ptr )
 void fmi2_free95 ( void* _ptr )
 {
   static const int func_id = 95;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2450,7 +2452,7 @@ void fmi2_free95 ( void* _ptr )
 void fmi2_free96 ( void* _ptr )
 {
   static const int func_id = 96;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2461,7 +2463,7 @@ void fmi2_free96 ( void* _ptr )
 void fmi2_free97 ( void* _ptr )
 {
   static const int func_id = 97;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2472,7 +2474,7 @@ void fmi2_free97 ( void* _ptr )
 void fmi2_free98 ( void* _ptr )
 {
   static const int func_id = 98;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2483,7 +2485,7 @@ void fmi2_free98 ( void* _ptr )
 void fmi2_free99 ( void* _ptr )
 {
   static const int func_id = 99;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
@@ -2494,15 +2496,13 @@ void fmi2_free99 ( void* _ptr )
 void fmi2_free100 ( void* _ptr )
 {
   static const int func_id = 100;
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool rem_res = pk->rem( _ptr );
   if( !rem_res ) {
     //TODO: assert? error?
   }
   free( _ptr );
-}
-
-struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ]
+}struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ]
     = {   0
         , NULL
         , NULL

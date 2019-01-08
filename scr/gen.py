@@ -3,6 +3,11 @@
 import sys
 import os
 
+"""
+A script to generate the boilerplate calloc/free indirections
+that also handle bookkeeping.
+"""
+
 START_ID = 1
 END_ID = 100
 INVALID_ID = -1
@@ -23,9 +28,11 @@ FILE_NAME_CODE    = "../src/{0}.{1}".format( FILE_NAME_BASE , FILE_EXT_CPP )
 # header with constants
 #
 def gen_header_defines_include_guard_top( _hf ) :
-  _hf.write("#ifndef FMI2DEFINES_H\n")
-  _hf.write("#define FMI2DEFINES_H\n")
-  _hf.write("\n")
+  _hf.write(
+"""#ifndef FMI2DEFINES_H
+#define FMI2DEFINES_H
+
+""")
 
 def gen_header_defines_constants( _hf , _start_id , _end_id , _invalid_id ) :
   _hf.write("static const int FMI2_FUNC_INDEX_MIN = %d;\n" % (_start_id) )
@@ -49,26 +56,29 @@ def main_gen_defines_header() :
 # header functions
 #
 def gen_header_include_guard_top( _hf ) :
-  _hf.write("#ifndef FMI2GUARDEDBOOKKEEPING_H\n")
-  _hf.write("#define FMI2GUARDEDBOOKKEEPING_H\n")
-  _hf.write("\n")
+  _hf.write(
+"""#ifndef FMI2GUARDEDBOOKKEEPING_H
+#define FMI2GUARDEDBOOKKEEPING_H""")
 
 def gen_header_includes( _hf ) :
   _hf.write(
-"""#include "fmi2Export.h"
-#include "fmi2AllocGuard.h"
-#include "PointerKeeper.hpp"
+"""
 
-""")
+#include "fmi2Export.h"
+#include "fmi2AllocGuard.h"
+#include "PointerKeeper.hpp" """)
 
 def gen_header_struct( _hf ) :
-  _hf.write("struct fmi2_guarded_alloc_free_str {\n")
-  _hf.write("  int                  id;\n")
-  _hf.write("  fmi2_guarded_alloc_t calloc_p;\n")
-  _hf.write("  fmi2_guarded_free_t  free_p;\n")
-  _hf.write("  PointerKeeper*       pointer_keeper;\n")
-  _hf.write("};\n")
-  _hf.write("\n")
+  _hf.write("""
+
+struct fmi2_guarded_alloc_free_str {
+  int                  id;
+  fmi2_guarded_alloc_t calloc_p;
+  fmi2_guarded_free_t  free_p;
+  PointerKeeper*       pointer_keeper;
+};
+
+""")
 
 def gen_header_callocs( _hf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
@@ -133,17 +143,19 @@ def gen_body_callocs( _bf , _start_id , _end_id ) :
 
 def gen_body_frees( _bf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
-    _bf.write("void fmi2_free%d ( void* _ptr )\n" % (i) )
-    _bf.write("{\n")
-    _bf.write("  static const int func_id = %d;\n" % (i))
-    _bf.write("  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;\n")
-    _bf.write("  const bool rem_res = pk->rem( _ptr );\n")
-    _bf.write("  if( !rem_res ) {\n")
-    _bf.write("    //TODO: assert? error?\n")
-    _bf.write("  }\n")
-    _bf.write("  free( _ptr );\n")
-    _bf.write("}\n")
-    _bf.write("\n")
+    _bf.write(
+"""
+
+void fmi2_free%d ( void* _ptr )
+{
+  static const int func_id = %d;
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  const bool rem_res = pk->rem( _ptr );
+  if( !rem_res ) {
+    //TODO: assert? error?
+  }
+  free( _ptr );
+}""" % (i, i))
 
 def gen_body_struct_array_implementation( _bf ) :
   _bf.write(

@@ -19,14 +19,18 @@ Rather that trying to describe what it is, I'll describe what it can be used for
 It is not a calloc/free implementation. So it will use whatever memory allocator happens to be present.
 
 ### Details ###
-Due to the nature of FMI-standard, the author is aware that advanced features of the c++ language would not always be readily available at the usage location.
-Therefore, the default implementation, albeit C++ in nature, does not use any of the modern
+Due to the nature of FMI-standard and various environments where it is used, the author is aware that
+advanced features of the c++ language would not always be readily available.
+Therefore, the default implementation, albeit C++ in nature, does not use any of the modern C++ features.
 
-### TODOs ###
+### TODOs - public ###
 * implement specific distinct versions:
   * C++03 (the default)
   * C-only
   * C++latest 
+
+### TODOs - internal/implementation ###
+* add unit test with dlopen/dlclose
 
 ### License
 Whatever you want it to be.
