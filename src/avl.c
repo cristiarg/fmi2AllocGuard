@@ -5,44 +5,66 @@
 // internals
 //
 
+struct avl_node* avl_internal_new_node(const int _data)
+{
+  struct avl_node* new_node = (struct avl_node*)calloc(1, sizeof(struct avl_node));
+  new_node->data = _data;
+  return new_node;
+}
+
 bool avl_internal_add(struct avl_node** _node, const int _data)
 {
   if (*_node == NULL) {
-    *_node = (struct avl_node*)calloc(1, sizeof(struct avl_node));
-    (*_node)->data = _data;
+    *_node = avl_internal_new_node(_data);
+    // pare remains null
     return true;
   }
   else {
-    if ((*_node)->data < _data) {
-      return avl_internal_add(&(*_node)->rite, _data);
-    }
-    else {
-      if (_data < (*_node)->data) {
+    if (_data < (*_node)->data) {
+      if ((*_node)->left != NULL) {
         return avl_internal_add(&(*_node)->left, _data);
       }
       else {
-        return false;
+        struct avl_node* new_node = avl_internal_new_node(_data);
+        new_node->pare = *_node;
+        (*_node)->left = new_node;
+        return true;
       }
+    }
+    else if ((*_node)->data < _data) {
+      if ((*_node)->rite != NULL) {
+        return avl_internal_add(&(*_node)->rite, _data);
+      }
+      else {
+        struct avl_node* new_node = avl_internal_new_node(_data);
+        new_node->pare = *_node;
+        (*_node)->rite = new_node;
+        return true;
+      }
+    }
+    else {
+      // data already in tree; cannot add
+      return false;
     }
   }
 }
 
 // detach the ritemost node in a subtree supplied initially
-struct avl_node* avl_internal_detach_ritemost(struct avl_node* const _root, struct avl_node** const _detached)
-{
-  if (_root->rite != NULL) {
-    _root->rite = avl_internal_detach_ritemost(_root->rite, _detached);
-    return _root;
-  }
-  else {
-    // _root->rite is NULL
-    // _root is to be detached
-    struct avl_node* const saved_left_child = _root->left;
-    _root->left = NULL;
-    *_detached = _root;
-    return saved_left_child;
-  }
-}
+//struct avl_node* avl_internal_detach_ritemost(struct avl_node* const _root, struct avl_node** const _detached)
+//{
+//  if (_root->rite != NULL) {
+//    _root->rite = avl_internal_detach_ritemost(_root->rite, _detached);
+//    return _root;
+//  }
+//  else {
+//    // _root->rite is NULL
+//    // _root is to be detached
+//    struct avl_node* const saved_left_child = _root->left;
+//    _root->left = NULL;
+//    *_detached = _root;
+//    return saved_left_child;
+//  }
+//}
 
 // detach the leftmost node in a subtree supplied initially
 struct avl_node* avl_internal_detach_leftmost(struct avl_node* const _root, struct avl_node** const _detached)
@@ -56,8 +78,12 @@ struct avl_node* avl_internal_detach_leftmost(struct avl_node* const _root, stru
     // _root is to be detached
     struct avl_node* const saved_rite_child = _root->rite;
     _root->rite = NULL;
+    if (saved_rite_child != NULL) {
+      saved_rite_child->pare = _root->pare;
+    }
+    _root->pare = NULL;
     *_detached = _root;
-return saved_rite_child;
+    return saved_rite_child;
   }
 }
 
@@ -89,6 +115,8 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           // replace node with left subtree
           struct avl_node* const left_subtree = _node->left;
           _node->left = NULL;
+          left_subtree->pare = _node->pare;
+          _node->pare = NULL;
           free(_node);
           *_found = true;
           return left_subtree;
@@ -97,6 +125,8 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           // replace node with rite subtree
           struct avl_node* const rite_subtree = _node->rite;
           _node->rite = NULL;
+          rite_subtree->pare = _node->pare;
+          _node->pare = NULL;
           free(_node);
           *_found = true;
           return rite_subtree;
@@ -106,10 +136,22 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           // TODO: just choose whichever is deepest
           struct avl_node* detached_leftmost_of_rite_subtree = NULL;
           struct avl_node* const remaining_rite_subtree = avl_internal_detach_leftmost(_node->rite, &detached_leftmost_of_rite_subtree);
+
           detached_leftmost_of_rite_subtree->left = _node->left;
+          if (detached_leftmost_of_rite_subtree->left != NULL) {
+            detached_leftmost_of_rite_subtree->left->pare = detached_leftmost_of_rite_subtree;
+          }
           _node->left = NULL;
+
           detached_leftmost_of_rite_subtree->rite = remaining_rite_subtree;
+          if (detached_leftmost_of_rite_subtree->rite != NULL) {
+            detached_leftmost_of_rite_subtree->rite->pare = detached_leftmost_of_rite_subtree;
+          }
           _node->rite = NULL;
+
+          detached_leftmost_of_rite_subtree->pare = _node->pare;
+          _node->pare = NULL;
+
           free(_node);
           *_found = true;
           return detached_leftmost_of_rite_subtree;

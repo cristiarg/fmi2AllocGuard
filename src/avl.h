@@ -8,8 +8,11 @@ struct avl_node;
 
 struct avl_node {
   int data;
+
   struct avl_node* left;
   struct avl_node* rite;
+
+  struct avl_node* pare;
 };
 
 bool avl_add(struct avl_node** const _root, const int _data);
