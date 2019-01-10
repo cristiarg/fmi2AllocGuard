@@ -126,25 +126,24 @@ def main_gen_header() :
 def gen_body_includes( _bf ) :
   _bf.write("#include \"%s\"\n" % (FILE_NAME_HEADER))
   _bf.write("#include <stdlib.h>\n")
-  _bf.write("\n")
 
 def gen_body_callocs( _bf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
-    _bf.write("void* fmi2_calloc%d ( size_t _num , size_t _size )\n" % (i) )
-    _bf.write("{\n")
-    _bf.write("  static const int func_id = %d;\n" % (i))
-    _bf.write("  void* const p = calloc( _num , _size );\n")
-    _bf.write("  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;\n")
-    _bf.write("  const bool add_res = pk->add( p );\n")
-    _bf.write("  if( add_res ) {\n")
-    _bf.write("    return p;\n")
-    _bf.write("  } else {\n")
-    _bf.write("    free( p );\n")
-    _bf.write("    return NULL;\n")
-    _bf.write("  }\n")
-    _bf.write("}\n")
-    _bf.write("\n")
-  _bf.write("\n")
+    _bf.write("""
+
+void* fmi2_calloc%d ( size_t _num , size_t _size )
+{
+  static const int func_id = %d;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  const bool add_res = pk->add( p );
+  if( add_res ) {
+    return p;
+  } else {
+    free( p );
+    return NULL;
+  }
+}""" % (i, i) )
 
 def gen_body_frees( _bf , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
@@ -195,13 +194,10 @@ def gen_body_init( _bf , _start_id , _end_id ) :
   fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;
   fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;""" % (i , i , i , i , i , i , i) )
 
-    #_bf.write("\n")
-    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].id              = %d;\n" % (i, i))
-    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].calloc_p        = &fmi2_calloc%d;\n" % (i, i))
-    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;\n" % (i, i))
-    #_bf.write("  fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;\n" % (i))
-  _bf.write("\n}\n")
-  _bf.write("\n")
+  _bf.write("""
+}
+
+""")
 
 def main_gen_body() :
   body_file = open( FILE_NAME_CODE , "w" )
@@ -214,10 +210,10 @@ def main_gen_body() :
 
   body_file.close()
 
-
 #
 # main
 #
 main_gen_defines_header()
 main_gen_header()
 main_gen_body()
+

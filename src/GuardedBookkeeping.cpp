@@ -1,6 +1,7 @@
 #include "../src/GuardedBookkeeping.hpp"
 #include <stdlib.h>
 
+
 void* fmi2_calloc1 ( size_t _num , size_t _size )
 {
   static const int func_id = 1;
@@ -1400,9 +1401,6 @@ void* fmi2_calloc100 ( size_t _num , size_t _size )
     return NULL;
   }
 }
-
-
-
 
 void fmi2_free1 ( void* _ptr )
 {
