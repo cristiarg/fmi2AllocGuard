@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "GuardedBookkeeping.hpp"
+#include "../src/GuardedBookkeeping.hpp"
 
 TEST_CASE("TestGuardedBookkeeping")
 {

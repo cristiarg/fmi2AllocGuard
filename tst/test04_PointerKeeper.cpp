@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "PointerKeeper.hpp"
+#include "../src/PointerKeeper.hpp"
 
 TEST_CASE("TestPointerKeeper")
 {

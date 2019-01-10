@@ -4,6 +4,13 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#ifdef FMI2AG_COMPILE_FOR_UNITTEST
+# ifdef __cplusplus
+extern "C" {
+# endif
+#endif
+  // needed
+
 struct avl_node;
 
 struct avl_node {
@@ -23,5 +30,11 @@ bool avl_find(const struct avl_node* const _root, const int _data);
 bool avl_check(const struct avl_node* const _root);
 
 int avl_size(const struct avl_node* const _root);
+
+#ifdef FMI2AG_COMPILE_FOR_UNITTEST
+# ifdef __cplusplus
+} // extern "C"
+# endif
+#endif
 
 #endif

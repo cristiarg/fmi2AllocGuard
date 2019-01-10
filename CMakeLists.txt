@@ -90,61 +90,114 @@ add_definitions( -DCMAKE_BUILD_TYPE=Debug )
 # unit testing
 #########################################
 
-option(FMI2AG_TESTS "Build tests for fmi2AllocGuard. Default: ON" ON)
-if ( FMI2AG_TESTS )
-  enable_testing()
+option(FMI2AG_TEST "Build tests for fmi2AllocGuard. Default: ON" ON)
 
-  set(FMI2AG_FETCH_CATCH
-      GIT_REPOSITORY https://github.com/catchorg/Catch2
-      GIT_TAG c32f275a008a50ae058fcd8a43f0c387d90c929b )
-    # fetching Catch1.x branch
+if ( FMI2AG_TEST )
+  set(FMI2AG_TEST_CATCH ON)
+  set(FMI2AG_TEST_MINUNIT ON)
+endif()
+
+if ( FMI2AG_TEST )
+  enable_testing()
 
   include(ExternalProject)
 
-  ExternalProject_Add(
-      Catch-External
-      PREFIX ${CMAKE_BINARY_DIR}/external/Catch1.x
-      ${FMI2AG_FETCH_CATCH}
-      CONFIGURE_COMMAND ""
-      BUILD_COMMAND ""
-      INSTALL_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/external/Catch1.x/src/Catch-External/single_include/catch.hpp
-                                               ${CMAKE_BINARY_DIR}/external/Catch/include/catch.hpp
-    )
-  add_library(Catch INTERFACE)
-  add_dependencies(Catch Catch-External)
-  target_include_directories(Catch INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
-
-  # implementation detail includes
-  include_directories("${PROJECT_SOURCE_DIR}/src")
-
+  # the location of the test sources
   set(FMI2AG_TST_DIR "${PROJECT_SOURCE_DIR}/tst")
 
-  set ( FMI2AG_TEST_FILES_CODE
-    ${FMI2AG_TST_DIR}/testMain.cpp
-    ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
-    ${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
-    ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp
-    ${FMI2AG_TST_DIR}/test04_PointerKeeper.cpp )
-    #${FMI2AG_TST_DIR}/test11_AVL.cpp )
-  #file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
+  if ( FMI2AG_TEST_CATCH )
+    set(FMI2AG_FETCH_CATCH
+        GIT_REPOSITORY https://github.com/catchorg/Catch2
+        GIT_TAG c32f275a008a50ae058fcd8a43f0c387d90c929b )
+      # fetching Catch1.x branch
 
-  add_executable(testFmi2AllocGuard ${FMI2AG_TEST_FILES_CODE})
-  target_link_libraries(testFmi2AllocGuard PUBLIC fmi2AllocGuard Catch)
-  target_include_directories(testFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
+    ExternalProject_Add(
+        Catch-External
+        PREFIX ${CMAKE_BINARY_DIR}/external/Catch1.x
+        ${FMI2AG_FETCH_CATCH}
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/external/Catch1.x/src/Catch-External/single_include/catch.hpp
+                                                 ${CMAKE_BINARY_DIR}/external/Catch/include/catch.hpp
+      )
+    add_library(Catch INTERFACE)
+    add_dependencies(Catch Catch-External)
+    target_include_directories(Catch INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
 
-  ##add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Catch2)
-  ##find_package(Catch2 REQUIRED)
+    # test code must be able to access implementation detail headers
+    # .. or it can use relative paths
+    #include_directories("${PROJECT_SOURCE_DIR}/src")
 
-  ## needed because both .c and .cpp code files are present
-  ##set_target_properties( testFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
-  ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
+    set ( FMI2AG_TEST_FILES_CATCH
+      ${FMI2AG_TST_DIR}/testMain.cpp
+      ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
+      ${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
+      ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp
+      ${FMI2AG_TST_DIR}/test04_PointerKeeper.cpp )
+      #${FMI2AG_TST_DIR}/test11_AVL.cpp )
+    #file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
 
-  target_compile_options(testFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    add_executable(testCatchFmi2AllocGuard ${FMI2AG_TEST_FILES_CATCH})
+    target_link_libraries(testCatchFmi2AllocGuard PUBLIC Catch)
+    target_link_libraries(testCatchFmi2AllocGuard PUBLIC fmi2AllocGuard)
+    target_include_directories(testCatchFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
 
-  add_test( NAME TestStaticInit         COMMAND testFmi2AllocGuard TestStaticInit )
-  add_test( NAME TestAllocGuard         COMMAND testFmi2AllocGuard TestAllocGuard )
-  add_test( NAME TestGuardedBookkeeping COMMAND testFmi2AllocGuard TestGuardedBookkeeping )
-  add_test( NAME TestPointerKeeper      COMMAND testFmi2AllocGuard TestPointerKeeper )
+    ##add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Catch2)
+    ##find_package(Catch2 REQUIRED)
+
+    ## needed because both .c and .cpp code files are present
+    ##set_target_properties( testCatchFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+    ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
+
+    target_compile_options(testCatchFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+
+    add_test( NAME TestStaticInit         COMMAND testCatchFmi2AllocGuard TestStaticInit )
+    add_test( NAME TestAllocGuard         COMMAND testCatchFmi2AllocGuard TestAllocGuard )
+    add_test( NAME TestGuardedBookkeeping COMMAND testCatchFmi2AllocGuard TestGuardedBookkeeping )
+    add_test( NAME TestPointerKeeper      COMMAND testCatchFmi2AllocGuard TestPointerKeeper )
+  endif()
+
+  if ( FMI2AG_TEST_MINUNIT )
+    enable_language( C )
+      # enable the C compiler for the following project
+      # not sure whether this option is restricted to this scope or
+      # whether it propagates further on as well
+    
+    set(FMI2AG_FETCH_MINUNIT
+        GIT_REPOSITORY https://github.com/siu/minunit.git
+        GIT_TAG 8af0cf5b675dc0a070475659a54ec044f1a6b4d0 )
+
+    ExternalProject_Add(
+        MinUnit-External
+        PREFIX ${CMAKE_BINARY_DIR}/external/MinUnit
+        ${FMI2AG_FETCH_MINUNIT}
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/external/MinUnit/src/MinUnit-External/minunit.h
+                                                 ${CMAKE_BINARY_DIR}/external/MinUnit/include/minunit.h
+      )
+    add_library(MinUnit INTERFACE)
+    add_dependencies(MinUnit MinUnit-External)
+    target_include_directories(MinUnit INTERFACE ${CMAKE_BINARY_DIR}/external/MinUnit/include)
+
+    set_source_files_properties("${FMI2AG_TST_DIR}/test11_avl.c" PROPERTIES LANGUAGE C )
+
+    set ( FMI2AG_TEST_FILES_MINUNIT
+      ${FMI2AG_TST_DIR}/test11_avl.c)
+    #add_compile_definitions(FMI2AG_COMPILE_FOR_UNITTEST)
+    add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
+
+    add_executable(testMinUnitFmi2AllocGuard ${FMI2AG_TEST_FILES_MINUNIT})
+    target_link_libraries(testMinUnitFmi2AllocGuard PRIVATE MinUnit)
+    target_link_libraries(testMinUnitFmi2AllocGuard PUBLIC fmi2AllocGuard)
+    target_include_directories(testMinUnitFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
+
+    target_compile_options(testMinUnitFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+
+    set_target_properties( testMinUnitFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+
+    add_test( NAME TestAVL         COMMAND testMinUnitFmi2AllocGuard )
+  endif()
 endif()
 
 #print_all_variables()
