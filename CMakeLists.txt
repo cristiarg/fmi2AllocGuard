@@ -184,8 +184,8 @@ if ( FMI2AG_TEST )
 
     set ( FMI2AG_TEST_FILES_MINUNIT
       ${FMI2AG_TST_DIR}/test11_avl.c)
-    #add_compile_definitions(FMI2AG_COMPILE_FOR_UNITTEST)
     add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
+      # needed to allow 'extern "C"' definition for unit testing
 
     add_executable(testMinUnitFmi2AllocGuard ${FMI2AG_TEST_FILES_MINUNIT})
     target_link_libraries(testMinUnitFmi2AllocGuard PRIVATE MinUnit)

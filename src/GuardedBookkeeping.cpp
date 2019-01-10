@@ -4,8 +4,8 @@
 void* fmi2_calloc1 ( size_t _num , size_t _size )
 {
   static const int func_id = 1;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -18,8 +18,8 @@ void* fmi2_calloc1 ( size_t _num , size_t _size )
 void* fmi2_calloc2 ( size_t _num , size_t _size )
 {
   static const int func_id = 2;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -32,8 +32,8 @@ void* fmi2_calloc2 ( size_t _num , size_t _size )
 void* fmi2_calloc3 ( size_t _num , size_t _size )
 {
   static const int func_id = 3;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -46,8 +46,8 @@ void* fmi2_calloc3 ( size_t _num , size_t _size )
 void* fmi2_calloc4 ( size_t _num , size_t _size )
 {
   static const int func_id = 4;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -60,8 +60,8 @@ void* fmi2_calloc4 ( size_t _num , size_t _size )
 void* fmi2_calloc5 ( size_t _num , size_t _size )
 {
   static const int func_id = 5;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -74,8 +74,8 @@ void* fmi2_calloc5 ( size_t _num , size_t _size )
 void* fmi2_calloc6 ( size_t _num , size_t _size )
 {
   static const int func_id = 6;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -88,8 +88,8 @@ void* fmi2_calloc6 ( size_t _num , size_t _size )
 void* fmi2_calloc7 ( size_t _num , size_t _size )
 {
   static const int func_id = 7;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -102,8 +102,8 @@ void* fmi2_calloc7 ( size_t _num , size_t _size )
 void* fmi2_calloc8 ( size_t _num , size_t _size )
 {
   static const int func_id = 8;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -116,8 +116,8 @@ void* fmi2_calloc8 ( size_t _num , size_t _size )
 void* fmi2_calloc9 ( size_t _num , size_t _size )
 {
   static const int func_id = 9;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -130,8 +130,8 @@ void* fmi2_calloc9 ( size_t _num , size_t _size )
 void* fmi2_calloc10 ( size_t _num , size_t _size )
 {
   static const int func_id = 10;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -144,8 +144,8 @@ void* fmi2_calloc10 ( size_t _num , size_t _size )
 void* fmi2_calloc11 ( size_t _num , size_t _size )
 {
   static const int func_id = 11;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -158,8 +158,8 @@ void* fmi2_calloc11 ( size_t _num , size_t _size )
 void* fmi2_calloc12 ( size_t _num , size_t _size )
 {
   static const int func_id = 12;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -172,8 +172,8 @@ void* fmi2_calloc12 ( size_t _num , size_t _size )
 void* fmi2_calloc13 ( size_t _num , size_t _size )
 {
   static const int func_id = 13;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -186,8 +186,8 @@ void* fmi2_calloc13 ( size_t _num , size_t _size )
 void* fmi2_calloc14 ( size_t _num , size_t _size )
 {
   static const int func_id = 14;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -200,8 +200,8 @@ void* fmi2_calloc14 ( size_t _num , size_t _size )
 void* fmi2_calloc15 ( size_t _num , size_t _size )
 {
   static const int func_id = 15;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -214,8 +214,8 @@ void* fmi2_calloc15 ( size_t _num , size_t _size )
 void* fmi2_calloc16 ( size_t _num , size_t _size )
 {
   static const int func_id = 16;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -228,8 +228,8 @@ void* fmi2_calloc16 ( size_t _num , size_t _size )
 void* fmi2_calloc17 ( size_t _num , size_t _size )
 {
   static const int func_id = 17;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -242,8 +242,8 @@ void* fmi2_calloc17 ( size_t _num , size_t _size )
 void* fmi2_calloc18 ( size_t _num , size_t _size )
 {
   static const int func_id = 18;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -256,8 +256,8 @@ void* fmi2_calloc18 ( size_t _num , size_t _size )
 void* fmi2_calloc19 ( size_t _num , size_t _size )
 {
   static const int func_id = 19;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -270,8 +270,8 @@ void* fmi2_calloc19 ( size_t _num , size_t _size )
 void* fmi2_calloc20 ( size_t _num , size_t _size )
 {
   static const int func_id = 20;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -284,8 +284,8 @@ void* fmi2_calloc20 ( size_t _num , size_t _size )
 void* fmi2_calloc21 ( size_t _num , size_t _size )
 {
   static const int func_id = 21;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -298,8 +298,8 @@ void* fmi2_calloc21 ( size_t _num , size_t _size )
 void* fmi2_calloc22 ( size_t _num , size_t _size )
 {
   static const int func_id = 22;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -312,8 +312,8 @@ void* fmi2_calloc22 ( size_t _num , size_t _size )
 void* fmi2_calloc23 ( size_t _num , size_t _size )
 {
   static const int func_id = 23;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -326,8 +326,8 @@ void* fmi2_calloc23 ( size_t _num , size_t _size )
 void* fmi2_calloc24 ( size_t _num , size_t _size )
 {
   static const int func_id = 24;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -340,8 +340,8 @@ void* fmi2_calloc24 ( size_t _num , size_t _size )
 void* fmi2_calloc25 ( size_t _num , size_t _size )
 {
   static const int func_id = 25;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -354,8 +354,8 @@ void* fmi2_calloc25 ( size_t _num , size_t _size )
 void* fmi2_calloc26 ( size_t _num , size_t _size )
 {
   static const int func_id = 26;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -368,8 +368,8 @@ void* fmi2_calloc26 ( size_t _num , size_t _size )
 void* fmi2_calloc27 ( size_t _num , size_t _size )
 {
   static const int func_id = 27;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -382,8 +382,8 @@ void* fmi2_calloc27 ( size_t _num , size_t _size )
 void* fmi2_calloc28 ( size_t _num , size_t _size )
 {
   static const int func_id = 28;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -396,8 +396,8 @@ void* fmi2_calloc28 ( size_t _num , size_t _size )
 void* fmi2_calloc29 ( size_t _num , size_t _size )
 {
   static const int func_id = 29;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -410,8 +410,8 @@ void* fmi2_calloc29 ( size_t _num , size_t _size )
 void* fmi2_calloc30 ( size_t _num , size_t _size )
 {
   static const int func_id = 30;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -424,8 +424,8 @@ void* fmi2_calloc30 ( size_t _num , size_t _size )
 void* fmi2_calloc31 ( size_t _num , size_t _size )
 {
   static const int func_id = 31;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -438,8 +438,8 @@ void* fmi2_calloc31 ( size_t _num , size_t _size )
 void* fmi2_calloc32 ( size_t _num , size_t _size )
 {
   static const int func_id = 32;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -452,8 +452,8 @@ void* fmi2_calloc32 ( size_t _num , size_t _size )
 void* fmi2_calloc33 ( size_t _num , size_t _size )
 {
   static const int func_id = 33;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -466,8 +466,8 @@ void* fmi2_calloc33 ( size_t _num , size_t _size )
 void* fmi2_calloc34 ( size_t _num , size_t _size )
 {
   static const int func_id = 34;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -480,8 +480,8 @@ void* fmi2_calloc34 ( size_t _num , size_t _size )
 void* fmi2_calloc35 ( size_t _num , size_t _size )
 {
   static const int func_id = 35;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -494,8 +494,8 @@ void* fmi2_calloc35 ( size_t _num , size_t _size )
 void* fmi2_calloc36 ( size_t _num , size_t _size )
 {
   static const int func_id = 36;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -508,8 +508,8 @@ void* fmi2_calloc36 ( size_t _num , size_t _size )
 void* fmi2_calloc37 ( size_t _num , size_t _size )
 {
   static const int func_id = 37;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -522,8 +522,8 @@ void* fmi2_calloc37 ( size_t _num , size_t _size )
 void* fmi2_calloc38 ( size_t _num , size_t _size )
 {
   static const int func_id = 38;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -536,8 +536,8 @@ void* fmi2_calloc38 ( size_t _num , size_t _size )
 void* fmi2_calloc39 ( size_t _num , size_t _size )
 {
   static const int func_id = 39;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -550,8 +550,8 @@ void* fmi2_calloc39 ( size_t _num , size_t _size )
 void* fmi2_calloc40 ( size_t _num , size_t _size )
 {
   static const int func_id = 40;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -564,8 +564,8 @@ void* fmi2_calloc40 ( size_t _num , size_t _size )
 void* fmi2_calloc41 ( size_t _num , size_t _size )
 {
   static const int func_id = 41;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -578,8 +578,8 @@ void* fmi2_calloc41 ( size_t _num , size_t _size )
 void* fmi2_calloc42 ( size_t _num , size_t _size )
 {
   static const int func_id = 42;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -592,8 +592,8 @@ void* fmi2_calloc42 ( size_t _num , size_t _size )
 void* fmi2_calloc43 ( size_t _num , size_t _size )
 {
   static const int func_id = 43;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -606,8 +606,8 @@ void* fmi2_calloc43 ( size_t _num , size_t _size )
 void* fmi2_calloc44 ( size_t _num , size_t _size )
 {
   static const int func_id = 44;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -620,8 +620,8 @@ void* fmi2_calloc44 ( size_t _num , size_t _size )
 void* fmi2_calloc45 ( size_t _num , size_t _size )
 {
   static const int func_id = 45;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -634,8 +634,8 @@ void* fmi2_calloc45 ( size_t _num , size_t _size )
 void* fmi2_calloc46 ( size_t _num , size_t _size )
 {
   static const int func_id = 46;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -648,8 +648,8 @@ void* fmi2_calloc46 ( size_t _num , size_t _size )
 void* fmi2_calloc47 ( size_t _num , size_t _size )
 {
   static const int func_id = 47;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -662,8 +662,8 @@ void* fmi2_calloc47 ( size_t _num , size_t _size )
 void* fmi2_calloc48 ( size_t _num , size_t _size )
 {
   static const int func_id = 48;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -676,8 +676,8 @@ void* fmi2_calloc48 ( size_t _num , size_t _size )
 void* fmi2_calloc49 ( size_t _num , size_t _size )
 {
   static const int func_id = 49;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -690,8 +690,8 @@ void* fmi2_calloc49 ( size_t _num , size_t _size )
 void* fmi2_calloc50 ( size_t _num , size_t _size )
 {
   static const int func_id = 50;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -704,8 +704,8 @@ void* fmi2_calloc50 ( size_t _num , size_t _size )
 void* fmi2_calloc51 ( size_t _num , size_t _size )
 {
   static const int func_id = 51;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -718,8 +718,8 @@ void* fmi2_calloc51 ( size_t _num , size_t _size )
 void* fmi2_calloc52 ( size_t _num , size_t _size )
 {
   static const int func_id = 52;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -732,8 +732,8 @@ void* fmi2_calloc52 ( size_t _num , size_t _size )
 void* fmi2_calloc53 ( size_t _num , size_t _size )
 {
   static const int func_id = 53;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -746,8 +746,8 @@ void* fmi2_calloc53 ( size_t _num , size_t _size )
 void* fmi2_calloc54 ( size_t _num , size_t _size )
 {
   static const int func_id = 54;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -760,8 +760,8 @@ void* fmi2_calloc54 ( size_t _num , size_t _size )
 void* fmi2_calloc55 ( size_t _num , size_t _size )
 {
   static const int func_id = 55;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -774,8 +774,8 @@ void* fmi2_calloc55 ( size_t _num , size_t _size )
 void* fmi2_calloc56 ( size_t _num , size_t _size )
 {
   static const int func_id = 56;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -788,8 +788,8 @@ void* fmi2_calloc56 ( size_t _num , size_t _size )
 void* fmi2_calloc57 ( size_t _num , size_t _size )
 {
   static const int func_id = 57;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -802,8 +802,8 @@ void* fmi2_calloc57 ( size_t _num , size_t _size )
 void* fmi2_calloc58 ( size_t _num , size_t _size )
 {
   static const int func_id = 58;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -816,8 +816,8 @@ void* fmi2_calloc58 ( size_t _num , size_t _size )
 void* fmi2_calloc59 ( size_t _num , size_t _size )
 {
   static const int func_id = 59;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -830,8 +830,8 @@ void* fmi2_calloc59 ( size_t _num , size_t _size )
 void* fmi2_calloc60 ( size_t _num , size_t _size )
 {
   static const int func_id = 60;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -844,8 +844,8 @@ void* fmi2_calloc60 ( size_t _num , size_t _size )
 void* fmi2_calloc61 ( size_t _num , size_t _size )
 {
   static const int func_id = 61;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -858,8 +858,8 @@ void* fmi2_calloc61 ( size_t _num , size_t _size )
 void* fmi2_calloc62 ( size_t _num , size_t _size )
 {
   static const int func_id = 62;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -872,8 +872,8 @@ void* fmi2_calloc62 ( size_t _num , size_t _size )
 void* fmi2_calloc63 ( size_t _num , size_t _size )
 {
   static const int func_id = 63;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -886,8 +886,8 @@ void* fmi2_calloc63 ( size_t _num , size_t _size )
 void* fmi2_calloc64 ( size_t _num , size_t _size )
 {
   static const int func_id = 64;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -900,8 +900,8 @@ void* fmi2_calloc64 ( size_t _num , size_t _size )
 void* fmi2_calloc65 ( size_t _num , size_t _size )
 {
   static const int func_id = 65;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -914,8 +914,8 @@ void* fmi2_calloc65 ( size_t _num , size_t _size )
 void* fmi2_calloc66 ( size_t _num , size_t _size )
 {
   static const int func_id = 66;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -928,8 +928,8 @@ void* fmi2_calloc66 ( size_t _num , size_t _size )
 void* fmi2_calloc67 ( size_t _num , size_t _size )
 {
   static const int func_id = 67;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -942,8 +942,8 @@ void* fmi2_calloc67 ( size_t _num , size_t _size )
 void* fmi2_calloc68 ( size_t _num , size_t _size )
 {
   static const int func_id = 68;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -956,8 +956,8 @@ void* fmi2_calloc68 ( size_t _num , size_t _size )
 void* fmi2_calloc69 ( size_t _num , size_t _size )
 {
   static const int func_id = 69;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -970,8 +970,8 @@ void* fmi2_calloc69 ( size_t _num , size_t _size )
 void* fmi2_calloc70 ( size_t _num , size_t _size )
 {
   static const int func_id = 70;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -984,8 +984,8 @@ void* fmi2_calloc70 ( size_t _num , size_t _size )
 void* fmi2_calloc71 ( size_t _num , size_t _size )
 {
   static const int func_id = 71;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -998,8 +998,8 @@ void* fmi2_calloc71 ( size_t _num , size_t _size )
 void* fmi2_calloc72 ( size_t _num , size_t _size )
 {
   static const int func_id = 72;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1012,8 +1012,8 @@ void* fmi2_calloc72 ( size_t _num , size_t _size )
 void* fmi2_calloc73 ( size_t _num , size_t _size )
 {
   static const int func_id = 73;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1026,8 +1026,8 @@ void* fmi2_calloc73 ( size_t _num , size_t _size )
 void* fmi2_calloc74 ( size_t _num , size_t _size )
 {
   static const int func_id = 74;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1040,8 +1040,8 @@ void* fmi2_calloc74 ( size_t _num , size_t _size )
 void* fmi2_calloc75 ( size_t _num , size_t _size )
 {
   static const int func_id = 75;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1054,8 +1054,8 @@ void* fmi2_calloc75 ( size_t _num , size_t _size )
 void* fmi2_calloc76 ( size_t _num , size_t _size )
 {
   static const int func_id = 76;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1068,8 +1068,8 @@ void* fmi2_calloc76 ( size_t _num , size_t _size )
 void* fmi2_calloc77 ( size_t _num , size_t _size )
 {
   static const int func_id = 77;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1082,8 +1082,8 @@ void* fmi2_calloc77 ( size_t _num , size_t _size )
 void* fmi2_calloc78 ( size_t _num , size_t _size )
 {
   static const int func_id = 78;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1096,8 +1096,8 @@ void* fmi2_calloc78 ( size_t _num , size_t _size )
 void* fmi2_calloc79 ( size_t _num , size_t _size )
 {
   static const int func_id = 79;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1110,8 +1110,8 @@ void* fmi2_calloc79 ( size_t _num , size_t _size )
 void* fmi2_calloc80 ( size_t _num , size_t _size )
 {
   static const int func_id = 80;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1124,8 +1124,8 @@ void* fmi2_calloc80 ( size_t _num , size_t _size )
 void* fmi2_calloc81 ( size_t _num , size_t _size )
 {
   static const int func_id = 81;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1138,8 +1138,8 @@ void* fmi2_calloc81 ( size_t _num , size_t _size )
 void* fmi2_calloc82 ( size_t _num , size_t _size )
 {
   static const int func_id = 82;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1152,8 +1152,8 @@ void* fmi2_calloc82 ( size_t _num , size_t _size )
 void* fmi2_calloc83 ( size_t _num , size_t _size )
 {
   static const int func_id = 83;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1166,8 +1166,8 @@ void* fmi2_calloc83 ( size_t _num , size_t _size )
 void* fmi2_calloc84 ( size_t _num , size_t _size )
 {
   static const int func_id = 84;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1180,8 +1180,8 @@ void* fmi2_calloc84 ( size_t _num , size_t _size )
 void* fmi2_calloc85 ( size_t _num , size_t _size )
 {
   static const int func_id = 85;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1194,8 +1194,8 @@ void* fmi2_calloc85 ( size_t _num , size_t _size )
 void* fmi2_calloc86 ( size_t _num , size_t _size )
 {
   static const int func_id = 86;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1208,8 +1208,8 @@ void* fmi2_calloc86 ( size_t _num , size_t _size )
 void* fmi2_calloc87 ( size_t _num , size_t _size )
 {
   static const int func_id = 87;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1222,8 +1222,8 @@ void* fmi2_calloc87 ( size_t _num , size_t _size )
 void* fmi2_calloc88 ( size_t _num , size_t _size )
 {
   static const int func_id = 88;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1236,8 +1236,8 @@ void* fmi2_calloc88 ( size_t _num , size_t _size )
 void* fmi2_calloc89 ( size_t _num , size_t _size )
 {
   static const int func_id = 89;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1250,8 +1250,8 @@ void* fmi2_calloc89 ( size_t _num , size_t _size )
 void* fmi2_calloc90 ( size_t _num , size_t _size )
 {
   static const int func_id = 90;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1264,8 +1264,8 @@ void* fmi2_calloc90 ( size_t _num , size_t _size )
 void* fmi2_calloc91 ( size_t _num , size_t _size )
 {
   static const int func_id = 91;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1278,8 +1278,8 @@ void* fmi2_calloc91 ( size_t _num , size_t _size )
 void* fmi2_calloc92 ( size_t _num , size_t _size )
 {
   static const int func_id = 92;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1292,8 +1292,8 @@ void* fmi2_calloc92 ( size_t _num , size_t _size )
 void* fmi2_calloc93 ( size_t _num , size_t _size )
 {
   static const int func_id = 93;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1306,8 +1306,8 @@ void* fmi2_calloc93 ( size_t _num , size_t _size )
 void* fmi2_calloc94 ( size_t _num , size_t _size )
 {
   static const int func_id = 94;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1320,8 +1320,8 @@ void* fmi2_calloc94 ( size_t _num , size_t _size )
 void* fmi2_calloc95 ( size_t _num , size_t _size )
 {
   static const int func_id = 95;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1334,8 +1334,8 @@ void* fmi2_calloc95 ( size_t _num , size_t _size )
 void* fmi2_calloc96 ( size_t _num , size_t _size )
 {
   static const int func_id = 96;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1348,8 +1348,8 @@ void* fmi2_calloc96 ( size_t _num , size_t _size )
 void* fmi2_calloc97 ( size_t _num , size_t _size )
 {
   static const int func_id = 97;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1362,8 +1362,8 @@ void* fmi2_calloc97 ( size_t _num , size_t _size )
 void* fmi2_calloc98 ( size_t _num , size_t _size )
 {
   static const int func_id = 98;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1376,8 +1376,8 @@ void* fmi2_calloc98 ( size_t _num , size_t _size )
 void* fmi2_calloc99 ( size_t _num , size_t _size )
 {
   static const int func_id = 99;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;
@@ -1390,8 +1390,8 @@ void* fmi2_calloc99 ( size_t _num , size_t _size )
 void* fmi2_calloc100 ( size_t _num , size_t _size )
 {
   static const int func_id = 100;
-  void* p = calloc( _num , _size );
-  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
+  void* const p = calloc( _num , _size );
+  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
   const bool add_res = pk->add( p );
   if( add_res ) {
     return p;

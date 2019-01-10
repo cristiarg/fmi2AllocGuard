@@ -31,19 +31,22 @@ def gen_header_defines_include_guard_top( _hf ) :
   _hf.write(
 """#ifndef FMI2DEFINES_H
 #define FMI2DEFINES_H
-
 """)
 
 def gen_header_defines_constants( _hf , _start_id , _end_id , _invalid_id ) :
-  _hf.write("static const int FMI2_FUNC_INDEX_MIN = %d;\n" % (_start_id) )
-  _hf.write("static const int FMI2_FUNC_INDEX_MAX = %d;\n" % (_end_id) )
-  _hf.write("\n")
-  _hf.write("static const int FMI2_FUNC_INDEX_INVALID = %d;\n" % (_invalid_id) )
-  _hf.write("\n")
+  _hf.write( """
+static const int FMI2_FUNC_INDEX_MIN = %d;
+static const int FMI2_FUNC_INDEX_MAX = %d;
+
+static const int FMI2_FUNC_INDEX_INVALID = %d;
+""" % (_start_id, _end_id, _invalid_id))
 
 def gen_header_defines_include_guard_bottom( _hf ) :
-  _hf.write("#endif // FMI2DEFINES_H\n")
-  _hf.write("\n")
+  _hf.write(
+"""
+#endif // FMI2DEFINES_H
+
+""")
 
 def main_gen_defines_header() :
   with open( FILE_NAME_DEFINES_HEADER , "w" ) as header_file :
@@ -77,30 +80,32 @@ struct fmi2_guarded_alloc_free_str {
   fmi2_guarded_free_t  free_p;
   PointerKeeper*       pointer_keeper;
 };
-
 """)
 
 def gen_header_callocs( _hf , _start_id , _end_id ) :
+  _hf.write("\n")
   for i in range( _start_id , _end_id + 1 ) :
     _hf.write("FMI2ALLOCGUARD_LOCAL void* fmi2_calloc%d ( size_t _num , size_t _size );\n" % (i) )
-  _hf.write("\n")
 
 def gen_header_frees( _hf , _start_id , _end_id ) :
+  _hf.write("\n")
   for i in range( _start_id , _end_id + 1 ) :
     _hf.write("FMI2ALLOCGUARD_LOCAL void fmi2_free%d ( void* _ptr );\n" % (i) )
-  _hf.write("\n")
 
 def gen_header_struct_array_declaration( _hf ) :
-  _hf.write("extern struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];\n")
-  _hf.write("\n")
+  _hf.write("""
+extern struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];
+""")
 
 def gen_header_init( _hf ) :
-  _hf.write("void fmi2_guarded_bookkeeping_init();\n")
   _hf.write("\n")
+  _hf.write("void fmi2_guarded_bookkeeping_init();\n")
 
 def gen_header_include_guard_bottom( _hf ) :
-  _hf.write("#endif // FMI2GUARDEDBOOKKEEPING_H\n")
-  _hf.write("\n")
+  _hf.write("""
+#endif // FMI2GUARDEDBOOKKEEPING_H
+
+""")
 
 def main_gen_header() :
   with open( FILE_NAME_HEADER , "w" ) as header_file :
@@ -128,8 +133,8 @@ def gen_body_callocs( _bf , _start_id , _end_id ) :
     _bf.write("void* fmi2_calloc%d ( size_t _num , size_t _size )\n" % (i) )
     _bf.write("{\n")
     _bf.write("  static const int func_id = %d;\n" % (i))
-    _bf.write("  void* p = calloc( _num , _size );\n")
-    _bf.write("  PointerKeeper* pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;\n")
+    _bf.write("  void* const p = calloc( _num , _size );\n")
+    _bf.write("  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;\n")
     _bf.write("  const bool add_res = pk->add( p );\n")
     _bf.write("  if( add_res ) {\n")
     _bf.write("    return p;\n")
