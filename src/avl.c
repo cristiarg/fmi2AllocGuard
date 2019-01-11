@@ -196,23 +196,6 @@ bool avl_find(const struct avl_node* const _root, const int _data)
   return false;
 }
 
-bool avl_check(const struct avl_node* const _root)
-{
-  if (_root != NULL) {
-    const bool left_ok      = (_root->left == NULL) || avl_check(_root->left);
-
-    const bool left_lt_root = (_root->left == NULL) || (_root->left->data < _root->data);
-    const bool root_lt_rite = (_root->rite == NULL) || (_root->data < _root->rite->data);
-
-    const bool rite_ok      = (_root->rite == NULL) || avl_check(_root->rite);
-
-    return (left_ok && left_lt_root && root_lt_rite && rite_ok);
-  }
-  else {
-    return true;
-  }
-}
-
 int avl_size(const struct avl_node* const _root)
 {
   if (_root == NULL) {
@@ -230,3 +213,86 @@ int avl_size(const struct avl_node* const _root)
     return left_child_size + 1 + rite_child_size;
   }
 }
+
+int avl_depth(const struct avl_node* const _root)
+{
+  if (_root == NULL) {
+    return 0;
+  }
+
+  int max_depth = 0;
+
+  static const int STACK_MAX_SIZE = 10000;
+  struct stack_elem {
+    const struct avl_node*  node;
+    int                     dept;
+  } stack[STACK_MAX_SIZE];
+  int stack_next_index = 0;
+
+  stack[stack_next_index  ].node = _root;
+  stack[stack_next_index++].dept = 1;
+
+  while (stack_next_index > 0) {
+    // remove the top of the stack
+    struct stack_elem top = stack[--stack_next_index];
+    if (top.dept > max_depth) {
+      max_depth = top.dept;
+    }
+
+    if (top.node->left != NULL) {
+      stack[stack_next_index  ].node = top.node->left;
+      stack[stack_next_index++].dept = top.dept + 1;
+    }
+
+    if (top.node->rite != NULL) {
+      stack[stack_next_index  ].node = top.node->rite;
+      stack[stack_next_index++].dept = top.dept + 1;
+    }
+  }
+
+  return max_depth;
+}
+
+int avl_clear(struct avl_node** const _root)
+{
+  int count = 0;
+  struct avl_node* curr = *_root;
+  while (curr != NULL) {
+    // recurse left all the way
+    if (curr->left != NULL) {
+      curr = curr->left;
+      continue;
+    }
+
+    // recurse rite all the way
+    if (curr->rite != NULL) {
+      curr = curr->rite;
+      continue;
+    }
+
+    // neither left nor rite children
+    struct avl_node* pare = curr->pare;
+    if (pare != NULL) {
+      if (pare->left == curr) {
+        // left child of parent
+        pare->left = NULL;
+      }
+      else if (pare->rite == curr) {
+        // rite child of parent
+        pare->rite = NULL;
+      }
+      else {
+        // should not happen
+        return - 1;
+      }
+    }
+    free(curr);
+    ++count;
+    curr = pare;
+  }
+
+  *_root = curr;
+
+  return count;
+}
+

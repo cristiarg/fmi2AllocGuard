@@ -9,7 +9,7 @@
 extern "C" {
 # endif
 #endif
-  // needed
+  // needed for unit testing
 
 struct avl_node;
 
@@ -27,9 +27,10 @@ bool avl_rem(struct avl_node** const _root, const int _data);
 
 bool avl_find(const struct avl_node* const _root, const int _data);
 
-bool avl_check(const struct avl_node* const _root);
-
 int avl_size(const struct avl_node* const _root);
+int avl_depth(const struct avl_node* const _root);
+
+int avl_clear(struct avl_node** const _root);
 
 #ifdef FMI2AG_COMPILE_FOR_UNITTEST
 # ifdef __cplusplus
