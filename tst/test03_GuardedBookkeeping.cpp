@@ -2,6 +2,13 @@
 
 #include "../src/GuardedBookkeeping.hpp"
 
+void func_clear_free(void* _data)
+{
+  if (_data != NULL) {
+    free(_data);
+  }
+}
+
 TEST_CASE("TestGuardedBookkeeping")
 {
   SECTION( "constant invariants" ) {
@@ -31,29 +38,30 @@ TEST_CASE("TestGuardedBookkeeping")
       REQUIRE( str.free_p != NULL );
       REQUIRE( str.pointer_keeper == NULL );
 
-      str.pointer_keeper = new PointerKeeper();
-
       {
         void* p1 = ( *str.calloc_p )( 1 , sizeof( int ) );
         REQUIRE( p1 != NULL );
+
+        REQUIRE( str.pointer_keeper != NULL );
 
         int* nr1 = reinterpret_cast< int* >( p1 );
         *nr1 = 42;
 
         ( *str.free_p )( p1 );
 
-        REQUIRE( str.pointer_keeper->flush() == 0 );
+        REQUIRE( avl_clear( &str.pointer_keeper , func_clear_free ) == 0 );
+        REQUIRE( str.pointer_keeper == NULL );
       }
 
       {
         void* p2 = ( *str.calloc_p )( 2 , sizeof( long ) );
         void* p3 = ( *str.calloc_p )( 2 , sizeof( long ) );
 
-        REQUIRE( str.pointer_keeper->flush() == 2 );
-      }
+        REQUIRE( str.pointer_keeper != NULL );
 
-      delete str.pointer_keeper;
-      str.pointer_keeper = NULL;
+        REQUIRE( avl_clear( &str.pointer_keeper , func_clear_free ) == 2 );
+        REQUIRE( str.pointer_keeper == NULL );
+      }
     }
   }
 }

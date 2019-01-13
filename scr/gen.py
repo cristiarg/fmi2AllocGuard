@@ -79,8 +79,7 @@ def gen_calloc_define_inline( _f ) :
 {
   static const int func_id = %d;
   void* const p = calloc( _num , _size );
-  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
-  const bool add_res = pk->add( p );
+  const bool add_res = avl_add(&fmi2_guarded_bookkeeping[ func_id ].pointer_keeper, p, func_comp_lt);
   if( add_res ) {
     return p;
   } else {
@@ -97,8 +96,7 @@ def gen_free_define_inline( _f ) :
 """void fmi2_free%d ( void* _ptr )
 {
   static const int func_id = %d;
-  PointerKeeper* const pk = fmi2_guarded_bookkeeping[ func_id ].pointer_keeper;
-  const bool rem_res = pk->rem( _ptr );
+  const bool rem_res = avl_rem(&fmi2_guarded_bookkeeping[ func_id ].pointer_keeper, _ptr, func_comp_lt, func_clear_nop);
   if( !rem_res ) {
     //TODO: assert? error?
   }
@@ -118,12 +116,14 @@ def main_gen_calloc_free_define_inline() :
 #
 def gen_init_inline( _f ) :
   for i in range( START_ID , END_ID + 1 ) :
-    _f.write("""
-  fmi2_guarded_bookkeeping[ %d ].id              = %d;
+    _f.write(
+"""  fmi2_guarded_bookkeeping[ %d ].id              = %d;
   fmi2_guarded_bookkeeping[ %d ].calloc_p        = &fmi2_calloc%d;
   fmi2_guarded_bookkeeping[ %d ].free_p          = &fmi2_free%d;
   fmi2_guarded_bookkeeping[ %d ].pointer_keeper  = NULL;
-""" % (i , i , i , i , i , i , i) )
+  fmi2_guarded_bookkeeping[ %d ].in_use          = false;
+
+""" % (i , i , i , i , i , i , i, i) )
 
 def main_gen_init() :
   with open( FILE_NAME_INIT_INLINE , "w" ) as inline_file :

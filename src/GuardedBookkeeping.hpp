@@ -3,13 +3,14 @@
 
 #include "fmi2Export.h"
 #include "fmi2AllocGuard.h"
-#include "PointerKeeper.hpp" 
+#include "avl.h"
 
 struct fmi2_guarded_alloc_free_str {
   int                  id;
   fmi2_guarded_alloc_t calloc_p;
   fmi2_guarded_free_t  free_p;
-  PointerKeeper*       pointer_keeper;
+  struct avl_node*     pointer_keeper;
+  bool                 in_use;
 };
 
 #include "calloc.declare.inl"
