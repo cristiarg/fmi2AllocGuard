@@ -30,10 +30,10 @@ def gen_header_defines_include_guard_top( _hf ) :
 
 def gen_header_defines_constants( _hf , _start_id , _end_id , _invalid_id ) :
   _hf.write( """
-static const int FMI2_FUNC_INDEX_MIN = %d;
-static const int FMI2_FUNC_INDEX_MAX = %d;
+#define FMI2_FUNC_INDEX_MIN %d
+#define FMI2_FUNC_INDEX_MAX %d
 
-static const int FMI2_FUNC_INDEX_INVALID = %d;
+#define FMI2_FUNC_INDEX_INVALID %d
 """ % (_start_id, _end_id, _invalid_id))
 
 def gen_header_defines_include_guard_bottom( _hf ) :

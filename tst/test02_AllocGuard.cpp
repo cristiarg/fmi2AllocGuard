@@ -3,7 +3,7 @@
 #include <catch.hpp>
 
 #include "fmi2AllocGuard.h"
-#include "../src/GuardedBookkeeping.hpp"
+#include "../src/bookkeeping.h"
 
 struct TestEntry {
   TestEntry( const int _id )

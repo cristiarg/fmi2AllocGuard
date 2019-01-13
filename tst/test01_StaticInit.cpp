@@ -1,7 +1,7 @@
 #include <catch.hpp>
 #include <stdio.h>
 
-#include "../src/GuardedBookkeeping.hpp"
+#include "../src/bookkeeping.h"
 
 TEST_CASE("TestStaticInit")
 {

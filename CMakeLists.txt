@@ -36,6 +36,8 @@ set(FMI2AG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
 set(FMI2AG_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
 set_source_files_properties(${FMI2AG_SOURCE_DIR}/avl.c PROPERTIES LANGUAGE CXX )
+set_source_files_properties(${FMI2AG_SOURCE_DIR}/bookkeeping.c PROPERTIES LANGUAGE CXX )
+set_source_files_properties(${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.c PROPERTIES LANGUAGE CXX )
 
 set(FMI2AG_FILES_HEADERS_PUBLIC
   ${FMI2AG_INCLUDE_DIR}/fmi2Export.h
@@ -43,13 +45,13 @@ set(FMI2AG_FILES_HEADERS_PUBLIC
   ${FMI2AG_INCLUDE_DIR}/fmi2AllocGuard.h )
 
 set(FMI2AG_FILES_HEADERS_PRIVATE
-  ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.hpp
-  ${FMI2AG_SOURCE_DIR}/avl.h )
+  ${FMI2AG_SOURCE_DIR}/avl.h
+  ${FMI2AG_SOURCE_DIR}/bookkeeping.h )
 
 set(FMI2AG_FILES_CODE
-  ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.cpp
-  ${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.cpp
-  ${FMI2AG_SOURCE_DIR}/avl.c )
+  ${FMI2AG_SOURCE_DIR}/avl.c
+  ${FMI2AG_SOURCE_DIR}/bookkeeping.c
+  ${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.c )
 
 add_library(fmi2AllocGuard SHARED ${FMI2AG_FILES_CODE} ${FMI2AG_FILES_HEADERS_PUBLIC} ${FMI2AG_FILES_HEADERS_PRIVATE} )
 

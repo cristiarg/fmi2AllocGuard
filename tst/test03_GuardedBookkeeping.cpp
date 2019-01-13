@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "../src/GuardedBookkeeping.hpp"
+#include "../src/bookkeeping.h"
 
 void func_clear_free(void* _data)
 {
