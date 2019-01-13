@@ -45,13 +45,11 @@ set(FMI2AG_FILES_HEADERS_PUBLIC
 set(FMI2AG_FILES_HEADERS_PRIVATE
   ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.hpp
   ${FMI2AG_SOURCE_DIR}/avl.h )
-  #${FMI2AG_SOURCE_DIR}/PointerKeeper.hpp
 
 set(FMI2AG_FILES_CODE
   ${FMI2AG_SOURCE_DIR}/GuardedBookkeeping.cpp
   ${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.cpp
   ${FMI2AG_SOURCE_DIR}/avl.c )
-  #${FMI2AG_SOURCE_DIR}/PointerKeeper.cpp
 
 add_library(fmi2AllocGuard SHARED ${FMI2AG_FILES_CODE} ${FMI2AG_FILES_HEADERS_PUBLIC} ${FMI2AG_FILES_HEADERS_PRIVATE} )
 
@@ -132,8 +130,7 @@ if ( FMI2AG_TEST )
       ${FMI2AG_TST_DIR}/testMain.cpp
       ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
       ${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
-      ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp
-      ${FMI2AG_TST_DIR}/test04_PointerKeeper.cpp )
+      ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp )
       #${FMI2AG_TST_DIR}/test11_AVL.cpp )
     #file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
 
@@ -154,7 +151,6 @@ if ( FMI2AG_TEST )
     add_test( NAME TestStaticInit         COMMAND testCatchFmi2AllocGuard TestStaticInit )
     add_test( NAME TestAllocGuard         COMMAND testCatchFmi2AllocGuard TestAllocGuard )
     add_test( NAME TestGuardedBookkeeping COMMAND testCatchFmi2AllocGuard TestGuardedBookkeeping )
-    add_test( NAME TestPointerKeeper      COMMAND testCatchFmi2AllocGuard TestPointerKeeper )
   endif()
 
   if ( FMI2AG_TEST_MINUNIT )
