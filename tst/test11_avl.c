@@ -175,25 +175,23 @@ MU_TEST(test_06_rand)
 
   const int cnt_intended = 3000;
 
-  //printf("cnt_intended = %d\n", cnt_intended);
-
   long long sum_added = 0LL;
   int cnt_added = 0;
   for (int i = 0; i < cnt_intended; ++i) {
     const int val = rand();
     const bool res_add = avl_add(&root, val); // there can be duplicates
     if (res_add) {
-      test_99_check_pare_consistency_root(root);
-      //printf("  %d", val);
       sum_added += val;
       cnt_added += 1;
+      test_98_check_order(root);
+      test_99_check_pare_consistency_root(root);
+      mu_check(avl_size(root) == cnt_added);
     }
   }
 
   mu_check(test_98_check_order(root));
 
   const int size_added = avl_size(root);
-  //printf("\n sum_added = %ld\n cnt_added = %d\n size_added = %d\n", sum_added, cnt_added, size_added);
   mu_check(cnt_added == size_added);
 
   long long sum_removed = 0LL;
@@ -209,7 +207,6 @@ MU_TEST(test_06_rand)
     }
     mu_check(avl_rem(&root, val) == false);
   }
-  //printf("\n sum_removed = %ld\n cnt_removed = %d\n", sum_removed, cnt_removed);
 
   mu_check(sum_added == sum_removed);
   mu_check(cnt_added == cnt_removed);
@@ -228,7 +225,9 @@ MU_TEST(test_07_rand_in_an_array)
       const int val = rand();
       const bool res_add = avl_add(&root, val);
       if (res_add) {
+        test_98_check_order(root);
         test_99_check_pare_consistency_root(root);
+        mu_check(avl_size(root) == i + 1);
         val_arr[i] = val;
         break;
       }
@@ -262,33 +261,34 @@ MU_TEST(test_08_outer_tree)
   mu_check(avl_add(&root, 40) == true);
   mu_check(avl_depth(root) == 2);
   mu_check(avl_add(&root, 30) == true);
-  mu_check(avl_depth(root) == 3);
+  //mu_check(avl_depth(root) == 3);
   mu_check(avl_add(&root, 20) == true);
-  mu_check(avl_depth(root) == 4);
+  //mu_check(avl_depth(root) == 4);
   mu_check(avl_add(&root, 10) == true);
-  mu_check(avl_depth(root) == 5);
+  //mu_check(avl_depth(root) == 5);
   mu_check(avl_add(&root,  9) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 11) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   // outer rite
   mu_check(avl_add(&root, 60) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 70) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 80) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 90) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 89) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
   mu_check(avl_add(&root, 91) == true);
-  mu_check(avl_depth(root) == 6);
+  //mu_check(avl_depth(root) == 6);
 
+  test_98_check_order(root);
+  test_99_check_pare_consistency_root(root);
   mu_check(avl_size(root) == 13);
 
   mu_check(avl_clear(&root) == 13);
-
   mu_check(root == NULL);
 }
 
@@ -313,14 +313,113 @@ MU_TEST(test_09_slim_downwards)
   mu_check(avl_size(root) == 11);
 
   mu_check(avl_clear(&root) == 11);
-  
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_10_linked_list_to_left)
+{
+  struct avl_node* root = { NULL };
+
+  // construct a tree that actually looks like a linked list
+  // each new element being added to the left of the last leaf
+  const int node_count = 1000;
+  for (int i = node_count; i > 0; i--) {
+    mu_check(avl_add(&root, i));
+    test_98_check_order(root);
+    test_99_check_pare_consistency_root(root);
+    mu_check(avl_size(root) == node_count - i + 1);
+  }
+
+  mu_check(avl_clear(&root) == node_count);
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_11_linked_list_to_rite)
+{
+  struct avl_node* root = { NULL };
+
+  // construct a tree that actually looks like a linked list
+  // each new element being added to the rite of the last leaf
+  const int node_count = 1000;
+  for (int i = 0; i < node_count; i++) {
+    mu_check(avl_add(&root, i));
+    test_98_check_order(root);
+    test_99_check_pare_consistency_root(root);
+    mu_check(avl_size(root) == i + 1);
+  }
+
+  mu_check(avl_clear(&root) == node_count);
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_12_balance_left_left)
+{
+  struct avl_node* root = { NULL };
+
+  mu_check(avl_add(&root, 50));
+  mu_check(avl_add(&root, 30));
+  mu_check(avl_add(&root, 20));
+
+  mu_check(avl_depth(root) == 2);
+  test_98_check_order(root);
+  test_99_check_pare_consistency_root(root);
+
+  mu_check(avl_clear(&root) == 3);
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_13_balance_rite_rite)
+{
+  struct avl_node* root = { NULL };
+
+  mu_check(avl_add(&root, 10));
+  mu_check(avl_add(&root, 20));
+  mu_check(avl_add(&root, 30));
+
+  mu_check(avl_depth(root) == 2);
+  test_98_check_order(root);
+  test_99_check_pare_consistency_root(root);
+
+  mu_check(avl_clear(&root) == 3);
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_14_balance_left_rite)
+{
+  struct avl_node* root = { NULL };
+
+  mu_check(avl_add(&root, 30));
+  mu_check(avl_add(&root, 10));
+  mu_check(avl_add(&root, 20));
+
+  mu_check(avl_depth(root) == 2);
+  test_98_check_order(root);
+  test_99_check_pare_consistency_root(root);
+
+  mu_check(avl_clear(&root) == 3);
+  mu_check(root == NULL);
+}
+
+MU_TEST(test_15_balance_rite_left)
+{
+  struct avl_node* root = { NULL };
+
+  mu_check(avl_add(&root, 30));
+  mu_check(avl_add(&root, 50));
+  mu_check(avl_add(&root, 40));
+
+  mu_check(avl_depth(root) == 2);
+  test_98_check_order(root);
+  test_99_check_pare_consistency_root(root);
+
+  mu_check(avl_clear(&root) == 3);
   mu_check(root == NULL);
 }
 
 MU_TEST_SUITE(test_suite_01)
 {
-	MU_RUN_TEST(test_01_remove_from_empty);
-	MU_RUN_TEST(test_02_add_one_rem_one);
+  MU_RUN_TEST(test_01_remove_from_empty);
+  MU_RUN_TEST(test_02_add_one_rem_one);
   MU_RUN_TEST(test_03_add_two_one_in_left_child);
   MU_RUN_TEST(test_04_add_two_one_in_rite_child);
   MU_RUN_TEST(test_05_complete_tree_01);
@@ -328,6 +427,12 @@ MU_TEST_SUITE(test_suite_01)
   MU_RUN_TEST(test_07_rand_in_an_array);
   MU_RUN_TEST(test_08_outer_tree);
   MU_RUN_TEST(test_09_slim_downwards);
+  MU_RUN_TEST(test_10_linked_list_to_left);
+  MU_RUN_TEST(test_11_linked_list_to_rite);
+  MU_RUN_TEST(test_12_balance_left_left);
+  MU_RUN_TEST(test_13_balance_rite_rite);
+  MU_RUN_TEST(test_14_balance_left_rite);
+  MU_RUN_TEST(test_15_balance_rite_left);
 }
 
 int main()
