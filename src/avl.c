@@ -6,14 +6,14 @@
 // internals
 //
 
-struct avl_node* avl_internal_new_node(const int _data)
+struct avl_node* avl_internal_new_node(void* _data)
 {
   struct avl_node* new_node = (struct avl_node*)calloc(1, sizeof(struct avl_node));
   new_node->data = _data;
   return new_node;
 }
 
-struct avl_node* avl_internal_add(struct avl_node** _node, const int _data)
+struct avl_node* avl_internal_add(struct avl_node** _node, void* _data, avl_compare_func _compare_func)
 {
   if (*_node == NULL) {
     *_node = avl_internal_new_node(_data);
@@ -21,9 +21,10 @@ struct avl_node* avl_internal_add(struct avl_node** _node, const int _data)
     return *_node;
   }
   else {
-    if (_data < (*_node)->data) {
+    const int compare_res = _compare_func(_data, (*_node)->data);
+    if (compare_res == -1) {
       if ((*_node)->left != NULL) {
-        return avl_internal_add(&(*_node)->left, _data);
+        return avl_internal_add(&(*_node)->left, _data, _compare_func);
       }
       else {
         struct avl_node* new_node = avl_internal_new_node(_data);
@@ -32,9 +33,9 @@ struct avl_node* avl_internal_add(struct avl_node** _node, const int _data)
         return new_node;
       }
     }
-    else if ((*_node)->data < _data) {
+    else if (compare_res == 1) {
       if ((*_node)->rite != NULL) {
-        return avl_internal_add(&(*_node)->rite, _data);
+        return avl_internal_add(&(*_node)->rite, _data, _compare_func);
       }
       else {
         struct avl_node* new_node = avl_internal_new_node(_data);
@@ -88,25 +89,32 @@ struct avl_node* avl_internal_detach_leftmost(struct avl_node* const _root, stru
   }
 }
 
-struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool* const _found)
+struct avl_node* avl_internal_rem(
+      struct avl_node* _node
+    , void* _data
+    , bool* const _found
+    , avl_compare_func _compare_func
+    , avl_clear_func _clear_func)
 {
   if (_node == NULL) {
     *_found = false;
     return NULL;
   }
   else {
-    if (_data < _node->data) {
-      _node->left = avl_internal_rem(_node->left, _data, _found);
+    const int compare_res = _compare_func(_data, _node->data);
+    if (compare_res == -1) {
+      _node->left = avl_internal_rem(_node->left, _data, _found, _compare_func, _clear_func);
       return _node;
     }
     else {
-      if (_node->data < _data) {
-        _node->rite = avl_internal_rem(_node->rite, _data, _found);
+      if (compare_res == 1) {
+        _node->rite = avl_internal_rem(_node->rite, _data, _found, _compare_func, _clear_func);
         return _node;
       }
       else {
         // _data == _node->data
         if (_node->left == NULL && _node->rite == NULL) {
+          _clear_func(_node->data);
           free(_node);
           _node = NULL;
           *_found = true;
@@ -118,6 +126,7 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           _node->left = NULL;
           left_subtree->pare = _node->pare;
           _node->pare = NULL;
+          _clear_func(_node->data);
           free(_node);
           *_found = true;
           return left_subtree;
@@ -128,6 +137,7 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           _node->rite = NULL;
           rite_subtree->pare = _node->pare;
           _node->pare = NULL;
+          _clear_func(_node->data);
           free(_node);
           *_found = true;
           return rite_subtree;
@@ -153,6 +163,7 @@ struct avl_node* avl_internal_rem(struct avl_node* _node, const int _data, bool*
           detached_leftmost_of_rite_subtree->pare = _node->pare;
           _node->pare = NULL;
 
+          _clear_func(_node->data);
           free(_node);
           *_found = true;
           return detached_leftmost_of_rite_subtree;
@@ -192,7 +203,7 @@ void avl_internal_nop(const struct avl_node* const _)
   }
 }
 
-struct avl_node* avl_internal_rotate_to_rite(struct avl_node* const _z)
+struct avl_node* avl_internal_rotate_rite(struct avl_node* const _z)
 {
   struct avl_node* const y = _z->left;
   struct avl_node* const T3 = y->rite;
@@ -208,7 +219,7 @@ struct avl_node* avl_internal_rotate_to_rite(struct avl_node* const _z)
   return y;
 }
 
-struct avl_node* avl_internal_rotate_to_left(struct avl_node* const _z)
+struct avl_node* avl_internal_rotate_left(struct avl_node* const _z)
 {
   struct avl_node* const y = _z->rite;
   struct avl_node* const T2 = y->left;
@@ -236,8 +247,8 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
 
       // detach z from its parent
       // keep a pointer to its parent's child where the new root should be attached
-      struct avl_node* z_pare = z->pare;
-      struct avl_node** z_pare_child_to_reattach_to
+      struct avl_node* const z_pare = z->pare;
+      struct avl_node** const z_pare_child_to_reattach_to
           = (z_pare == NULL)
               ? NULL
               : (z == z_pare->left)
@@ -253,7 +264,7 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
         // left left ==> rite rotate z
 
         // balance
-        new_z = avl_internal_rotate_to_rite(z);
+        new_z = avl_internal_rotate_rite(z);
 
         //printf(" ==LL==");
       }
@@ -262,11 +273,11 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
 
         // left rotate y
         y->pare = NULL;
-        z->left = avl_internal_rotate_to_left(y);
+        z->left = avl_internal_rotate_left(y);
         z->left->pare = z;
 
         // rite rotate z
-        new_z = avl_internal_rotate_to_rite(z);
+        new_z = avl_internal_rotate_rite(z);
 
         //printf(" ==LR==");
       }
@@ -275,11 +286,11 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
 
         // rite rotate y
         y->pare = NULL;
-        z->rite = avl_internal_rotate_to_rite(y);
+        z->rite = avl_internal_rotate_rite(y);
         z->rite->pare = z;
 
         // left rotate z
-        new_z = avl_internal_rotate_to_left(z);
+        new_z = avl_internal_rotate_left(z);
 
         //printf(" ==RL==");
       }
@@ -287,12 +298,11 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
         // rite rite ==> left rotate z
 
         // balance
-        new_z = avl_internal_rotate_to_left(z);
+        new_z = avl_internal_rotate_left(z);
 
         //printf(" ==RR==");
       }
       else {
-
         //printf(" ==RETURN");
         return;
       }
@@ -343,32 +353,34 @@ void avl_internal_balance(struct avl_node** const _root, const struct avl_node* 
 // public
 //
 
-bool avl_add(struct avl_node** const _root, const int _data)
+bool avl_add(struct avl_node** const _root, void* _data, avl_compare_func _compare_func)
 {
-  const struct avl_node* new_node = avl_internal_add(_root, _data);
+  const struct avl_node* new_node = avl_internal_add(_root, _data, _compare_func);
   avl_internal_balance(_root, new_node);
   return (new_node != NULL);
 }
 
-bool avl_rem(struct avl_node** const _root, const int _data)
+bool avl_rem(struct avl_node** const _root, void* _data
+    , avl_compare_func _compare_func, avl_clear_func _clear_func)
 {
   bool found = false;
-  *_root = avl_internal_rem(*_root, _data, &found);
+  *_root = avl_internal_rem(*_root, _data, &found, _compare_func, _clear_func);
   return found;
 }
 
-bool avl_find(const struct avl_node* const _root, const int _data)
+bool avl_find(const struct avl_node* const _root, void* _data, avl_compare_func _compare_func)
 {
   // non-recursive
   const struct avl_node* l_root = _root;
   while (l_root != NULL) {
-    if (_data < l_root->data) {
+    const int compare_res = _compare_func(_data, l_root->data);
+    if (compare_res == -1) {
       l_root = l_root->left;
     }
-    else if (l_root->data < _data) {
+    else if (compare_res == 1) {
       l_root = l_root->rite;
     }
-    else if (l_root->data == _data) {
+    else if (compare_res == 0) {
       return true;
     }
   }
@@ -432,7 +444,7 @@ int avl_depth(const struct avl_node* const _root)
   return max_depth;
 }
 
-int avl_clear(struct avl_node** const _root)
+int avl_clear(struct avl_node** const _root, avl_clear_func _clear_func)
 {
   int count = 0;
   struct avl_node* curr = *_root;
@@ -465,6 +477,7 @@ int avl_clear(struct avl_node** const _root)
         return - 1;
       }
     }
+    _clear_func(curr->data);
     free(curr);
     ++count;
     curr = pare;
