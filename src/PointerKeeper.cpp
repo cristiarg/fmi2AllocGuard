@@ -1,7 +1,34 @@
 #include "PointerKeeper.hpp"
 #include <stdlib.h>
 
+namespace {
+  int ptr_comp_lt_func(const void* const _left, const void* const _rite)
+  {
+    if (_left < _rite )
+      return -1;
+    else if (_left > _rite)
+      return 1;
+    else
+      return 0;
+  }
+
+  void ptr_clear_nop_func(void* _data)
+  {
+    if (_data != NULL) {
+      _data = NULL;
+    }
+  }
+
+  void ptr_clear_func(void* _data)
+  {
+    if (_data != NULL) {
+      free(_data);
+    }
+  }
+}
+
 PointerKeeper::PointerKeeper()
+    : avl_root( NULL )
 {
   // nop
 }
@@ -14,8 +41,8 @@ PointerKeeper::~PointerKeeper()
 bool PointerKeeper::add( void* _p )
 {
   if ( _p != NULL ) {
-    const std::pair< PointerToVoidSet_t::iterator , bool > res = pointerToVoiSet.insert( _p );
-    return res.second;
+    const bool res = avl_add(&avl_root, _p, ptr_comp_lt_func);
+    return res;
   }
   return false;
 }
@@ -23,25 +50,17 @@ bool PointerKeeper::add( void* _p )
 bool PointerKeeper::rem( void* _p )
 {
   if ( _p != NULL ) {
-    const PointerToVoidSet_t::iterator it = pointerToVoiSet.find( _p );
-    if ( it != pointerToVoiSet.end() ) {
-      pointerToVoiSet.erase( it );
-      return true;
-    }
+    const bool res = avl_rem(&avl_root, _p, ptr_comp_lt_func, ptr_clear_nop_func);
+      // this is the clean removal from bookkeeping
+      // actual free-ing is done elsewhere
+    return res;
   }
   return false;
 }
 
 int PointerKeeper::flush()
 {
-  const int res = pointerToVoiSet.size();
-        PointerToVoidSet_t::iterator it     = pointerToVoiSet.begin();
-  const PointerToVoidSet_t::iterator itEnd  = pointerToVoiSet.end();
-  for( ; it != itEnd ; it++ ) {
-    free( *it );
-    // TODO: provide this function from afar
-  }
-  pointerToVoiSet.clear();
+  const int res = avl_clear(&avl_root, ptr_clear_func);
   return res;
 }
 

@@ -1,13 +1,10 @@
 #ifndef POINTERKEEPER_HPP
 #define POINTERKEEPER_HPP /*1*/
 
-#include <set>
+#include "avl.h"
 
 class PointerKeeper
 {
-private: // types
-  typedef std::set< void* > PointerToVoidSet_t;
-  
 public:
   PointerKeeper();
   ~PointerKeeper();
@@ -25,7 +22,7 @@ public:
   int flush();
 
 private:
-  PointerToVoidSet_t pointerToVoiSet;
+  struct avl_node* avl_root;
 };
 
 #endif // POINTERKEEPER_HPP
