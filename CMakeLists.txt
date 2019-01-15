@@ -203,12 +203,23 @@ if ( FMI2AG_TEST )
     # testAllocGuard
     #
     set ( FMI2AG_TEST_FILES_ALLOCGUARD
-      ${FMI2AG_TST_DIR}/test12_AllocGuard.c)
-    add_executable(testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD})
-    target_link_libraries(testAllocGuard PRIVATE MinUnit)
-    target_link_libraries(testAllocGuard PRIVATE fmi2AllocGuard)
+      ${FMI2AG_TST_DIR}/test12_AllocGuard.c )
+    add_executable( testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD} )
+    target_link_libraries( testAllocGuard PRIVATE MinUnit )
+    target_link_libraries( testAllocGuard PRIVATE fmi2AllocGuard )
 
     add_test( NAME TestAllocGuard COMMAND testAllocGuard )
+
+    #
+    # testStaticInit
+    #
+    set ( FMI2AG_TEST_FILES_STATICINIT
+      ${FMI2AG_TST_DIR}/test01_StaticInit.c )
+    add_executable(testStaticInit ${FMI2AG_TEST_FILES_STATICINIT} )
+    target_link_libraries( testStaticInit PRIVATE MinUnit )
+    target_link_libraries( testStaticInit PRIVATE fmi2AllocGuard )
+
+    add_test( NAME TestStaticInit COMMAND testStaticInit )
   endif()
 endif()
 

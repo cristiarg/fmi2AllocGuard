@@ -3,7 +3,7 @@
 
 #include "fmi2AllocGuard.h"
 
-void test(const int _id)
+void testOne(const int _id)
 {
   fmi2_guarded_alloc_t pAlloc = fmi2_guarded_get_alloc( _id );
   mu_check( pAlloc != NULL );
@@ -32,7 +32,7 @@ bool testRecursive( int* _count )
   if ( id != FMI2_FUNC_INDEX_INVALID ) {
     *_count += 1;
 
-    test(id);
+    testOne(id);
 
     const bool res_rec = testRecursive( _count );
 
