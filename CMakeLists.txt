@@ -9,7 +9,7 @@ macro(print_all_variables)
   message(STATUS "print_all_variables------------------------------------------}")
 endmacro()
 
-project (fmi2AllocGuard LANGUAGES CXX)
+project (fmi2AllocGuard LANGUAGES C)
 
 # tune some cmake options
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -19,14 +19,14 @@ set(CMAKE_RULE_MESSAGES ON)
 # compiler options
 #########################################
 
-set(CMAKE_CXX_STANDARD 98)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_STANDARD 98)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
-  #message( STATUS "compiler id = 'GNU'" )
-elseif( CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" )
-  #message( STATUS "compiler id = 'MSVC'" )
-endif()
+#if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
+#  #message( STATUS "compiler id = 'GNU'" )
+#elseif( CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" )
+#  #message( STATUS "compiler id = 'MSVC'" )
+#endif()
 
 #########################################
 # library
@@ -35,9 +35,9 @@ endif()
 set(FMI2AG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
 set(FMI2AG_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
-set_source_files_properties(${FMI2AG_SOURCE_DIR}/avl.c PROPERTIES LANGUAGE CXX )
-set_source_files_properties(${FMI2AG_SOURCE_DIR}/bookkeeping.c PROPERTIES LANGUAGE CXX )
-set_source_files_properties(${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.c PROPERTIES LANGUAGE CXX )
+#set_source_files_properties(${FMI2AG_SOURCE_DIR}/avl.c PROPERTIES LANGUAGE CXX )
+#set_source_files_properties(${FMI2AG_SOURCE_DIR}/bookkeeping.c PROPERTIES LANGUAGE CXX )
+#set_source_files_properties(${FMI2AG_SOURCE_DIR}/fmi2AllocGuard.c PROPERTIES LANGUAGE CXX )
 
 set(FMI2AG_FILES_HEADERS_PUBLIC
   ${FMI2AG_INCLUDE_DIR}/fmi2Export.h
@@ -124,35 +124,37 @@ if ( FMI2AG_TEST )
     add_dependencies(Catch Catch-External)
     target_include_directories(Catch INTERFACE ${CMAKE_BINARY_DIR}/external/Catch/include)
 
-    # test code must be able to access implementation detail headers
-    # .. or it can use relative paths
-    #include_directories("${PROJECT_SOURCE_DIR}/src")
+    #
+    # testCatchFmi2AllocGuard
+    #
+                 ## test code must be able to access implementation detail headers
+                 ## .. or it can use relative paths
+                 ##include_directories("${PROJECT_SOURCE_DIR}/src")
 
-    set ( FMI2AG_TEST_FILES_CATCH
-      ${FMI2AG_TST_DIR}/testMain.cpp
-      ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
-      ${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
-      ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp )
-      #${FMI2AG_TST_DIR}/test11_AVL.cpp )
-    #file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
+                 #set ( FMI2AG_TEST_FILES_CATCH
+                 #  ${FMI2AG_TST_DIR}/testMain.cpp
+                 #  ${FMI2AG_TST_DIR}/test01_StaticInit.cpp
+                 #  ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.cpp )
+                 #  #${FMI2AG_TST_DIR}/test02_AllocGuard.cpp
+                 ##file(GLOB_RECURSE unit_test_sources "${FMI2AG_TST_DIR}/*.c" "${FMI2AG_TST_DIR}/*.cpp")
 
-    add_executable(testCatchFmi2AllocGuard ${FMI2AG_TEST_FILES_CATCH})
-    target_link_libraries(testCatchFmi2AllocGuard PUBLIC Catch)
-    target_link_libraries(testCatchFmi2AllocGuard PUBLIC fmi2AllocGuard)
-    target_include_directories(testCatchFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
+                 #add_executable(testCatchFmi2AllocGuard ${FMI2AG_TEST_FILES_CATCH})
+                 #target_link_libraries(testCatchFmi2AllocGuard PUBLIC Catch)
+                 #target_link_libraries(testCatchFmi2AllocGuard PUBLIC fmi2AllocGuard)
+                 #target_include_directories(testCatchFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
 
-    ##add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Catch2)
-    ##find_package(Catch2 REQUIRED)
+                 ###add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Catch2)
+                 ###find_package(Catch2 REQUIRED)
 
-    ## needed because both .c and .cpp code files are present
-    ##set_target_properties( testCatchFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
-    ##set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
+                 ### needed because both .c and .cpp code files are present
+                 ###set_target_properties( testCatchFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+                 ###set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
 
-    target_compile_options(testCatchFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+                 #target_compile_options(testCatchFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
-    add_test( NAME TestStaticInit         COMMAND testCatchFmi2AllocGuard TestStaticInit )
-    add_test( NAME TestAllocGuard         COMMAND testCatchFmi2AllocGuard TestAllocGuard )
-    add_test( NAME TestGuardedBookkeeping COMMAND testCatchFmi2AllocGuard TestGuardedBookkeeping )
+                 #add_test( NAME TestStaticInit         COMMAND testCatchFmi2AllocGuard TestStaticInit )
+                 ##add_test( NAME TestAllocGuard         COMMAND testCatchFmi2AllocGuard TestAllocGuard )
+                 #add_test( NAME TestGuardedBookkeeping COMMAND testCatchFmi2AllocGuard TestGuardedBookkeeping )
   endif()
 
   if ( FMI2AG_TEST_MINUNIT )
@@ -178,23 +180,35 @@ if ( FMI2AG_TEST )
     add_dependencies(MinUnit MinUnit-External)
     target_include_directories(MinUnit INTERFACE ${CMAKE_BINARY_DIR}/external/MinUnit/include)
 
-    set_source_files_properties("${FMI2AG_TST_DIR}/test11_avl.c" PROPERTIES LANGUAGE C )
+    #
+    # testAVL
+    #
+    #set_source_files_properties("${FMI2AG_TST_DIR}/test11_avl.c" PROPERTIES LANGUAGE C )
 
-    set ( FMI2AG_TEST_FILES_MINUNIT
+    set ( FMI2AG_TEST_FILES_AVL
       ${FMI2AG_TST_DIR}/test11_avl.c)
     add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
       # needed to allow 'extern "C"' definition for unit testing
 
-    add_executable(testMinUnitFmi2AllocGuard ${FMI2AG_TEST_FILES_MINUNIT})
-    target_link_libraries(testMinUnitFmi2AllocGuard PRIVATE MinUnit)
-    target_link_libraries(testMinUnitFmi2AllocGuard PUBLIC fmi2AllocGuard)
-    target_include_directories(testMinUnitFmi2AllocGuard PUBLIC ${FMI2AG_TST_DIR})
+    add_executable(testAVL ${FMI2AG_TEST_FILES_AVL})
+    target_link_libraries(testAVL PRIVATE MinUnit)
+    target_link_libraries(testAVL PUBLIC fmi2AllocGuard)
+    target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
+    target_compile_options(testAVL PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
 
-    target_compile_options(testMinUnitFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    add_test( NAME TestAVL COMMAND testAVL )
 
-    set_target_properties( testMinUnitFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
+    #
+    # testAllocGuard
+    #
+    set ( FMI2AG_TEST_FILES_ALLOCGUARD
+      ${FMI2AG_TST_DIR}/test12_AllocGuard.c)
+    add_executable(testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD})
+    target_link_libraries(testAllocGuard PRIVATE MinUnit)
+    target_link_libraries(testAllocGuard PRIVATE fmi2AllocGuard)
 
-    add_test( NAME TestAVL         COMMAND testMinUnitFmi2AllocGuard )
+    add_test( NAME TestAllocGuard COMMAND testAllocGuard )
   endif()
 endif()
 

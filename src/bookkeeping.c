@@ -22,11 +22,11 @@ void func_clear_nop(void* _data)
 #include "calloc.define.inl"
 
 struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ]
-    = {   0
-        , NULL
-        , NULL
-        , NULL
-        , false };
+    = {   0  };
+        //, NULL
+        //, NULL
+        //, NULL
+        //, false };
 
 void fmi2_guarded_bookkeeping_init()
 {
