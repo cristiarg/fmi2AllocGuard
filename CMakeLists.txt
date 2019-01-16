@@ -193,9 +193,9 @@ if ( FMI2AG_TEST )
     add_executable(testAVL ${FMI2AG_TEST_FILES_AVL})
     target_link_libraries(testAVL PRIVATE MinUnit)
     target_link_libraries(testAVL PUBLIC fmi2AllocGuard)
-    target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
+    #target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
     target_compile_options(testAVL PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
-    set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
+    #set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
 
     add_test( NAME TestAVL COMMAND testAVL )
 
@@ -207,6 +207,7 @@ if ( FMI2AG_TEST )
     add_executable( testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD} )
     target_link_libraries( testAllocGuard PRIVATE MinUnit )
     target_link_libraries( testAllocGuard PRIVATE fmi2AllocGuard )
+    target_compile_options(testAllocGuard PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
     add_test( NAME TestAllocGuard COMMAND testAllocGuard )
 
@@ -218,8 +219,21 @@ if ( FMI2AG_TEST )
     add_executable(testStaticInit ${FMI2AG_TEST_FILES_STATICINIT} )
     target_link_libraries( testStaticInit PRIVATE MinUnit )
     target_link_libraries( testStaticInit PRIVATE fmi2AllocGuard )
+    target_compile_options(testStaticInit PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
 
     add_test( NAME TestStaticInit COMMAND testStaticInit )
+
+    #
+    # testGuardedBookkeeping
+    #
+    set ( FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING
+      ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.c )
+    add_executable(testGuardedBookkeeping ${FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING} )
+    target_link_libraries( testGuardedBookkeeping PRIVATE MinUnit )
+    target_link_libraries( testGuardedBookkeeping PRIVATE fmi2AllocGuard )
+    target_compile_options(testGuardedBookkeeping PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
+
+    add_test( NAME TestGuardedBookkeeping COMMAND testGuardedBookkeeping )
   endif()
 endif()
 
