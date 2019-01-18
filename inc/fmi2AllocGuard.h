@@ -19,22 +19,34 @@ extern "C" {
   //
   void FMI2ALLOCGUARD_API fmi2_guarded_init();
 
-  // obtain a new entry in the function table
+  // obtain a new entry id in the function table
   // the value is an opaque reference for further requests
   //
   int FMI2ALLOCGUARD_API fmi2_guarded_acquire();
 
   // the getter functions
-  // the entry is obtained from a previously called *_acquire
+  // the id is obtained from a previously called *_acquire
   //
   fmi2_guarded_alloc_t FMI2ALLOCGUARD_API fmi2_guarded_get_alloc( const int _id );
   fmi2_guarded_free_t FMI2ALLOCGUARD_API fmi2_guarded_get_free( const int _id );
 
   // release an entry in the function table
   // upon calling this, remaining unfreed memory pending to this entry is released
-  // the entry is obtained from a previously called *_acquire
+  // the entry id is obtained from a previously called *_acquire
   //
-  void FMI2ALLOCGUARD_API fmi2_guarded_release( const int _id );
+  int FMI2ALLOCGUARD_API fmi2_guarded_release( const int _id );
+
+  // TODO:
+  //  - add logging/dump capability upon release/termination; or at
+  //    least some sort of information as to the leaked memory; or
+  //    at the very least, whether there was some leak or not (ie
+  //    let fmi2_guarded_release return some info)
+  // ensure that all still existing entries are freed
+  // any entry id's still held by clients become invalid
+  //
+  //void FMI2ALLOCGUARD_API fmi2_guarded_terminate();
+
+
 
 #ifdef __cplusplus
 } // extern "C"

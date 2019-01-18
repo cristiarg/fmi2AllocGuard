@@ -11,9 +11,9 @@ endmacro()
 
 project (fmi2AllocGuard LANGUAGES C)
 
-# tune some cmake options
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RULE_MESSAGES ON)
+  # tune some cmake options
 
 #########################################
 # compiler options
@@ -21,6 +21,10 @@ set(CMAKE_RULE_MESSAGES ON)
 
 #set(CMAKE_CXX_STANDARD 98)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(FMI2AG_C_COMPILER_OPTIONS -Wall -Wextra -pedantic)
+  # -Wfloat-equal
+  # -Wfloat-conversion 
 
 #if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
 #  #message( STATUS "compiler id = 'GNU'" )
@@ -55,13 +59,13 @@ set(FMI2AG_FILES_CODE
 
 add_library(fmi2AllocGuard SHARED ${FMI2AG_FILES_CODE} ${FMI2AG_FILES_HEADERS_PUBLIC} ${FMI2AG_FILES_HEADERS_PRIVATE} )
 
-# public includes
 include_directories( ${FMI2AG_INCLUDE_DIR} )
+  # public includes
 
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+target_compile_options(fmi2AllocGuard PUBLIC ${FMI2AG_C_COMPILER_OPTIONS} )
 
 # needed because both .c and .cpp code files are present
 #set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
@@ -93,7 +97,7 @@ add_definitions( -DCMAKE_BUILD_TYPE=Debug )
 option(FMI2AG_TEST "Build tests for fmi2AllocGuard. Default: ON" ON)
 
 if ( FMI2AG_TEST )
-  set(FMI2AG_TEST_CATCH ON)
+  set(FMI2AG_TEST_CATCH OFF)
   set(FMI2AG_TEST_MINUNIT ON)
 endif()
 
@@ -150,7 +154,7 @@ if ( FMI2AG_TEST )
                  ###set_target_properties( testCatchFmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
                  ###set_source_files_properties("${PROJECT_SOURCE_DIR}/tst/*.cpp" PROPERTIES LANGUAGE C )
 
-                 #target_compile_options(testCatchFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+                 #target_compile_options(testCatchFmi2AllocGuard PUBLIC -Wall -Wfloat-conversion -pedantic -Wextra)
 
                  #add_test( NAME TestStaticInit         COMMAND testCatchFmi2AllocGuard TestStaticInit )
                  ##add_test( NAME TestAllocGuard         COMMAND testCatchFmi2AllocGuard TestAllocGuard )
@@ -164,8 +168,8 @@ if ( FMI2AG_TEST )
       # whether it propagates further on as well
     
     set(FMI2AG_FETCH_MINUNIT
-        GIT_REPOSITORY https://github.com/siu/minunit.git
-        GIT_TAG 8af0cf5b675dc0a070475659a54ec044f1a6b4d0 )
+        GIT_REPOSITORY https://github.com/cristiarg/minunit.git
+        GIT_TAG 7bb647614d0ca1644f2e5a620a6e7583edddb4a8 )
 
     ExternalProject_Add(
         MinUnit-External
@@ -192,9 +196,9 @@ if ( FMI2AG_TEST )
 
     add_executable(testAVL ${FMI2AG_TEST_FILES_AVL})
     target_link_libraries(testAVL PRIVATE MinUnit)
-    target_link_libraries(testAVL PUBLIC fmi2AllocGuard)
+    target_link_libraries(testAVL PRIVATE fmi2AllocGuard)
     #target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
-    target_compile_options(testAVL PUBLIC -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    target_compile_options(testAVL PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
     #set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
 
     add_test( NAME TestAVL COMMAND testAVL )
@@ -207,7 +211,7 @@ if ( FMI2AG_TEST )
     add_executable( testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD} )
     target_link_libraries( testAllocGuard PRIVATE MinUnit )
     target_link_libraries( testAllocGuard PRIVATE fmi2AllocGuard )
-    target_compile_options(testAllocGuard PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    target_compile_options(testAllocGuard PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
 
     add_test( NAME TestAllocGuard COMMAND testAllocGuard )
 
@@ -219,7 +223,7 @@ if ( FMI2AG_TEST )
     add_executable(testStaticInit ${FMI2AG_TEST_FILES_STATICINIT} )
     target_link_libraries( testStaticInit PRIVATE MinUnit )
     target_link_libraries( testStaticInit PRIVATE fmi2AllocGuard )
-    target_compile_options(testStaticInit PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    target_compile_options(testStaticInit PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
 
     add_test( NAME TestStaticInit COMMAND testStaticInit )
 
@@ -231,9 +235,22 @@ if ( FMI2AG_TEST )
     add_executable(testGuardedBookkeeping ${FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING} )
     target_link_libraries( testGuardedBookkeeping PRIVATE MinUnit )
     target_link_libraries( testGuardedBookkeeping PRIVATE fmi2AllocGuard )
-    target_compile_options(testGuardedBookkeeping PRIVATE -Wall -Wfloat-conversion -Wpedantic -Wextra)
+    target_compile_options(testGuardedBookkeeping PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
 
     add_test( NAME TestGuardedBookkeeping COMMAND testGuardedBookkeeping )
+
+    #
+    # testLoadSharedLib
+    #
+    set ( FMI2AG_TEST_FILES_LOADSHAREDLIB
+      ${FMI2AG_TST_DIR}/test02_dlopen.c )
+    add_executable(testLoadSharedLib ${FMI2AG_TEST_FILES_LOADSHAREDLIB} )
+    target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
+    #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
+    target_link_libraries( testLoadSharedLib PRIVATE dl )
+    #target_compile_options(testLoadSharedLib PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
+
+    add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
   endif()
 endif()
 

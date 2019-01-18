@@ -8,6 +8,10 @@ void fmi2_guarded_init()
   fmi2_guarded_bookkeeping_init();
 }
 
+//void FMI2ALLOCGUARD_API fmi2_guarded_terminate()
+//{
+//}
+
 int fmi2_guarded_acquire()
 {
   for( int idx = FMI2_FUNC_INDEX_MIN ; idx <= FMI2_FUNC_INDEX_MAX ; ++idx ) {
@@ -49,14 +53,16 @@ void func_clear_free(void* _data)
   }
 }
 
-void fmi2_guarded_release( const int _id )
+int fmi2_guarded_release( const int _id )
 {
   if ( FMI2_FUNC_INDEX_MIN <= _id && _id <= FMI2_FUNC_INDEX_MAX ) {
     struct fmi2_guarded_alloc_free_str* str = &fmi2_guarded_bookkeeping[ _id ];
     if ( str->in_use ) {
-      avl_clear( &str->pointer_keeper , func_clear_free );
+      const int cleared_count = avl_clear( &str->pointer_keeper , func_clear_free );
       str->in_use = false;
+      return cleared_count;
     }
   }
+  return 0;
 }
 

@@ -457,7 +457,7 @@ int main()
 {
   srand((unsigned)time(0));
 
-  //MU_SUITE_CONFIGURE_PROGRESS(0);
+  MU_SUITE_CONFIGURE_SHOW_PROGRESS(0);
 
   MU_RUN_SUITE(test_suite_01);
   MU_REPORT();
