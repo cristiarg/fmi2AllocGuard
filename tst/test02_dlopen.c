@@ -38,6 +38,7 @@ void test_shared_lib_teardown()
 {
   if ( fmi2_lib_handle != NULL ) {
     dlclose( fmi2_lib_handle );
+    fmi2_lib_handle = NULL;
   }
 }
 

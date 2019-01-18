@@ -72,6 +72,7 @@ MU_TEST(TestGuardedBookkeeping)
   test_constant_invariants();;
   test_empty_array_elements_at_the_beginning();
 
+  fmi2_guarded_bookkeeping_clear();
   fmi2_guarded_bookkeeping_init();
 
 }

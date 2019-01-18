@@ -19,6 +19,11 @@ extern "C" {
   //
   void FMI2ALLOCGUARD_API fmi2_guarded_init();
 
+  // all still existing entries are freed
+  // any entry id's still held by clients becomes invalid
+  //
+  void FMI2ALLOCGUARD_API fmi2_guarded_clear();
+
   // obtain a new entry id in the function table
   // the value is an opaque reference for further requests
   //
@@ -41,12 +46,7 @@ extern "C" {
   //    least some sort of information as to the leaked memory; or
   //    at the very least, whether there was some leak or not (ie
   //    let fmi2_guarded_release return some info)
-  // ensure that all still existing entries are freed
-  // any entry id's still held by clients become invalid
   //
-  //void FMI2ALLOCGUARD_API fmi2_guarded_terminate();
-
-
 
 #ifdef __cplusplus
 } // extern "C"

@@ -14,9 +14,9 @@ END_ID = 10
 INVALID_ID = -1
 
 FILE_NAME_HEADER_DEFINES = "../inc/fmi2Defines.h"
-FILE_NAME_CALLOC_FREE_DECLARE_INLINE = "../src/calloc.declare.inl"
-FILE_NAME_CALLOC_FREE_DEFINE_INLINE = "../src/calloc.define.inl"
-FILE_NAME_INIT_INLINE = "../src/init.inl"
+FILE_NAME_BOOKKEEPING_DECLARE_INLINE = "../src/bookkeeping.declare.inl"
+FILE_NAME_BOOKKEEPING_DEFINE_INLINE = "../src/bookkeeping.define.inl"
+FILE_NAME_BOOKKEEPING_INIT_INLINE = "../src/bookkeeping.init.inl"
 
 #
 # public header with constants
@@ -62,7 +62,7 @@ def gen_free_declare_inline( _f ) :
     _f.write("FMI2ALLOCGUARD_LOCAL void fmi2_free%d ( void* _ptr );\n" % (i) )
 
 def main_gen_calloc_free_declare_inline() :
-  with open( FILE_NAME_CALLOC_FREE_DECLARE_INLINE , "w" ) as inline_file :
+  with open( FILE_NAME_BOOKKEEPING_DECLARE_INLINE , "w" ) as inline_file :
     gen_calloc_declare_inline( inline_file )
     inline_file.write("\n")
     gen_free_declare_inline( inline_file )
@@ -77,9 +77,8 @@ def gen_calloc_define_inline( _f ) :
     _f.write(
 """void* fmi2_calloc%d ( size_t _num , size_t _size )
 {
-  static const int func_id = %d;
   void* const p = calloc( _num , _size );
-  const bool add_res = avl_add(&fmi2_guarded_bookkeeping[ func_id ].pointer_keeper, p, func_comp_lt);
+  const bool add_res = avl_add(&fmi2_guarded_bookkeeping[ %d ].pointer_keeper, p, func_avl_data_comp_lt);
   if( add_res ) {
     return p;
   } else {
@@ -95,8 +94,7 @@ def gen_free_define_inline( _f ) :
     _f.write(
 """void fmi2_free%d ( void* _ptr )
 {
-  static const int func_id = %d;
-  const bool rem_res = avl_rem(&fmi2_guarded_bookkeeping[ func_id ].pointer_keeper, _ptr, func_comp_lt, func_clear_nop);
+  const bool rem_res = avl_rem(&fmi2_guarded_bookkeeping[ %d ].pointer_keeper, _ptr, func_avl_data_comp_lt, func_avl_data_clear_nop);
   if( !rem_res ) {
     //TODO: assert? error?
   }
@@ -106,7 +104,7 @@ def gen_free_define_inline( _f ) :
 """ % (i, i) )
 
 def main_gen_calloc_free_define_inline() :
-  with open( FILE_NAME_CALLOC_FREE_DEFINE_INLINE , "w" ) as inline_file :
+  with open( FILE_NAME_BOOKKEEPING_DEFINE_INLINE , "w" ) as inline_file :
     gen_calloc_define_inline( inline_file )
     gen_free_define_inline( inline_file )
   inline_file.close()
@@ -126,7 +124,7 @@ def gen_init_inline( _f ) :
 """ % (i , i , i , i , i , i , i, i) )
 
 def main_gen_init() :
-  with open( FILE_NAME_INIT_INLINE , "w" ) as inline_file :
+  with open( FILE_NAME_BOOKKEEPING_INIT_INLINE , "w" ) as inline_file :
     gen_init_inline( inline_file )
   inline_file.close()
 

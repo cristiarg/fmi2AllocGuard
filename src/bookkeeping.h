@@ -13,10 +13,15 @@ struct fmi2_guarded_alloc_free_str {
   bool                 in_use;
 };
 
-#include "calloc.declare.inl"
+#include "bookkeeping.declare.inl"
+
+int   func_avl_data_comp_lt(const void* const _left, const void* const _rite);
+void  func_avl_data_clear_free(void* _data);
+void  func_avl_data_clear_nop(void* _data);
 
 extern struct fmi2_guarded_alloc_free_str fmi2_guarded_bookkeeping[ FMI2_FUNC_INDEX_MAX + 1 ];
 
+void fmi2_guarded_bookkeeping_clear();
 void fmi2_guarded_bookkeeping_init();
 
 #endif // FMI2GUARDEDBOOKKEEPING_H
