@@ -1,6 +1,3 @@
-### Warning ###
-Work in incipient state. Nothing functional yet.
-
 ### What is? ###
 Rather that trying to describe what it is, I'll describe what it can be used for:
 * there exists a process that loads/unloads a number of - same or different - shared libraries that conform to the [FMI / Functional Mockup Interface](https://fmi-standard.org) standard.
@@ -19,18 +16,23 @@ Rather that trying to describe what it is, I'll describe what it can be used for
 It is not a calloc/free implementation. So it will use whatever memory allocator happens to be present.
 
 ### Details ###
-Due to the nature of FMI-standard and various environments where it is used, the author is aware that
-advanced features of the c++ language would not always be readily available.
-Therefore, the default implementation, albeit C++ in nature, does not use any of the modern C++ features.
+Due to the nature of FMI-standard and various environments where it is used, the author is aware that advanced features of the c/c++ language would not always be readily available.
+Therefore, the implementation is C99 compliant.
 
-### TODOs - public ###
-* implement specific distinct versions:
-  * C++03 (the default)
-  * C-only
-  * C++latest 
+For convenient [modern] C++ usage, wrapping in a [RAII-style] class should do.
 
-### TODOs - internal/implementation ###
-* add unit test with dlopen/dlclose
+### Thread safety ###
+There is no thread safety built in.
+
+### Platform ###
+Only Linux/GCC at the moment.
+
+TODO:
+* Linux/Clang
+* Win32/Visual C++
+
+### Example ###
+TODO
 
 ### License
-Whatever you want it to be.
+TODO

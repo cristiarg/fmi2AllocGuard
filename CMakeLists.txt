@@ -22,7 +22,7 @@ set(CMAKE_RULE_MESSAGES ON)
 #set(CMAKE_CXX_STANDARD 98)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(FMI2AG_C_COMPILER_OPTIONS -Wall -Wextra -pedantic)
+set(FMI2AG_C_COMPILER_OPTIONS -std=c99 -Wall -Wextra -pedantic)
   # -Wfloat-equal
   # -Wfloat-conversion 
 
