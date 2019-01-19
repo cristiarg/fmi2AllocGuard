@@ -21,15 +21,23 @@ set(CMAKE_RULE_MESSAGES ON)
 
 #set(CMAKE_CXX_STANDARD 98)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_C_COMPILER "/usr/bin/clang")
+  # setting this, causes cmake to loop indefinitely
+  # ?? probably trying to find the suggested compiler ??
+  # to switch between gcc/clang, export env variable CC with compiler full path
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic -Wfloat-conversion" )
   # -Wfloat-equal       - cannot add this as MinUnit does it
 
-#if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
-#  #message( STATUS "compiler id = 'GNU'" )
-#elseif( CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" )
-#  #message( STATUS "compiler id = 'MSVC'" )
-#endif()
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+  message( STATUS "compiler id = 'Clang'" )
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+  message( STATUS "compiler id = 'GNU'" )
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel")
+  message( STATUS "compiler id = 'Intel'" )
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+  message( STATUS "compiler id = 'MSVC'" )
+endif()
 
 #########################################
 # library
@@ -210,17 +218,6 @@ if ( FMI2AG_TEST )
     add_test( NAME TestAllocGuard COMMAND testAllocGuard )
 
     #
-    # testStaticInit
-    #
-    set ( FMI2AG_TEST_FILES_STATICINIT
-      ${FMI2AG_TST_DIR}/test01_StaticInit.c )
-    add_executable(testStaticInit ${FMI2AG_TEST_FILES_STATICINIT} )
-    target_link_libraries( testStaticInit PRIVATE MinUnit )
-    target_link_libraries( testStaticInit PRIVATE fmi2AllocGuard )
-
-    add_test( NAME TestStaticInit COMMAND testStaticInit )
-
-    #
     # testGuardedBookkeeping
     #
     set ( FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING
@@ -240,6 +237,7 @@ if ( FMI2AG_TEST )
     target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
     #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
     target_link_libraries( testLoadSharedLib PRIVATE dl )
+      
 
     add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
   endif()

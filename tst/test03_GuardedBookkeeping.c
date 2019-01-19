@@ -19,9 +19,9 @@ MU_TEST(TestConstantInvariants)
   mu_check( FMI2_FUNC_INDEX_INVALID < 0 );
 }
 
-MU_TEST(TestIdleArrayElementsAtTheBeginningAreClean)
+MU_TEST(TestStaticInitialization)
 {
-  for ( int i = 0 ; i < FMI2_FUNC_INDEX_MIN ; i++ ) {
+  for ( int i = 0 ; i < FMI2_FUNC_INDEX_MAX ; i++ ) {
     const struct fmi2_guarded_alloc_free_str* const str = &fmi2_guarded_bookkeeping[ i ];
     mu_check( str->id == 0 );
     mu_check( str->calloc_p == NULL );
@@ -128,7 +128,8 @@ int main()
   MU_RUN_TEST(TestConstantInvariants);
   MU_RUN_TEST(TestUniformDistributionLimits);
 
-  MU_RUN_TEST(TestIdleArrayElementsAtTheBeginningAreClean);
+  // superfluous I know..
+  MU_RUN_TEST(TestStaticInitialization);
 
   fmi2_guarded_bookkeeping_clear();
   fmi2_guarded_bookkeeping_init();
