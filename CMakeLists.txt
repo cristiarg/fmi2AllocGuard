@@ -22,9 +22,9 @@ set(CMAKE_RULE_MESSAGES ON)
 #set(CMAKE_CXX_STANDARD 98)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(FMI2AG_C_COMPILER_OPTIONS -std=c99 -Wall -Wextra -pedantic)
-  # -Wfloat-equal
-  # -Wfloat-conversion 
+#set(FMI2AG_C_COMPILER_OPTIONS )
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic -Wfloat-conversion" )
+  # -Wfloat-equal       - cannot add this as MinUnit does it
 
 #if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
 #  #message( STATUS "compiler id = 'GNU'" )
@@ -65,7 +65,7 @@ include_directories( ${FMI2AG_INCLUDE_DIR} )
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src" src )
 
 # compilation flags
-target_compile_options(fmi2AllocGuard PUBLIC ${FMI2AG_C_COMPILER_OPTIONS} )
+#target_compile_options(fmi2AllocGuard PUBLIC ${FMI2AG_C_COMPILER_OPTIONS} )
 
 # needed because both .c and .cpp code files are present
 #set_target_properties( fmi2AllocGuard PROPERTIES LINKER_LANGUAGE C)
@@ -198,7 +198,7 @@ if ( FMI2AG_TEST )
     target_link_libraries(testAVL PRIVATE MinUnit)
     target_link_libraries(testAVL PRIVATE fmi2AllocGuard)
     #target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
-    target_compile_options(testAVL PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
+    #target_compile_options(testAVL PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
     #set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
 
     add_test( NAME TestAVL COMMAND testAVL )
@@ -211,7 +211,7 @@ if ( FMI2AG_TEST )
     add_executable( testAllocGuard ${FMI2AG_TEST_FILES_ALLOCGUARD} )
     target_link_libraries( testAllocGuard PRIVATE MinUnit )
     target_link_libraries( testAllocGuard PRIVATE fmi2AllocGuard )
-    target_compile_options(testAllocGuard PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
+    #target_compile_options(testAllocGuard PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
 
     add_test( NAME TestAllocGuard COMMAND testAllocGuard )
 
@@ -223,7 +223,7 @@ if ( FMI2AG_TEST )
     add_executable(testStaticInit ${FMI2AG_TEST_FILES_STATICINIT} )
     target_link_libraries( testStaticInit PRIVATE MinUnit )
     target_link_libraries( testStaticInit PRIVATE fmi2AllocGuard )
-    target_compile_options(testStaticInit PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
+    #target_compile_options(testStaticInit PRIVATE ${FMI2AG_C_COMPILER_OPTIONS} )
 
     add_test( NAME TestStaticInit COMMAND testStaticInit )
 
@@ -235,7 +235,7 @@ if ( FMI2AG_TEST )
     add_executable(testGuardedBookkeeping ${FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING} )
     target_link_libraries( testGuardedBookkeeping PRIVATE MinUnit )
     target_link_libraries( testGuardedBookkeeping PRIVATE fmi2AllocGuard )
-    target_compile_options(testGuardedBookkeeping PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
+    #target_compile_options(testGuardedBookkeeping PRIVATE ${FMI2AG_C_COMPILER_OPTIONS})
 
     add_test( NAME TestGuardedBookkeeping COMMAND testGuardedBookkeeping )
 

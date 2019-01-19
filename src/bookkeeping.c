@@ -40,11 +40,12 @@ void fmi2_guarded_bookkeeping_clear()
 {
   for( int idx_wipe = 0 ; idx_wipe <= FMI2_FUNC_INDEX_MAX ; ++idx_wipe ) {
     struct fmi2_guarded_alloc_free_str* str = &fmi2_guarded_bookkeeping[ idx_wipe ];
-    
-    str->id        = -1;
-    str->calloc_p  = NULL;
-    str->free_p    = NULL;
 
+    //str->id        = -1;
+    //str->calloc_p  = NULL;
+    //str->free_p    = NULL;
+      // do not invalidate previously init'ed values and function pointers
+    
     // the following sequence is pretty weak semantically
     // but, for the time being, no better alternative in sight
     if( str->pointer_keeper != NULL ) {
@@ -58,9 +59,6 @@ void fmi2_guarded_bookkeeping_clear()
     }
 
     str->in_use = false;
-
-      //printf("INIT: pointer_keeper NOT NULL at index %d\n", idx_clean);
-      //fmi2_guarded_bookkeeping[ idx_clean ].pointer_keeper = NULL;
   }
 }
 

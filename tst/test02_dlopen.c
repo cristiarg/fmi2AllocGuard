@@ -165,7 +165,7 @@ void testStart(
     , fmi2_guarded_get_free_t   _ptr_fmi2_guarded_get_free
     , fmi2_guarded_release_t    _ptr_fmi2_guarded_release )
 {
-  ptr_fmi2_guarded_init();
+  _ptr_fmi2_guarded_init();
 
   bool reachedInvalid = false;
   int count = 0;
