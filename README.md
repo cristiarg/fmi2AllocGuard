@@ -35,5 +35,5 @@ TODO:
 ### Example ###
 TODO
 
-### License
-TODO
+### License ###
+BSD. See LICENSE.md.
