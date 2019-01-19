@@ -58,11 +58,18 @@ int uniform_distribution_impl( const int _range_low , const int _range_high , co
 }
 
 int uniform_distribution( const int _range_low , const int _range_high ) {
-  //double my_rand = rand()/(1.0 + RAND_MAX); 
-  //int range = _range_high - _range_low + 1;
-  //int my_rand_scaled = (my_rand * range) + _range_low;
-  //return my_rand_scaled;
   return uniform_distribution_impl( _range_low , _range_high , rand() );
+}
+
+MU_TEST(TestUniformDistributionLimits)
+{
+  const int UDMIN = 1;
+  const int UDMAX = 523;
+  
+  const int mmin = uniform_distribution_impl( UDMIN , UDMAX , 0 );
+  mu_check( mmin == UDMIN );
+  const int mmax = uniform_distribution_impl( UDMIN , UDMAX , RAND_MAX );
+  mu_check( mmax == UDMAX );
 }
 
 void AllocRandomNumberOfEntriesInElement( struct fmi2_guarded_alloc_free_str* const _str
@@ -119,6 +126,7 @@ int main()
   srand( (unsigned)time( 0 ) );
 
   MU_RUN_TEST(TestConstantInvariants);
+  MU_RUN_TEST(TestUniformDistributionLimits);
 
   MU_RUN_TEST(TestIdleArrayElementsAtTheBeginningAreClean);
 
