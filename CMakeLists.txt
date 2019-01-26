@@ -255,6 +255,20 @@ if ( FMI2AG_TEST )
 
       add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
     endif(UNIX)
+
+    #
+    # testUseSharedLib
+    #
+    set ( FMI2AG_TEST_FILES_USESHAREDLIB
+      ${FMI2AG_TST_DIR}/test04_UseSharedLib.c )
+    add_executable(testUseSharedLib ${FMI2AG_TEST_FILES_USESHAREDLIB} )
+    target_link_libraries( testUseSharedLib PRIVATE MinUnit )
+    target_link_libraries( testUseSharedLib PRIVATE fmi2AllocGuard )
+    if(UNIX)
+      target_link_libraries( testUseSharedLib PRIVATE dl )
+    endif(UNIX)
+
+    add_test( NAME TestUseSharedLib COMMAND testUseSharedLib )
   endif()
 endif()
 
