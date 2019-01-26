@@ -9,8 +9,13 @@
 struct avl_node* avl_internal_new_node(void* _data)
 {
   struct avl_node* new_node = (struct avl_node*)calloc(1, sizeof(struct avl_node));
-  new_node->data = _data;
-  return new_node;
+  if (new_node != NULL) {
+    new_node->data = _data;
+    return new_node;
+  }
+  else {
+    return NULL;
+  }
 }
 
 struct avl_node* avl_internal_add(struct avl_node** _node, void* _data, avl_compare_func _compare_func)
@@ -413,7 +418,7 @@ int avl_depth(const struct avl_node* const _root)
 
   int max_depth = 0;
 
-  static const int STACK_MAX_SIZE = 1000;
+  #define STACK_MAX_SIZE 1000
   struct stack_elem {
     const struct avl_node*  node;
     int                     dept;
@@ -433,11 +438,13 @@ int avl_depth(const struct avl_node* const _root)
     if (top.node->left != NULL) {
       stack[stack_next_index  ].node = top.node->left;
       stack[stack_next_index++].dept = top.dept + 1;
+        // TODO: check stack_next_index againt max constant or make dynamic
     }
 
     if (top.node->rite != NULL) {
       stack[stack_next_index  ].node = top.node->rite;
       stack[stack_next_index++].dept = top.dept + 1;
+        // TODO: check stack_next_index againt max constant or make dynamic
     }
   }
 
@@ -449,13 +456,13 @@ int avl_clear(struct avl_node** const _root, avl_clear_func _clear_func)
   int count = 0;
   struct avl_node* curr = *_root;
   while (curr != NULL) {
-    // recurse left all the way
+    // recurse left
     if (curr->left != NULL) {
       curr = curr->left;
       continue;
     }
 
-    // recurse rite all the way
+    // recurse rite
     if (curr->rite != NULL) {
       curr = curr->rite;
       continue;
@@ -477,9 +484,11 @@ int avl_clear(struct avl_node** const _root, avl_clear_func _clear_func)
         return - 1;
       }
     }
-    _clear_func(curr->data);
-    free(curr);
-    ++count;
+    if (curr != NULL) { // check to please static analyser
+      _clear_func(curr->data);
+      free(curr);
+      ++count;
+    }
     curr = pare;
   }
 
