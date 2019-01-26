@@ -26,17 +26,23 @@ set(CMAKE_RULE_MESSAGES ON)
   # ?? probably trying to find the suggested compiler ??
   # to switch between gcc/clang, export env variable CC with compiler full path
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic -Wfloat-conversion" )
-  # -Wfloat-equal       - cannot add this as MinUnit does it
-
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+if (${CMAKE_C_COMPILER_ID} STREQUAL "Clang")
   message( STATUS "compiler id = 'Clang'" )
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic -Wfloat-conversion" )
+    # -Wfloat-equal       - cannot add this as MinUnit does it
+elseif (${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
   message( STATUS "compiler id = 'GNU'" )
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic -Wfloat-conversion" )
+    # -Wfloat-equal       - cannot add this as MinUnit does it
+elseif (${CMAKE_C_COMPILER_ID} STREQUAL "Intel")
   message( STATUS "compiler id = 'Intel'" )
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+  message( WARNING "Not tested with 'Intel' compiler!")
+elseif (${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
   message( STATUS "compiler id = 'MSVC'" )
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /TC /W4" )
+    # /TC - treat all files as C
+else()
+  message( STATUS "compiler not supported (not one of 'Clang', 'GNU' or 'MSVC')" )
 endif()
 
 #########################################
@@ -102,7 +108,9 @@ option(FMI2AG_TEST "Build tests for fmi2AllocGuard. Default: ON" ON)
 
 if ( FMI2AG_TEST )
   set(FMI2AG_TEST_CATCH OFF)
+    # not using Catch2; it requires C++ and we want to make do with C only
   set(FMI2AG_TEST_MINUNIT ON)
+    # this is C only
 endif()
 
 if ( FMI2AG_TEST )
@@ -187,6 +195,8 @@ if ( FMI2AG_TEST )
     add_library(MinUnit INTERFACE)
     add_dependencies(MinUnit MinUnit-External)
     target_include_directories(MinUnit INTERFACE ${CMAKE_BINARY_DIR}/external/MinUnit/include)
+      # this will clone the MinUnit repo and also, sort of, install it in an arbitrary location
+      # I'm sure this process can be optimized
 
     #
     # testAVL
@@ -194,13 +204,14 @@ if ( FMI2AG_TEST )
     #set_source_files_properties("${FMI2AG_TST_DIR}/test11_avl.c" PROPERTIES LANGUAGE C )
 
     set ( FMI2AG_TEST_FILES_AVL
+      ${FMI2AG_SOURCE_DIR}/avl.c
       ${FMI2AG_TST_DIR}/test11_avl.c)
     add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
       # needed to allow 'extern "C"' definition for unit testing
 
     add_executable(testAVL ${FMI2AG_TEST_FILES_AVL})
     target_link_libraries(testAVL PRIVATE MinUnit)
-    target_link_libraries(testAVL PRIVATE fmi2AllocGuard)
+    #target_link_libraries(testAVL PRIVATE fmi2AllocGuard)
     #target_include_directories(testAVL PUBLIC ${FMI2AG_TST_DIR})
     #set_target_properties( testAVL PROPERTIES LINKER_LANGUAGE C)
 
@@ -221,25 +232,29 @@ if ( FMI2AG_TEST )
     # testGuardedBookkeeping
     #
     set ( FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING
+      ${FMI2AG_SOURCE_DIR}/avl.c
+      ${FMI2AG_SOURCE_DIR}/bookkeeping.c
       ${FMI2AG_TST_DIR}/test03_GuardedBookkeeping.c )
     add_executable(testGuardedBookkeeping ${FMI2AG_TEST_FILES_GUARDEDBOOKKEEPING} )
     target_link_libraries( testGuardedBookkeeping PRIVATE MinUnit )
-    target_link_libraries( testGuardedBookkeeping PRIVATE fmi2AllocGuard )
+    #target_link_libraries( testGuardedBookkeeping PRIVATE fmi2AllocGuard )
 
     add_test( NAME TestGuardedBookkeeping COMMAND testGuardedBookkeeping )
 
     #
     # testLoadSharedLib
     #
-    set ( FMI2AG_TEST_FILES_LOADSHAREDLIB
-      ${FMI2AG_TST_DIR}/test02_dlopen.c )
-    add_executable(testLoadSharedLib ${FMI2AG_TEST_FILES_LOADSHAREDLIB} )
-    target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
-    #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
-    target_link_libraries( testLoadSharedLib PRIVATE dl )
-      
+    if(UNIX)
+      # TODO: this test does not work on windows yet
+      set ( FMI2AG_TEST_FILES_LOADSHAREDLIB
+        ${FMI2AG_TST_DIR}/test02_dlopen.c )
+      add_executable(testLoadSharedLib ${FMI2AG_TEST_FILES_LOADSHAREDLIB} )
+      target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
+      #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
+      target_link_libraries( testLoadSharedLib PRIVATE dl )
 
-    add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
+      add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
+    endif(UNIX)
   endif()
 endif()
 

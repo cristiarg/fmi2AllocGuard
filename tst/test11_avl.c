@@ -248,7 +248,7 @@ MU_TEST(test_06_rand)
 MU_TEST(test_07_rand_in_an_array)
 {
   struct avl_node* root = { NULL };
-  static const int val_arr_size = 3000;
+  #define val_arr_size 3000
   int val_arr[ val_arr_size ];
   for (int i = 0; i < val_arr_size; ++i) {
     while(true) {
