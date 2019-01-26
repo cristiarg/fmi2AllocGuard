@@ -4,11 +4,11 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#ifdef FMI2AG_COMPILE_FOR_UNITTEST
-# ifdef __cplusplus
-extern "C" {
-# endif
-#endif
+//#ifdef FMI2AG_COMPILE_FOR_UNITTEST
+//# ifdef __cplusplus
+//extern "C" {
+//# endif
+//#endif
   // needed for unit testing
 
 struct avl_node;
@@ -35,10 +35,10 @@ int avl_depth(const struct avl_node* const _root);
 
 int avl_clear(struct avl_node** const _root, avl_clear_func _clear_func);
 
-#ifdef FMI2AG_COMPILE_FOR_UNITTEST
-# ifdef __cplusplus
-} // extern "C"
-# endif
-#endif
+//#ifdef FMI2AG_COMPILE_FOR_UNITTEST
+//# ifdef __cplusplus
+//} // extern "C"
+//# endif
+//#endif
 
 #endif

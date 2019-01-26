@@ -40,6 +40,7 @@ elseif (${CMAKE_C_COMPILER_ID} STREQUAL "Intel")
 elseif (${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
   message( STATUS "compiler id = 'MSVC'" )
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /TC /W4" )
+  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2" )
     # /TC - treat all files as C
 else()
   message( STATUS "compiler not supported (not one of 'Clang', 'GNU' or 'MSVC')" )
@@ -206,7 +207,7 @@ if ( FMI2AG_TEST )
     set ( FMI2AG_TEST_FILES_AVL
       ${FMI2AG_SOURCE_DIR}/avl.c
       ${FMI2AG_TST_DIR}/test11_avl.c)
-    add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
+    #add_definitions(-DFMI2AG_COMPILE_FOR_UNITTEST)
       # needed to allow 'extern "C"' definition for unit testing
 
     add_executable(testAVL ${FMI2AG_TEST_FILES_AVL})

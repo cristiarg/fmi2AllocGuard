@@ -20,7 +20,7 @@ void testOne(const int _id)
   pFree( p2 );
 
   // make some alloc's and leave them to be unallocated upon release
-  for (int i = 0 ; i < 100000 ; ++i ) {
+  for (int i = 0 ; i < 10000 ; ++i ) {
     void* p3 = pAlloc( 10 , sizeof( double ) );
     mu_check( p3 != NULL );
   }
