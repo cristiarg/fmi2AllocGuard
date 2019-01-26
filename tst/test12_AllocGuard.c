@@ -58,7 +58,10 @@ MU_TEST(TestAllocGuard)
 
 int main()
 {
+  MU_SUITE_CONFIGURE_SHOW_PROGRESS(0);
+
   MU_RUN_TEST(TestAllocGuard);
   MU_REPORT();
+
   return 0;
 }

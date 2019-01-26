@@ -76,3 +76,9 @@ Session.vim
 tags
 # Persistent undo
 [._]*.un~
+
+#
+# Visual Studio
+#
+
+.vs/
