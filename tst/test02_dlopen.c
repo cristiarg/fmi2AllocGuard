@@ -28,10 +28,16 @@ typedef
 #endif
   SYS_TYPE_LIBRARY_HANDLE;
 
-//#if defined(_WIN32)
-//#elif defined(__linux__) || defined(__linux) || defined(__gnu_linux)
-//#else
-//#endif
+void sys_func_cleanup_previous_error()
+{
+#if defined(_WIN32)
+  // nothing needed
+#elif defined(__linux__) || defined(__linux) || defined(__gnu_linux)
+  dlerror();
+#else
+  // ..
+#endif
+}
 
 /// param:
 ///   - _indication: a string to supply more context as to where the error
@@ -147,7 +153,7 @@ void( *sys_func_find_symbol(const SYS_TYPE_LIBRARY_HANDLE _handle, const char* c
 }
 
 //
-//
+// types
 //
 
 SYS_TYPE_LIBRARY_HANDLE fmi2_lib_handle = NULL;
@@ -165,6 +171,10 @@ fmi2_guarded_get_alloc_t  ptr_fmi2_guarded_get_alloc  = NULL;
 fmi2_guarded_get_free_t   ptr_fmi2_guarded_get_free   = NULL;
 fmi2_guarded_release_t    ptr_fmi2_guarded_release    = NULL;
 
+//
+// init/teardown/helper functions
+//
+
 void test_shared_lib_init(void)
 {
   srand( (unsigned)time(0) );
@@ -177,95 +187,40 @@ void test_shared_lib_teardown(void)
   // the unloading of the library happens after the entire suite is done
 }
 
-MU_TEST(test_shared_lib_load)
-{
-  //int last_error = 0;
-  //char* err = NULL;
-//#if defined(_WIN32)
-//  // nothing needed
-//#elif defined(__linux__) || defined(__linux) || defined(__gnu_linux)
-//  dlerror(); // cleanup possible previous error
-//#else
-//  // ..
-//#endif
-
-  /*void **/
-  fmi2_lib_handle =
-//#if defined(_WIN32)
-//      LoadLibrary("fmi2AllocGuard.dll");
-//#elif defined(__linux__) || defined(__linux) || defined(__gnu_linux)
-//      dlopen("./libfmi2AllocGuard.so", RTLD_LAZY)
-//#else
-//  // other platform .. not tested
-//      NULL
-//#endif
-  sys_func_load_library();
-  //last_error = sys_func_get_and_print_last_error(NULL);
-  //mu_check(last_error == 0);
-  mu_check(fmi2_lib_handle != NULL);
-  //if (last_error != 0) {
-  //  return;
-  //}
-  if (fmi2_lib_handle != NULL) {
-  }
-  //err = dlerror();
-  //mu_check(err == NULL);
-  //if (err != NULL) {
-  //  fprintf(stderr, "dlopen failed: %s\n", err);
-  //  return;
-  //}
-
-  //*(void**)(&ptr_fmi2_guarded_init) = dlsym( fmi2_lib_handle , "fmi2_guarded_init" );
-  //*(void**)(&ptr_fmi2_guarded_init) = sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
-  ptr_fmi2_guarded_init = sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
-  //err = dlerror();
-  mu_check(ptr_fmi2_guarded_init != NULL);
-  //mu_check(err == NULL);
-  //if (err != NULL) {
-  //  fprintf(stderr, "fmi2_guarded_init NOT FOUND: %s\n", err);
-  //  return;
-  //}
-
-  //*(void**)(&ptr_fmi2_guarded_acquire) = dlsym( fmi2_lib_handle , "fmi2_guarded_acquire" );
-  ptr_fmi2_guarded_acquire = ( fmi2_guarded_acquire_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_acquire" );
-  //err = dlerror();
-  mu_check(ptr_fmi2_guarded_acquire != NULL);
-  //mu_check(err == NULL);
-  //if (err != NULL ) {
-  //  fprintf(stderr, "fmi2_guarded_acquire NOT FOUND: %s\n", err);
-  //  return;
-  //}
-
-  //*(void**)(&ptr_fmi2_guarded_get_alloc) = dlsym( fmi2_lib_handle , "fmi2_guarded_get_alloc");
-  ptr_fmi2_guarded_get_alloc = ( fmi2_guarded_get_alloc_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_alloc");
-  //err = dlerror();
-  mu_check(ptr_fmi2_guarded_get_alloc != NULL);
-  //mu_check(err == NULL);
-  //if (err != NULL ) {
-  //  fprintf(stderr, "fmi2_guarded_get_alloc NOT FOUND: %s\n", err);
-  //  return;
-  //}
-
-  //*(void**)(&ptr_fmi2_guarded_get_free) = dlsym( fmi2_lib_handle , "fmi2_guarded_get_free");
-  ptr_fmi2_guarded_get_free = ( fmi2_guarded_get_free_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_free");
-  //err = dlerror();
-  mu_check(ptr_fmi2_guarded_get_free != NULL);
-  //mu_check(err == NULL);
-  //if (err != NULL) {
-  //  fprintf(stderr, "fmi2_guarded_get_free NOT FOUND: %s\n", err);
-  //  return;
-  //}
-
-  ptr_fmi2_guarded_release = ( fmi2_guarded_release_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_release");
-  mu_check(ptr_fmi2_guarded_release != NULL);
-}
-
-
 void unload_library()
 {
   if ( fmi2_lib_handle != NULL ) {
     sys_func_unload_library(fmi2_lib_handle);
     fmi2_lib_handle = NULL;
+  }
+}
+
+//
+// actual tests
+//
+
+MU_TEST(test_shared_lib_load)
+{
+  sys_func_cleanup_previous_error();
+
+  fmi2_lib_handle = sys_func_load_library();
+  mu_check(fmi2_lib_handle != NULL);
+
+  if (fmi2_lib_handle != NULL) {
+    ptr_fmi2_guarded_init = sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
+    mu_check(ptr_fmi2_guarded_init != NULL);
+
+    ptr_fmi2_guarded_acquire = ( fmi2_guarded_acquire_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_acquire" );
+    mu_check(ptr_fmi2_guarded_acquire != NULL);
+
+    ptr_fmi2_guarded_get_alloc = ( fmi2_guarded_get_alloc_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_alloc");
+    mu_check(ptr_fmi2_guarded_get_alloc != NULL);
+
+    ptr_fmi2_guarded_get_free = ( fmi2_guarded_get_free_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_free");
+    mu_check(ptr_fmi2_guarded_get_free != NULL);
+
+    ptr_fmi2_guarded_release = ( fmi2_guarded_release_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_release");
+    mu_check(ptr_fmi2_guarded_release != NULL);
   }
 }
 
@@ -325,16 +280,6 @@ void test_recursive(
   }
 }
 
-//void test_start(
-//      fmi2_guarded_init_t       _ptr_fmi2_guarded_init
-//    , fmi2_guarded_acquire_t    _ptr_fmi2_guarded_acquire
-//    , fmi2_guarded_get_alloc_t  _ptr_fmi2_guarded_get_alloc
-//    , fmi2_guarded_get_free_t   _ptr_fmi2_guarded_get_free
-//    , fmi2_guarded_release_t    _ptr_fmi2_guarded_release )
-//{
-//
-//}
-
 MU_TEST(test_shared_lib_use)
 {
   ( *ptr_fmi2_guarded_init)();
@@ -350,13 +295,6 @@ MU_TEST(test_shared_lib_use)
       , &count );
   mu_check( count == ( FMI2_FUNC_INDEX_MAX - FMI2_FUNC_INDEX_MIN + 1 ) );
   mu_check( reachedInvalid );
-
-  //test_start(
-  //    ptr_fmi2_guarded_init
-  //  , ptr_fmi2_guarded_acquire
-  //  , ptr_fmi2_guarded_get_alloc
-  //  , ptr_fmi2_guarded_get_free
-  //  , ptr_fmi2_guarded_release );
 }
 
 MU_TEST_SUITE(test_shared_lib_suite)
