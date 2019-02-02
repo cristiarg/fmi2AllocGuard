@@ -125,20 +125,21 @@ void sys_func_unload_library(const SYS_TYPE_LIBRARY_HANDLE _handle)
   }
 }
 
-typedef void (*untyped_function_pointer_t)(void);
-
-untyped_function_pointer_t sys_func_find_symbol(const SYS_TYPE_LIBRARY_HANDLE _handle, const char* const _symbol_name)
+void( *sys_func_find_symbol(const SYS_TYPE_LIBRARY_HANDLE _handle, const char* const _symbol_name) )()
+  // a function that takes two arguments and that returns
+  //    a pointer to a function returning void and taking void as argument
+  // https://stackoverflow.com/questions/997821/how-to-make-a-function-return-a-pointer-to-a-function-c
+  // https://stackoverflow.com/questions/10758811/c-syntax-for-functions-returning-function-pointers
 {
-  untyped_function_pointer_t symbol_ptr =
+  // found no common way to have the same casts on both platforms
 #if defined(_WIN32)
-      ( untyped_function_pointer_t )GetProcAddress(_handle, _symbol_name)
-        // client code should convert to the appropriate function pointer
+  void (*symbol_ptr)() = GetProcAddress(_handle, _symbol_name);
 #elif defined(__linux__) || defined(__linux) || defined(__gnu_linux)
-      dlsym(_handle, _symbol_name)
+  void (*symbol_ptr)() = NULL;
+  *(void**)(&symbol_ptr) = dlsym(_handle, _symbol_name);
 #else
     // ..
 #endif
-  ;
   if (symbol_ptr == NULL) {
     sys_func_get_and_print_last_error("GetProcAddress|dlsym");
   }
@@ -164,15 +165,9 @@ fmi2_guarded_get_alloc_t  ptr_fmi2_guarded_get_alloc  = NULL;
 fmi2_guarded_get_free_t   ptr_fmi2_guarded_get_free   = NULL;
 fmi2_guarded_release_t    ptr_fmi2_guarded_release    = NULL;
 
-//void ( *ptr_fmi2_guarded_init )() = NULL;
-//int ( *ptr_fmi2_guarded_acquire )() = NULL;
-//fmi2_guarded_alloc_t ( *ptr_fmi2_guarded_get_alloc )( const int ) = NULL;
-//fmi2_guarded_free_t ( *ptr_fmi2_guarded_get_free )( const int ) = NULL;
-//int ( *ptr_fmi2_guarded_release )( const int ) = NULL;
-
 void test_shared_lib_init(void)
 {
-  //srand( (unsigned)time(0) );
+  srand( (unsigned)time(0) );
 }
 
 void test_shared_lib_teardown(void)
@@ -220,10 +215,9 @@ MU_TEST(test_shared_lib_load)
   //  return;
   //}
 
-  printf("== fmi2_guarded_init\n");
   //*(void**)(&ptr_fmi2_guarded_init) = dlsym( fmi2_lib_handle , "fmi2_guarded_init" );
   //*(void**)(&ptr_fmi2_guarded_init) = sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
-  ptr_fmi2_guarded_init = ( fmi2_guarded_init_t )sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
+  ptr_fmi2_guarded_init = sys_func_find_symbol(fmi2_lib_handle, "fmi2_guarded_init");
   //err = dlerror();
   mu_check(ptr_fmi2_guarded_init != NULL);
   //mu_check(err == NULL);
@@ -232,7 +226,6 @@ MU_TEST(test_shared_lib_load)
   //  return;
   //}
 
-  printf("== fmi2_guarded_acquire\n");
   //*(void**)(&ptr_fmi2_guarded_acquire) = dlsym( fmi2_lib_handle , "fmi2_guarded_acquire" );
   ptr_fmi2_guarded_acquire = ( fmi2_guarded_acquire_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_acquire" );
   //err = dlerror();
@@ -243,7 +236,6 @@ MU_TEST(test_shared_lib_load)
   //  return;
   //}
 
-  printf("== fmi2_guarded_get_alloc\n");
   //*(void**)(&ptr_fmi2_guarded_get_alloc) = dlsym( fmi2_lib_handle , "fmi2_guarded_get_alloc");
   ptr_fmi2_guarded_get_alloc = ( fmi2_guarded_get_alloc_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_alloc");
   //err = dlerror();
@@ -254,7 +246,6 @@ MU_TEST(test_shared_lib_load)
   //  return;
   //}
 
-  printf("== fmi2_guarded_get_free\n");
   //*(void**)(&ptr_fmi2_guarded_get_free) = dlsym( fmi2_lib_handle , "fmi2_guarded_get_free");
   ptr_fmi2_guarded_get_free = ( fmi2_guarded_get_free_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_get_free");
   //err = dlerror();
@@ -265,16 +256,8 @@ MU_TEST(test_shared_lib_load)
   //  return;
   //}
 
-  printf("== fmi2_guarded_release\n");
-  //*(void**)(&ptr_fmi2_guarded_release) = dlsym( fmi2_lib_handle , "fmi2_guarded_release");
   ptr_fmi2_guarded_release = ( fmi2_guarded_release_t )sys_func_find_symbol( fmi2_lib_handle , "fmi2_guarded_release");
-  //err = dlerror();
   mu_check(ptr_fmi2_guarded_release != NULL);
-  //mu_check(err == NULL);
-  //if (err != NULL) {
-  //  fprintf(stderr, "fmi2_guarded_release NOT FOUND: %s\n", err);
-  //  return;
-  //}
 }
 
 
