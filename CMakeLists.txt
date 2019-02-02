@@ -245,17 +245,16 @@ if ( FMI2AG_TEST )
     #
     # testLoadSharedLib
     #
+    set ( FMI2AG_TEST_FILES_LOADSHAREDLIB
+      ${FMI2AG_TST_DIR}/test02_dlopen.c )
+    add_executable(testLoadSharedLib ${FMI2AG_TEST_FILES_LOADSHAREDLIB} )
+    target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
+    #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
     if(UNIX)
-      # TODO: this test does not work on windows yet
-      set ( FMI2AG_TEST_FILES_LOADSHAREDLIB
-        ${FMI2AG_TST_DIR}/test02_dlopen.c )
-      add_executable(testLoadSharedLib ${FMI2AG_TEST_FILES_LOADSHAREDLIB} )
-      target_link_libraries( testLoadSharedLib PRIVATE MinUnit )
-      #target_link_libraries( testLoadSharedLib PRIVATE fmi2AllocGuard )
       target_link_libraries( testLoadSharedLib PRIVATE dl )
-
-      add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
     endif(UNIX)
+
+    add_test( NAME TestLoadSharedLib COMMAND testLoadSharedLib )
 
     #
     # testUseSharedLib
