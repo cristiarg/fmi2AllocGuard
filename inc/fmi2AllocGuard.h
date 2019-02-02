@@ -26,6 +26,7 @@ extern "C" {
 
   // obtain a new entry id in the function table
   // the value is an opaque reference for further requests
+  // if no entry is available for use, FMI2_FUNC_INDEX_INVALID is returned
   //
   int FMI2ALLOCGUARD_API fmi2_guarded_acquire();
 
