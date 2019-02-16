@@ -54,12 +54,12 @@ def main_gen_header_defines( _project_dir , _start_id , _end_id ) :
       print("INFO:   wrote" )
     inline_file.close()
   except IOError as x :
-    print "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror
-
+    print( "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror , file=sys.stderr )
 
 #
 # calloc/free declare inline file
 #
+
 def gen_calloc_declare_inline( _f , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
     _f.write("FMI2ALLOCGUARD_LOCAL void* fmi2_calloc%d ( size_t _num , size_t _size );\n" % (i) )
@@ -81,11 +81,12 @@ def main_gen_calloc_free_declare_inline( _project_dir , _start_id , _end_id ) :
       print("INFO:   wrote" )
     inline_file.close()
   except IOError as x :
-    print "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror
+    print( "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror , file=sys.stderr )
 
 #
 # calloc/free define inline file
 #
+
 def gen_calloc_define_inline( _f , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
     _f.write(
@@ -128,11 +129,12 @@ def main_gen_calloc_free_define_inline( _project_dir , _start_id , _end_id ) :
       print("INFO:   wrote" )
     inline_file.close()
   except IOError as x :
-    print "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror
+    print( "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror , file=sys.stderr )
 
 #
 # init inline file
 #
+
 def gen_init_inline( _f , _start_id , _end_id ) :
   for i in range( _start_id , _end_id + 1 ) :
     _f.write(
@@ -149,12 +151,16 @@ def main_gen_init( _project_dir , _start_id , _end_id ) :
   try :
     print("INFO: opening file '" + file_abs_path + "' for writing" )
     with open( file_abs_path , "w" ) as inline_file :
-      print("INFO:   opened" )
+      print("INFO:   writing ... ", end='')
       gen_init_inline( inline_file , _start_id , _end_id )
-      print("INFO:   wrote" )
+      print("done" )
     inline_file.close()
   except IOError as x :
-    print "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror
+    print( "ERROR: cannot open file '" + file_abs_path + "' for writing: " + x.strerror , file=sys.stderr )
+
+#
+# arguments processing
+#
 
 def get_project_dir( _sys_argv0 ) :
   argv0_dir = os.path.dirname( _sys_argv0 )
@@ -163,8 +169,8 @@ def get_project_dir( _sys_argv0 ) :
 
 def arguments_get_parser() :
   prs = argparse.ArgumentParser(description='Generate boilerplate code for the fmi2AllocGuard library.')
-  prs.add_argument('-s', '--start_id', type=int, metavar='START_ID', default= 1, help="the first entry id", required=False)
-  prs.add_argument('-e', '--end_id', type=int, metavar='END_ID'  , default=10, help="the last entry id" , required=False)
+  prs.add_argument('-s', '--start_id', type=int, metavar='<numeric>', default= 1, help="the first entry id", required=False)
+  prs.add_argument('-e', '--end_id', type=int, metavar='<numeric>'  , default=10, help="the last entry id" , required=False)
   return prs
 
 def arguments_validate_and_bail( _args ) :
@@ -180,7 +186,7 @@ def arguments_validate_and_bail( _args ) :
 # main
 #
 
-# minimal command line arguments to allow calling from cmake at some point
+# minimal command line arguments to allow calling from cmake
 prs = arguments_get_parser()
 args = prs.parse_args()
 arguments_validate_and_bail( args )
