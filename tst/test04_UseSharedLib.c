@@ -110,6 +110,8 @@ MU_TEST_SUITE(test_use_shared_lib_suite)
 
 int main()
 {
+  MU_SUITE_CONFIGURE_SHOW_PROGRESS(0);
+
   MU_RUN_SUITE(test_use_shared_lib_suite);
   MU_REPORT();
 

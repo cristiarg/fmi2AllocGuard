@@ -200,5 +200,5 @@ main_gen_header_defines( project_dir , args.start_id , args.end_id )
 main_gen_calloc_free_declare_inline( project_dir , args.start_id , args.end_id )
 main_gen_calloc_free_define_inline( project_dir , args.start_id , args.end_id )
 main_gen_init( project_dir , args.start_id , args.end_id )
-
+sys.exit(0)
 

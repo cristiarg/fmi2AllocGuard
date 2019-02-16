@@ -4,8 +4,8 @@ Rather than trying to describe what it is, I'll describe what it can be used for
 * it does so repeatedly - being a long running process, akin to a service
 * once loaded, one such FMU library is executed ("co-simulation" in FMI-speak)
 * depending on a configuration flag, upon initialization, a library might need be supplied with pointers to two memory management functions:
-  * `void\* (\*allocateMemory)(size_t nobj, size_t size)` - calloc like
-  * `void (\*freeMemory)(void\* obj)` - free like
+  * `void* (*allocateMemory)(size_t nobj, size_t size)` - calloc like
+  * `void (*freeMemory)(void* obj)` - free like
 * for various reasons, during execution of said libraries things might not work as expected:
   * abnormal execution termination
   * hang
@@ -42,8 +42,8 @@ To build:
   * executes tests
 
 ### Usage ###
-There is no installation script (TODO).
-To use the includes in `inc` folder are needed and the linked lib.
+There is no installation script.
+To use, just include `inc/fmi2AllocGuard.h` and link against the shared lib.
 
 ### Details ###
 Due to the nature of FMI-standard and various environments where it is used, the author is aware that advanced features of the c/c++ language would not always be readily available.

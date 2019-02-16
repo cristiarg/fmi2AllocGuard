@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdio.h>
 
-#include "fmi2AllocGuard.h"
+#include "fmi2Defines.h"
 
 #if defined(_WIN32)
 # include <Windows.h>
@@ -159,6 +159,10 @@ void( *sys_func_find_symbol(const SYS_TYPE_LIBRARY_HANDLE _handle, const char* c
 SYS_TYPE_LIBRARY_HANDLE fmi2_lib_handle = NULL;
 
 // prototypes in the library header
+typedef void* ( *fmi2_guarded_alloc_t )( size_t num , size_t size );
+typedef void  ( *fmi2_guarded_free_t  )( void* obj );
+  // these are just redefines of the ones in the header
+
 typedef void                  ( *fmi2_guarded_init_t      )(           );
 typedef int                   ( *fmi2_guarded_acquire_t   )(           );
 typedef fmi2_guarded_alloc_t  ( *fmi2_guarded_get_alloc_t )( const int );
@@ -309,6 +313,8 @@ MU_TEST_SUITE(test_shared_lib_suite)
 
 int main()
 {
+  MU_SUITE_CONFIGURE_SHOW_PROGRESS(0);
+
   MU_RUN_SUITE(test_shared_lib_suite);
   MU_REPORT();
 

@@ -23,6 +23,8 @@ MU_TEST(TestStaticInit)
 
 int main()
 {
+  MU_SUITE_CONFIGURE_SHOW_PROGRESS(0);
+
   MU_RUN_TEST(TestStaticInit);
   MU_REPORT();
 

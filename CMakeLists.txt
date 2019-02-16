@@ -20,9 +20,6 @@ option(FMI2AG_TEST "Build tests for fmi2AllocGuard (default: OFF)" OFF)
 option(FMI2AG_START_ID "Start id <numeric>" -1)
 option(FMI2AG_END_ID "End id <numeric>" -1)
 
-#option(FMI2AG_REGEN "Regenerate boilerplate code with, possibly, different arguments (default: OFF)" OFF)
-#option(FMI2AG_ "Regenerate boilerplate code with, possibly, different arguments (default: OFF)" OFF)
-
 #########################################
 # pre build step
 #########################################
@@ -55,11 +52,11 @@ if ( FMI2AG_SCRIPT_DO_INVOKE )
         COMMAND "${FMI2AG_SCRIPT_PYTHON_EXE}" ${PROJECT_SOURCE_DIR}/scr/gen.py --start_id ${FMI2AG_SCRIPT_START_ID} --end_id ${FMI2AG_SCRIPT_END_ID}
         RESULT_VARIABLE FMI2AG_SCRIPT_EXEC_RESULT )
 
-    #if ( $(FMI2AG_SCRIPT_EXEC_RESULT} NOTEQUAL -1 )
-    #  message( STATUS "=== generating OK" )
-    #else( $(FMI2AG_SCRIPT_EXEC_RESULT} NOTEQUAL -1 )
-    #  message( STATUS "=== generating NOK" )
-    #endif( $(FMI2AG_SCRIPT_EXEC_RESULT} NOTEQUAL -1 )
+    if ( ${FMI2AG_SCRIPT_EXEC_RESULT} EQUAL 0 )
+      message( STATUS "boilerplate generating script returned '${FMI2AG_SCRIPT_EXEC_RESULT}'" )
+    else()
+      message( FATAL_ERROR "boilerplate generating script returned '${FMI2AG_SCRIPT_EXEC_RESULT}'" )
+    endif()
 
   else( ${FMI2AG_SCRIPT_PYTHON_EXE} STRGREATER "" )
     message( FATAL_ERROR "==== python executable was not found" )
